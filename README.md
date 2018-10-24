@@ -9,4 +9,4 @@
 
 ## HOW TO SUBMIT CODE
 ---------------------
-Please always create a pull request and  one of the team members as the reviewer before merging to master. 
+Please always create a pull request and add one of the team members as the reviewer before merging to master. 
