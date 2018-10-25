@@ -12,15 +12,17 @@
     </div>
     <div id="ayinawu-login-input">
         <form action="process.php" method="POST">
-            <h3 id="log">LOGIN</h3>
+            <div id="ayinawu_logo">
+                <h6>takeAway</h6>
+            </div>
             <p>
                 <label>Username</label>
-                <input type="text" id="ayinawu-login-user" name="ayinawu-login-user" placeholder="Username" />
+                <input type="text" id="ayinawu-login-user" name="ayinawu-login-user" />
             </p>
             
             <p>
                 <label>Password</label>
-                <input type="password" id="ayinawu-login-password" name="ayinawu-login-password" placeholder="Password" />
+                <input type="password" id="ayinawu-login-password" name="ayinawu-login-password" />
             </p>
         
             <p>

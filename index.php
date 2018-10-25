@@ -13,6 +13,9 @@
     </div>
     <div id="ayinawu-login-input">
         <form action="process.php" method="POST">
+            <div id="ayinawu_logo">
+                <h6>takeAway</h6>
+            </div>
             <p>
                 <label>Username</label>
                 <input type="text" id="ayinawu-login-user" class="search" name="ayinawu-login-user" />
