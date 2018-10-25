@@ -1,75 +1,60 @@
 /*Add background image*/
 body{
-    background: url(../images/background.jpeg);
+    background: url(../images/ocan.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 /*Apply style to input boxes*/
-
 #ayinawu-login-input{
     border: solid gray 1px;
-    
-    width: 300px;
-    
+    width: 200px;
     border-radius: 5px;
     margin: 100px auto;
-   
     background: white;
-    
     padding: 60px;
-
 }
 
 /*Apply style to login page text*/
 #login-page{
-    color: #337ab7;
+    color: whitesmoke;
     text-align: center;
 }
 
 /*Apply style to submit button*/
-
 #ayinawu-login-btn{
-  width: 90%;
-  height: 35px;
-  background: #337ab7;
-  color: white;
-  border: none;
+    color: #fff;
+    background: #337ab7;
+    padding: 5px;
+    width:200px;
 }
+
 
 /*Affects All text inputs*/
-   
 input[type="text"]{
-	width:90%;
-    height: 20px;
+	display:block;
+	margin-bottom:25px;
+	width:100%;
+	border:2px solid steelblue;
     background:white;
-    
-    
-}
-
-label{
-    color: gray;
+	border-radius:14%;
 }
 
 /*Affects password input*/
-
 input[type="password"]{
-	width:90%;
-    height: 20px;
+	display:block;
+	margin-bottom:25px;
+	width:100%;
+	border:2px solid steelblue;
 	background:white;
+	border-radius:14%;
 }
 
-/*Icon*/
-/*
-.search{
-    background: url(../images/icon.jpg) left no-repeat;
-    height: 30px;
-    font: 20px Ms Sans Serif;
-    padding-left: 35px;
-    color: grey;
-    width: 200px;
-    border: 1px solid grey;
-    
+#log{
+    color: #337ab7;
+    font-size: 20px;
+    text-align: center;
+    margin-top:-30px;
 }
-*/
+

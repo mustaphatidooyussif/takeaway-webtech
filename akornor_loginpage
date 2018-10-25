@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +14,12 @@
         <form action="process.php" method="POST">
             <p>
                 <label>Username</label>
-                <input type="text" id="ayinawu-login-user" class="search" name="ayinawu-login-user" />
-                
-                
+                <input type="text" id="ayinawu-login-user" name="ayinawu-login-user" placeholder="Username" />
             </p>
             
             <p>
                 <label>Password</label>
-                <input type="password" id="ayinawu-login-password" class="search" name="ayinawu-login-password" />
+                <input type="password" id="ayinawu-login-password" name="ayinawu-login-password" placeholder="Password" />
             </p>
         
             <p>
