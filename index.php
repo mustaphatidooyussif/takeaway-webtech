@@ -12,29 +12,54 @@
         <h1>LOGIN</h1>
     </div>
     <div id="ayinawu-login-input">
-        <form action="process.php" method="POST">
+        <form method="POST">
             <div id="ayinawu_logo">
                 <h6>takeAway</h6>
             </div>
             <p>
                 <label>Username</label>
-                <input type="text" id="ayinawu-login-user" class="search" name="ayinawu-login-user" />
-                
-                
+                <input type="text" id="ayinawu-login-user" class="search" name="ayinawu-login-user" required />
             </p>
             
             <p>
                 <label>Password</label>
-                <input type="password" id="ayinawu-login-password" class="search" name="ayinawu-login-password" />
+                <input type="password" id="ayinawu-login-password" class="search" name="ayinawu-login-password" required/>
             </p>
         
             <p>
-                <input type="submit" id="ayinawu-login-btn" value="Login" />
+                <input type="submit" id="ayinawu-login-btn" name="ayinawu-login-btn" value="Login" />
             </p>
             
         </form>
     </div>
     
+    
+    <?php
+    $username = $_POST['ayinawu-login-user'];
+    $password = $_POST['ayinawu-login-password'];
+    $error = "";
+    $success = "";
+
+    if(isset($_POST["ayinawu-login-btn"])){
+        if($username == "Ayinawu"){
+            if($password == "123"){
+                $error = "";
+                $success = "Welcome Ayinawu";
+                header("Location:welcome.php");
+            
+            }else{
+                $error = "Invalid Password";
+                $success = "";
+        
+            }
+        }else{
+            $error = "Invalid Username";
+            $success = "";
+        }
+    }
+    ?>
+    
 </body>
 
 </html>
+
