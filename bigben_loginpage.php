@@ -35,12 +35,13 @@
     
     
     <?php
-    $username = $_POST['ayinawu-login-user'];
-    $password = $_POST['ayinawu-login-password'];
-    $error = "";
-    $success = "";
 
     if(isset($_POST["ayinawu-login-btn"])){
+        $username = $_POST['ayinawu-login-user'];
+        $password = $_POST['ayinawu-login-password'];
+        $error = "";
+        $success = "";
+
        if($username == "Ayinawu"){
            if($password == "123"){
               $error = "";
