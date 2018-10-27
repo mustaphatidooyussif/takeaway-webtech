@@ -21,6 +21,7 @@ var transparentDemo = true;
 var fixedTop = false;
 
 var navbar_initialized = false;
+var is_original_size = true;
 
 $(document).ready(function(){
     window_width = $(window).width();
@@ -74,15 +75,24 @@ $(document).on('click', '.navbar-toggle', function(){
 });
 
 $(window).on('resize', function(){
+
     if(navbar_initialized){
         lbd.initRightMenu();
         navbar_initialized = true;
+        //Lets do something heree
     }
+    //is_original_size = true;
 });
+
 
 lbd = {
     misc:{
         navbar_menu_visible: 0
+    },
+
+    navToggle: function(){
+      alert("Add nav open class");
+
     },
 
     checkSidebarImage: function(){

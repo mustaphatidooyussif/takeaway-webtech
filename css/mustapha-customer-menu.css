@@ -1,0 +1,32 @@
+.search-overlay_wrapper{
+    margin: 40px 0;
+    margin-left:0;
+}
+
+.search-overlay_wrapper .search-overlay_inner{
+  padding-left:0;
+}
+
+
+li{
+  margin: 0 50px;
+  text-transform: uppercase;
+}
+
+footer{
+  background-color: #0088cc;
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.nav-list li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    list-style: none;
+}
+
+.nav-list li a:hover:before {
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+}
