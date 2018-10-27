@@ -3,13 +3,13 @@
 <html>
 <head>
     <title>Customer Login Page</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bigben_login.css">
     
 </head>
     
 <body>
     <div id="login-page">
-        <h1>LOGIN</h1>
+        <h1>BIGBEN CAFETERIA</h1>
     </div>
     <div id="ayinawu-login-input">
         <form method="POST">
@@ -18,12 +18,12 @@
             </div>
             <p>
                 <label>Username</label>
-                <input type="text" id="ayinawu-login-user" class="search" name="ayinawu-login-user" required />
+                <input type="text" id="ayinawu-login-user" name="ayinawu-login-user" />
             </p>
             
             <p>
                 <label>Password</label>
-                <input type="password" id="ayinawu-login-password" class="search" name="ayinawu-login-password" required/>
+                <input type="password" id="ayinawu-login-password" name="ayinawu-login-password" />
             </p>
         
             <p>
@@ -41,23 +41,25 @@
         $password = $_POST['ayinawu-login-password'];
         $error = "";
         $success = "";
-        if($username == "Ayinawu"){
-            if($password == "123"){
-                $error = "";
-                $success = "Welcome Ayinawu";
-                header("Location:welcome.php");
+
+       if($username == "Ayinawu"){
+           if($password == "123"){
+              $error = "";
+              $success = "Welcome Ayinawu";
+              header("Location:welcome_bigben.php");
             
-            }else{
-                $error = "Invalid Password";
-                $success = "";
+           }else{
+              $error = "Invalid Password";
+              $success = "";
         
-            }
-        }else{
-            $error = "Invalid Username";
-            $success = "";
+           }
+         }else{
+              $error = "Invalid Username";
+              $success = "";
         }
-    }
-    ?>
+      }
+      ?>
+
     
 </body>
 
