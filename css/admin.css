@@ -1,0 +1,19 @@
+.center-element{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40%;
+    text-align: center;
+    padding: 2rem;
+}
+
+.center-only{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40%;
+    text-align: center;
+}
+.center-element #item_to_delete{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
