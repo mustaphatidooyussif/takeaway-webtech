@@ -78,8 +78,7 @@ class ComposerStaticInit2e5e9cadb5fb0f852448dda4b4e8f4f5
         array (
             'Propel' => 
             array (
-                0 => __DIR__ . '/../..' . '/src',
-                1 => __DIR__ . '/..' . '/propel/propel/src',
+                0 => __DIR__ . '/..' . '/propel/propel/src',
             ),
         ),
     );
