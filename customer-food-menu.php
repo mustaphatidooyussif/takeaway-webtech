@@ -13,7 +13,7 @@
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link rel="stylesheet" href="assets/css/light-bootstrap-dashboard.css" />
+    <link rel="stylesheet" href="assets/css/atule-customer-food-menu.css" />
 
 
     <!--     Fonts and icons     -->
