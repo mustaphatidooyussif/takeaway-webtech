@@ -6,7 +6,7 @@
     
 </head>
     
-<body>
+<body class="ayinawu-body-style-ako"> 
     <div id="login-page">
         <h1>AKORNOR CAFETERIA</h1>
     </div>

@@ -7,7 +7,7 @@
     
 </head>
     
-<body>
+<body class="ayinawu-body-style-big">
     <div id="login-page">
         <h1>BIGBEN CAFETERIA</h1>
     </div>

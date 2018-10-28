@@ -1,5 +1,5 @@
 /*Add background image*/
-body{
+.ayinawu-body-style-ako, html{
     background: url(../images/ocan.jpg);
     background-position: center;
     background-repeat: no-repeat;
