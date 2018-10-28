@@ -125,3 +125,10 @@ ul.nav.navbar-nav .dropdown.open .dropdown-toggle {
 .atule-total-price {
     margin-left: 50%;
 }
+
+p.atule-dotted-square {
+    border: 2px dashed #0088cc;
+    padding: 10% 10% 10% 10%;
+    margin: 5%;
+    text-align: center;
+}
