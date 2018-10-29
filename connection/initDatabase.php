@@ -7,8 +7,7 @@
     $conn = new ConnectionProvider();
 
     class InitDatabase {
-        // This class creates all tables 
-
+        //===This class creates all tables===//
 
         private $db_conn;
 
@@ -16,9 +15,19 @@
         public function __construct(){
             global $conn, $connectionCredential, $queries;
             $this->db_conn = $conn->getConnection();
-            
-            $this->db_conn->exec($queries->createDatabaseQuery());
+
+            // create database if not created
+            $this->db_conn->exec($queries->createDatabaseQuery(
+                                        $connectionCredential['credential']['dbname']
+                                    )
+                                );
         }
+
+
+        // create tables
+        // public function createDataBaseTables(){
+
+        // }
     }
 
     $db = new InitDatabase();
