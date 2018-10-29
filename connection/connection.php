@@ -1,6 +1,6 @@
 <?php 
     // import credentials
-    $connectionCredential = include "credentials.php";
+    $connectionCredential = require "credentials.php";
 
     class ConnectionProvider {
 
