@@ -9,44 +9,48 @@
     class InitDatabase {
         //===This class creates all tables===//
 
-        private $db_conn;
-        private $db_name;
-        private $queryObj;
+        // resources
+        public $db_conn;
+        public $db_name;
+        public $queryObj;
 
         // matron table credentials
-        private $matron_table = "matron_login";
-        private $matron_id = "matron_id";
-        private $matron_username = "matron_username";
-        private $matron_password = "matron_password";
+        public $matron_table = "matron_login";
+        public $matron_id = "matron_id";
+        public $matron_username = "matron_username";
+        public $matron_password = "matron_password";
 
         // matron table credentials
-        private $customer_table = "customer_login";
-        private $customer_id = "customer_id";
-        private $customer_username = "customer_username";
-        private $customer_password = "customer_password";
+        public $customer_table = "customer_login";
+        public $customer_id = "customer_id";
+        public $customer_username = "customer_username";
+        public $customer_password = "customer_password";
+
+        // admin credentials
+        public $admin_id = "admin_id";
+        public $admin_username = "admin_username";
+        public $admin_password = "admin_password";
 
         // food menu table credentials
-        private $ak_food_menu_table = "akorno_food_menu";
-        private $bb_food_menu_table = "bigben_food_menu";
-        private $food_item_id = "food_item_id";
-        private $food_item_field = "food_item";
-        private $price_field = "price";
-        private $type_field = "type";
-        private $category_field = "category";
+        public $ak_food_menu_table = "akorno_food_menu";
+        public $bb_food_menu_table = "bigben_food_menu";
+        public $food_item_id = "food_item_id";
+        public $food_item_field = "food_item";
+        public $price_field = "price";
+        public $type_field = "type";
+        public $category_field = "category";
 
         // orders table credentials
-        private $ak_orders_table = "akorno_orders";
-        private $bb_orders_table = "bigben_orders";
-        private $orders_id = "orders_id";
-        private $served_field = "served";
+        public $ak_orders_table = "akorno_orders";
+        public $bb_orders_table = "bigben_orders";
+        public $orders_id = "orders_id";
+        public $served_field = "served";
 
         // customer history table credentials
-        private $customer_history_table = "customer_history";
-        private $history_id=  "history_id";
-        private $ak_history_table = "akorno_orders_history";
-        private $bb_history_table = "bigben_orders_history";
-
-
+        public $customer_history_table = "customer_history";
+        public $history_id=  "history_id";
+        public $ak_history_table = "akorno_orders_history";
+        public $bb_history_table = "bigben_orders_history";
 
 
         // constructor
@@ -90,15 +94,15 @@
                 $customer_history_table_query, $akornor_history_table_query, $bb_history_table_query
             ];
 
+            // loop and execute queries
             foreach($queries as $sql){
                 $this->db_conn->exec($sql);
-                // var_dump($customer_history_table_query);
             }
         }
     }
 
-    $db = new InitDatabase();
-    $db->createDataBaseTables();
+    // $db = new InitDatabase();
+    // $db->createDataBaseTables();
 
 
 
