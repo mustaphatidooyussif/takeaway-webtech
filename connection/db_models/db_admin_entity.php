@@ -25,6 +25,4 @@
 
     $adm = new AdminEntity("06002020", "atule", "1234");
     var_dump($adm);
-
-
 ?>

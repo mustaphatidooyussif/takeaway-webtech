@@ -20,20 +20,22 @@
             $this->password = $password;
         }
 
-        // GETTERS
-
-        // id getter
         function getID(){
+            /**
+             * id getter.
+             */
             return $this->id;
         }
-
-        // username getter
         function getUsername(){
+            /**
+             * username getter
+             */
             return $this->username;
         }
-
-        // password getter
         function getPassword(){
+            /**
+             * password getter.
+             */
             return $this->password;
         }
 
