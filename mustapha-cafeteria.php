@@ -47,7 +47,7 @@
                                 </div>
 
 
-                                <div class="card">
+                                    <div class="card">
                                         <!--Big ben Users-->
                                         <div class="header">
                                             <h4 class="title">Big ben users</h4>
@@ -83,36 +83,37 @@
 
                                     <div class="card">
                                             <!--Akornor users-->
-                                            <div class="header">
-                                                <h4 class="title">Akornor Users</h4>
-                                            </div>
-                                            <div class="content table-responsive table-full-width">
-                                                <table class="table table-hover table-striped">
-                                                    <thead>
-                                                        <th>ID</th>
-                                                        <th>Name</th>
-                                                        <th>Email</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>user1</td>
-                                                            <td>user1@ashesi.edu.gh</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>User2</td>
-                                                            <td>user2@ashesi.edu.gh</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
+                                        <div class="header">
+                                            <h4 class="title">Akornor Users</h4>
                                         </div>
+                                        <div class="content table-responsive table-full-width">
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>user1</td>
+                                                        <td>user1@ashesi.edu.gh</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>User2</td>
+                                                        <td>user2@ashesi.edu.gh</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                             </div>
                     </div>
                 </div>
             </div>
-        </div><!--End of Main content area-->
+        </div>
+    </div>
+</div><!--End of Main content area-->
 
 <?php include('template-parts/admin-footer.php'); ?>

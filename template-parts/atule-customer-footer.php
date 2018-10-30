@@ -32,8 +32,9 @@
 
 	<script type="text/javascript">
     	$(document).ready(function(){
-
-        	// demo.initChartist();
+			var search = new Search();
+			// demo.initChartist();
+			demo.initSearch();
 
         	$.notify({
             	icon: 'pe-7s-gift',
