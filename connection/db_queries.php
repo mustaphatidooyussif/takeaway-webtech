@@ -3,12 +3,15 @@
     class Queries {
 
         // build customer history table query
-        public function buildCustomerHistoryTableQuery($db_name, $table_name, $id_field, $c_id, $fk_cafeteria_id1, $fk_cafeteria_id2, $cafeteria_table1, $cafeteria_table2){
+        public function buildCustomerHistoryTableQuery($db_name, $table_name, $id_field, $c_id, $customer_id, $customer_table, $fk_cafeteria_id1, $fk_cafeteria_id2, $cafeteria_table1, $cafeteria_table2){
             $customerHistoryTabeQuery = "CREATE TABLE IF NOT EXISTS `%s`.`%s` (
                 `%s` INT NOT NULL AUTO_INCREMENT,
                 `%s` INT NOT NULL,
                 `%s` INT NOT NULL,
+                `%s` INT NOT NULL,
                 PRIMARY KEY (`%s`),
+                FOREIGN KEY (`%s`)
+                    REFERENCES `%s`.`%s` (`%s`),
                 FOREIGN KEY (`%s`)
                     REFERENCES `%s`.`%s` (`%s`),
                 FOREIGN KEY (`%s`)
@@ -19,14 +22,27 @@
                 $customerHistoryTabeQuery,
                 $db_name,
                 $table_name,
+
                 $id_field,
+                $customer_id,
                 $fk_cafeteria_id1,
                 $fk_cafeteria_id2,
                 $id_field,
+
+                $customer_id,
+                $db_name, 
+                $customer_table,
+                $customer_id,
+
                 $fk_cafeteria_id1,
-                $db_name, $cafeteria_table1,$c_id,
+                $db_name, 
+                $cafeteria_table1,
+                $c_id,
+
                 $fk_cafeteria_id2,
-                $db_name,$cafeteria_table2,$c_id
+                $db_name,
+                $cafeteria_table2,
+                $c_id
             );
         }
 
@@ -85,20 +101,31 @@
                 FOREIGN KEY (`%s`) 
                     REFERENCES `%s`.`%s` (`%s`),
                 FOREIGN KEY (`%s`)
-                    REFERENCES `%s`.`%s` (`%s`),
-                FOREIGN KEY (`%s`)
                     REFERENCES `%s`.`%s` (`%s`)
             )";
             
             return sprintf(
-                $ordersTableQuery,$db_name,$table_name,
-                $id_field,$served_field,$food_menu_id,
-                $matron_id,$customer_id,$id_field,
-                $food_menu_id,$db_name,
-                $food_menu_table, $food_menu_id,$matron_id,
-                $db_name,$matron_table, $matron_id,
-                $customer_id,$db_name,
-                $customer_table, $customer_id
+                $ordersTableQuery,
+                $db_name,
+                $table_name,
+                $id_field,
+                $served_field,
+                $food_menu_id,
+                $matron_id,
+                $customer_id,
+                $id_field,
+                $food_menu_id,
+                $db_name,
+                $food_menu_table,
+                $food_menu_id,
+                $matron_id,
+                $db_name,
+                $matron_table,
+                $matron_id,
+                $customer_id,
+                $db_name,
+                $customer_table,
+                $customer_id
             );
         }
 
