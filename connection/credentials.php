@@ -1,7 +1,18 @@
 <?php
-    //Login data for the database. Use this file in all Models
-    $host = "localhost";
-    $user = "root";
-    $password = "";
-    $database = "test_takeaway";
+
+    return [
+            'credential' => [
+                'host' => 'localhost',
+                'db_username' => 'root',
+                'db_password' => '',
+                'dbname' => 'takeAway_db',
+                'opt' => [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => false,
+                ],
+            ],
+            
+    ];
+    
 ?>
