@@ -114,14 +114,12 @@
                 $matron_id,
                 $customer_id,
                 $id_field,
+
                 $food_menu_id,
                 $db_name,
                 $food_menu_table,
                 $food_menu_id,
-                $matron_id,
-                $db_name,
-                $matron_table,
-                $matron_id,
+                
                 $customer_id,
                 $db_name,
                 $customer_table,

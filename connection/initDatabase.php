@@ -72,7 +72,7 @@
             $this->db_conn->exec($this->queryObj->buildUseDbQuery($this->db_name));
         }
 
-
+        
         // create tables
         public function createDataBaseTables(){
             // login tables
@@ -109,8 +109,8 @@
         }
     }
 
-    // $db = new InitDatabase();
-    // $db->createDataBaseTables();
+    $db = new InitDatabase();
+    $db->createDataBaseTables();
 
 
 

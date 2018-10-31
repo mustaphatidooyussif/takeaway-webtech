@@ -10,7 +10,7 @@
     // CustomerEntity
     require_once "db_customer_entity.php";
     // OrderEntity
-    require "db_order_entity.php";
+    require_once "db_order_entity.php";
 
 
     class CafeteriaOrdersHistoryEntity{
@@ -23,7 +23,7 @@
 
 
         // credentials
-        public $owner;
+        public $owner; // use the table name where the obj belongs in the database
         public $id;
         public $orderEntity = null; // OrderEntity Obj
 
@@ -159,7 +159,8 @@
     }
     
     // test
-    // $coh = new CafeteriaOrdersHistoryEntity("Akornor", "1", $ord);
+    $coh = new CafeteriaOrdersHistoryEntity("akorno_orders_history", "123", $ord_ak);
+    $coh->insert();
     // var_dump($coh);
 
 ?>

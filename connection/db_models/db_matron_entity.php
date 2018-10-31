@@ -2,7 +2,7 @@
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
     // import file
-    require get_include_path()."initDatabase.php";
+    require_once get_include_path()."initDatabase.php";
     // instantiate obj
     $db = new InitDatabase();
 
@@ -186,19 +186,19 @@
     }
 
     // test
-    $cus1 = new MatronEntity("06002021", "atule", "1234");
-    $cus2 = new MatronEntity("06002022", "atule1", "1234");
-    $cus3 = new MatronEntity("06002023", "atule2", "1234");
-    $cus2->insert();
-    $cus3->insert();
-    $retrieve_stmt = matronEntity::retrieveAll();
+    // $cus1 = new MatronEntity("06002021", "atule", "1234");
+    // $cus2 = new MatronEntity("06002022", "atule1", "1234");
+    // $cus3 = new MatronEntity("06002023", "atule2", "1234");
+    // $cus2->insert();
+    // $cus3->insert();
+    // $retrieve_stmt = matronEntity::retrieveAll();
 
-    while ($row = $retrieve_stmt->fetch()){ 
-            $id = $row['matron_id'];
-            $username = $row['matron_username'];
-            var_dump($id);
-            var_dump($username);
-        }
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $id = $row['matron_id'];
+    //         $username = $row['matron_username'];
+    //         var_dump($id);
+    //         var_dump($username);
+    //     }
 
 
 ?>
