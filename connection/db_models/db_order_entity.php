@@ -254,7 +254,7 @@
              * deletes OrderEntity item with a particular id.
              */
 
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
