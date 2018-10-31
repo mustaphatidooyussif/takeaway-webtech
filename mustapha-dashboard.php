@@ -2,6 +2,7 @@
 
     <div class="wrapper">
       <?php include('template-parts/admin-sidebar.php'); ?>
+      
         <div class="main-panel">
           <!--navbar-->
             <?php include('template-parts/admin-navbar.php'); ?>

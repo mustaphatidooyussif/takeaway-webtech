@@ -26,6 +26,7 @@
                                                 <td>Akornor Jollof</td>
                                                 <td>Full Portion</td>
                                                 <td>Ghc8.50</td>
+                                                
                                                 <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>
                                             </tr>
                                             <tr>

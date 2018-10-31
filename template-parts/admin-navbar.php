@@ -26,8 +26,7 @@
                 </li>
                 <li>
                     <a href="">
-                        <i class="fa fa-search"></i>
-                        <p class="hidden-lg hidden-md">Search</p>
+                        <span class="search-trigger js-search-trigger"><i class="fa fa-search" aria-hidden="true"></i></span>
                     </a>
                 </li>
                 <li>
