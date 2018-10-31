@@ -34,7 +34,8 @@ try {
     $mail->setFrom('takeawayproject112@gmail.com', 'Take Away Team');
 
     //TODO: Get recipient email from the database
-    $mail->addAddress('takeawayproject112@gmail.com', $username);     // Add a 
+    $mail->addAddress('takeawayproject112@gmail.com', $username);     // Add a
+    $mail->addAddress('mustapha.yussif@ashesi.edu.gh', $username);     // Add a  
 
     // //Attachments
     // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -49,7 +50,7 @@ try {
 
     $url = $_SERVER['DOCUMENT_ROOT'].'/takeaway-webtech/customer-dashboard.php'; 
     $mail->send();
-    header("Location:../customer-order-alert.php"); 
+    header("Location:../customer-food-menu.php"); 
     
     echo 'Message has been sent ';
 } catch (Exception $e) {
