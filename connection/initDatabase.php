@@ -21,7 +21,7 @@
         public $cafeteria_email = "cafeteria_email";
 
         // matron table credentials
-        public $matron_table = "matron_login";
+        public $matron_table = "matron_details";
         public $matron_id = "matron_id";
         public $matron_username = "matron_username";
         public $matron_password = "matron_password";

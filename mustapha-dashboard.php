@@ -59,21 +59,17 @@
                                                     <th>Email</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>User 1</td>
-                                                        <td>user1@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>User 2</td>
-                                                        <td>user2@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                            <td>User 3</td>
-                                                            <td>user3@ashesi.edu.gh</td>
-                                                        </tr>
+                                                    <?php
+                                                      $bigben_users = $db->selectAllFromTable('matron_details');
+                                                      while($user = $bigben_users->fetch()){?>
+                                                            <tr>
+                                                                <td><?php echo $user['matron_id']; ?></td>
+                                                                <td><?php echo $user['matron_username']; ?></td>
+                                                                <td><?php echo $user['matron_email']; ?></td>
+                                                            </tr>
+                                                    <?php }
+                                                     ?>
+                                                  
                                                 </tbody>
                                             </table>
 
@@ -93,16 +89,16 @@
                                                         <th>Email</th>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>user1</td>
-                                                            <td>user1@ashesi.edu.gh</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>User2</td>
-                                                            <td>user2@ashesi.edu.gh</td>
-                                                        </tr>
+                                                        <?php
+                                                        $bigben_users = $db->selectAllFromTable('matron_details');
+                                                        while($user = $bigben_users->fetch()){?>
+                                                                <tr>
+                                                                    <td><?php echo $user['matron_id']; ?></td>
+                                                                    <td><?php echo $user['matron_username']; ?></td>
+                                                                    <td><?php echo $user['matron_email']; ?></td>
+                                                                </tr>
+                                                        <?php }
+                                                        ?>
                                                     </tbody>
                                                 </table>
 
