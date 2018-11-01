@@ -65,8 +65,30 @@
             );
         }
 
+        // build cafeteria  table query
+        public function buildCafeteriaTableQuery($db_name, $table_name, $id, $cafeteria_user_name, $cafeteria_email){
+            
+            $cafeteriaTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
+                %s INT NOT NULL AUTO_INCREMENT,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                PRIMARY KEY(%s)
+            )";
+
+            return sprintf(
+                $cafeteriaTableQuery,
+                $db_name,
+                $table_name,
+                $id, 
+                $cafeteria_user_name, 
+                $cafeteria_email,
+                $id
+            );
+        }
+
         // build food menu table query
-        public function buildFoodMenuTableQuery($db_name, $table_name, $id_field, $food_item_field, $price_field, $type_field, $category_field){    
+        public function buildFoodMenuTableQuery($db_name, $table_name, $id_field, $food_item_field, $price_field, $type_field, $category_field){  
+
             $foodMenuTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                 %s INT NOT NULL AUTO_INCREMENT,
                 %s VARCHAR(45) NOT NULL,
@@ -149,6 +171,29 @@
             );
         }
 
+
+        // build persons table query
+        public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email){            
+            $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
+                    %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    PRIMARY KEY (%s)
+            )";
+
+            return sprintf(
+                $loginTableQuery,
+                $db_name,
+                $table_name,
+                $id_field_name,
+                $username_field_name,
+                $password_field_name,
+                $email,
+                $id_field_name
+
+            );
+        }
         // create database query
         public function buildDatabaseQuery($db_name){
             $db = "CREATE DATABASE IF NOT EXISTS %s";
@@ -168,10 +213,6 @@
                 $db_name
             );
         }
-
-
-    
-
 
     }
 ?>

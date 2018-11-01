@@ -14,11 +14,18 @@
         public $db_name;
         public $queryObj;
 
+        //Caferteris
+        public $cafeteria_table = "cafeterias";
+        public $cafeterias_ids = "cafeterias_ids";
+        public $cafeteria_uname = "cafeteria_uname";
+        public $cafeteria_email = "cafeteria_email";
+
         // matron table credentials
         public $matron_table = "matron_login";
         public $matron_id = "matron_id";
         public $matron_username = "matron_username";
         public $matron_password = "matron_password";
+        public $matron_email = "matron_email";
 
         // special ids
         public $sak_orders_id = "ak_orders_id";
@@ -76,7 +83,7 @@
         // create tables
         public function createDataBaseTables(){
             // login tables
-            $matron_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password);
+            $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email);
             $customer_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->customer_table, $this->customer_id, $this->customer_username, $this->customer_password);
             $admin_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->admin_table, $this->admin_id, $this->admin_username, $this->admin_password);
             
@@ -92,6 +99,7 @@
             $customer_history_table_query = $this->queryObj->buildCustomerHistoryTableQuery($this->db_name, $this->customer_history_table, $this->history_id, $this->orders_id, $this->customer_id, $this->customer_table, "ak_".$this->orders_id, "bb_".$this->orders_id, $this->ak_orders_table, $this->bb_orders_table);
             $akornor_history_table_query = $this->queryObj->buildCafeteriaHistoryTableQuery($this->db_name, $this->ak_history_table, $this->history_id, $this->orders_id, $this->ak_orders_table);
             $bb_history_table_query = $this->queryObj->buildCafeteriaHistoryTableQuery($this->db_name, $this->bb_history_table, $this->history_id, $this->orders_id, $this->bb_orders_table);
+            $cafeteria_create_table_query = $this->queryObj->buildCafeteriaTableQuery($this->db_name, $this->cafeteria_table, $this->cafeterias_ids, $this->cafeteria_uname, $this->cafeteria_email);
             
             // queries list
             $queries = [
@@ -99,16 +107,62 @@
                 $akornor_food_menu_table_query, $bigben_food_menu_table_query,
                 $akornor_orders_table_query, $bigben_orders_table_query,
                 $customer_history_table_query, $akornor_history_table_query, $bb_history_table_query,
-                $admin_login_table_query
+                $admin_login_table_query, $cafeteria_create_table_query
             ];
 
             // loop and execute queries
             foreach($queries as $sql){
                 $this->db_conn->exec($sql);
             }
+
+            
+        }
+
+        public function selectAllFromTable($table_name){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "SELECT * FROM %s.%s;";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name
+            );
+
+            $retrieve_stmt = $this->db_conn->prepare($query);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+
+        public function selectItemById($table_name, $id_name, $id_val){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s = %s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $id_name,
+                $id_val
+            ); 
+            $retrieve_stmt = $this->db_conn->prepare($query);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
         }
     }
+    
 
+    
     // $db = new InitDatabase();
     // $db->createDataBaseTables();
 
