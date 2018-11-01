@@ -1,15 +1,8 @@
-
- <?php   
-     require_once('connection/initDatabase.php');
-     require_once('connection/db_queries.php');
-     $db = new InitDatabase();  //create db and tables if not exists
-     $db->createDataBaseTables();
-
+<?php
  if(isset($_POST["add_to_cart"]))  
  { 
       if(isset($_SESSION["shopping_cart"]))  
       {  
-          
            $item_array_id = array_column($_SESSION["shopping_cart"], "food_item_id");  
            if(!in_array($_GET["id"], $item_array_id))  
            {  
@@ -30,7 +23,7 @@
       }  
       else  
       {  
-          echo "kkkkkkkkkkkkkkkkkkkkkk";
+          //echo "kkkkkkkkkkkkkkkkkkkkkk";
            $item_array = array(  
                 'food_item_id'               =>     $_POST["food_item_id"],  
                 'food_item_name'               =>     $_POST["food_item"],  
@@ -39,6 +32,8 @@
            );  
            $_SESSION["shopping_cart"][0] = $item_array;  
       }  
+
+      print_r($_SESSION["shopping_cart"]);
  }  
 //  if(isset($_GET["action"]))  
 //  {  
@@ -164,10 +159,10 @@
                                               $result2 = $db->selectAllFromTable('akorno_food_menu');
                                               while ($row = $result2->fetch()){?>
                                                     <tr>
-                                                        <td><input type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" ></td>
-                                                        <td><input type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" ></td>
-                                                        <td><input type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" ></td>
-                                                        <td><input type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" ></td>
+                                                        <td><input type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
                                                         <td><input type="submit" name="add_to_cart" form="menu_form" class="btn btn btn-success btn-fill pull-right" value="ADD"></td>
                                                         
                                                     </tr>
