@@ -149,6 +149,7 @@
             );
         }
 
+
         // create database query
         public function buildDatabaseQuery($db_name){
             $db = "CREATE DATABASE IF NOT EXISTS %s";
@@ -168,10 +169,6 @@
                 $db_name
             );
         }
-
-
-    
-
 
     }
 ?>

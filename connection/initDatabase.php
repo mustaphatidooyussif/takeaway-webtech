@@ -106,9 +106,55 @@
             foreach($queries as $sql){
                 $this->db_conn->exec($sql);
             }
+
+            
+        }
+
+        public function selectAllFromTable($table_name){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "SELECT * FROM %s.%s;";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name
+            );
+
+            $retrieve_stmt = $this->db_conn->prepare($query);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+
+        public function selectItemById($table_name, $id_name, $id_val){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s = %s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $id_name,
+                $id_val
+            ); 
+            $retrieve_stmt = $this->db_conn->prepare($query);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
         }
     }
+    
 
+    
     // $db = new InitDatabase();
     // $db->createDataBaseTables();
 
