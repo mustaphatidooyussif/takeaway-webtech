@@ -1,7 +1,9 @@
+
 <?php include('template-parts/admin-header.php'); ?>
 
     <div class="wrapper">
       <?php include('template-parts/admin-sidebar.php'); ?>
+      
         <div class="main-panel">
           <!--navbar-->
             <?php include('template-parts/admin-navbar.php'); ?>
@@ -26,18 +28,18 @@
                                                 <th class="pull-right">Delete?</th>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Big Ben</td>
-                                                    <td>bigben@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Akornor</td>
-                                                    <td>akornor@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
+                                                <?php 
+                                                
+                                                    $cafeterias = $db->selectAllFromTable('cafeterias');
+                                                    while($cafeteria = $cafeterias->fetch()){?>
+                                                        <tr>
+                                                            <td><?php echo $cafeteria['cafeterias_ids'] ?></td>
+                                                            <td><?php echo $cafeteria['cafeteria_uname'] ?></td>
+                                                            <td><?php echo $cafeteria['cafeteria_email'] ?></td>
+                                                            <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                        </tr>                                                     
+                                                   <?php }
+                                                ?>
                                             </tbody>
                                         </table>
 

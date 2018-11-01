@@ -1,6 +1,58 @@
-<?php include('template-parts/admin-header.php'); ?>
-   
+<?php
+ if(isset($_POST["add_to_cart"]))  
+ { 
+      if(isset($_SESSION["shopping_cart"]))  
+      {  
+           $item_array_id = array_column($_SESSION["shopping_cart"], "food_item_id");  
+           if(!in_array($_GET["id"], $item_array_id))  
+           {  
+                $count = count($_SESSION["shopping_cart"]);  
+                $item_array = array(  
+                     'food_item_id'               =>     $_GET["food_item_id"],  
+                     'food_item_name'               =>     $_POST["food_item"],  
+                     'price'          =>     $_POST["price"],  
+                     'type'          =>     $_POST["type"]  
+                );  
+                $_SESSION["shopping_cart"][$count] = $item_array;  
+           }  
+           else  
+           {  
+                echo '<script>alert("Item Already Added")</script>';  
+                echo '<script>window.location="index.php"</script>';  
+           }  
+      }  
+      else  
+      {  
+          //echo "kkkkkkkkkkkkkkkkkkkkkk";
+           $item_array = array(  
+                'food_item_id'               =>     $_POST["food_item_id"],  
+                'food_item_name'               =>     $_POST["food_item"],  
+                'price'          =>     $_POST["price"],  
+                'type'          =>     $_POST["type"] 
+           );  
+           $_SESSION["shopping_cart"][0] = $item_array;  
+      }  
 
+      print_r($_SESSION["shopping_cart"]);
+ }  
+//  if(isset($_GET["action"]))  
+//  {  
+//       if($_GET["action"] == "delete")  
+//       {  
+//            foreach($_SESSION["shopping_cart"] as $keys => $values)  
+//            {  
+//                 if($values["item_id"] == $_GET["id"])  
+//                 {  
+//                      unset($_SESSION["shopping_cart"][$keys]);  
+//                      echo '<script>alert("Item Removed")</script>';  
+//                      echo '<script>window.location="index.php"</script>';  
+//                 }  
+//            }  
+//       }  
+//  }  
+ ?> 
+
+<?php include('template-parts/admin-header.php'); ?>
  <div class="wrapper"> <!-- WRAPPER -->
     <?php include('template-parts/atule-customer-navbar.php'); ?>
         <div class="atule-content"><!-- CONTENT CONTAINER-->
@@ -13,6 +65,7 @@
                                     <h4 class="title">Your Orders</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
+                                <?php print_r($_SESSION);?>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -26,6 +79,7 @@
                                                 <td>Akornor Jollof</td>
                                                 <td>Full Portion</td>
                                                 <td>Ghc8.50</td>
+                                                
                                                 <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>
                                             </tr>
                                             <tr>
@@ -92,6 +146,7 @@
                                     <p class="category">Here is a subtitle for this table</p>
                                 </div>
                                 <div class="content table-responsive table-full-width">
+                                    <form id="menu_form" method="post" action="customer-food-menu.php"></form>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -100,48 +155,20 @@
                                             <th>Price</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Akornor Jollof</td>
-                                                <td>Full Portion</td>
-                                                <td>Ghc8.50</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>$38,735</td>
-                                                <td>Korea, South</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Doris Greene</td>
-                                                <td>$63,542</td>
-                                                <td>Malawi</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Mason Porter</td>
-                                                <td>$78,615</td>
-                                                <td>Chile</td>
-                                                <td><button type="button" class="btn btn-success btn-fill pull-right"><i class="fa fa-plus"></i> <b>ADD</b></button></td>
-                                            </tr>
+                                        <?php 
+                                              $result2 = $db->selectAllFromTable('akorno_food_menu');
+                                              while ($row = $result2->fetch()){?>
+                                                    <tr>
+                                                        <td><input type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
+                                                        <td><input type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
+                                                        <td><input type="submit" name="add_to_cart" form="menu_form" class="btn btn btn-success btn-fill pull-right" value="ADD"></td>
+                                                        
+                                                    </tr>
+                                             <?php }
+
+                                            ?>
                                         </tbody>
                                     </table>
                             </div>

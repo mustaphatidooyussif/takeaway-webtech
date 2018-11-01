@@ -1,0 +1,25 @@
+[
+{
+  "email":"mustapha.yussif@ashesi.edu.gh",
+  "password" : "password1"
+},
+
+{
+    "email":"ayinawu.tanko@ashesi.edu.gh",
+    "password" : "password2"
+  },
+
+  {
+    "email":"sadat.yussissahif@ashesi.edu.gh",
+    "password" : "password3"
+  },
+
+  {
+    "email":"atule.samuel@ashesi.edu.gh",
+    "password" : "password4"
+  },
+  {
+    "email":"angela.gawuga@ashesi.edu.gh",
+    "password" : "password5"
+  }
+]

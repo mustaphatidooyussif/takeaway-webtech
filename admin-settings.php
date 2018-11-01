@@ -1,6 +1,7 @@
 <?php include('template-parts/admin-header.php'); ?>
 
 <div class="wrapper">
+    
 	<!--sidebar-->
     <?php include('template-parts/admin-sidebar.php'); ?>
 
@@ -11,7 +12,8 @@
         <!--Main content area-->
         <div class="content">
             <div class="container-fluid">
-                This is the admin settings page.
+                <p>This is the admin settings page.</p>
+                <?php $var = $_SERVER['DOCUMENT_ROOT'].'/takeaway-webtech/customer-dashboard.php'; $var;?>
             </div>
         </div><!--End of Main content area-->
 

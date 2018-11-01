@@ -32,7 +32,7 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li>
                 <a href="mustapha-cafeteria.php">
-                    <i class="pe-7s-note2"></i>
+                    <i class="fas fa-utensils"></i>
                     <p>Cafeteria</p>
                 </a>
             </li>
