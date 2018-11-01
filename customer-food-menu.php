@@ -1,37 +1,62 @@
-<?php   
-    require_once('connection/initDatabase.php');
-    require_once('connection/db_queries.php');
-    $db = new InitDatabase();  //create db and tables if not exists
-    $db->createDataBaseTables();
 
-    //$connect = mysqli_connect("localhost", "root", "", "test");  
-    if($_GET['action'] and $_GET['action'] == 'add'){  
-        $id = intval($_GET['food_item_id']);   
-        $result1 = $db->selectItemById('akorno_food_menu', 'food_item_id', $id);
-        //$result1 = $db->selectAllFromTable('akorno_food_menu');
+ <?php   
+     require_once('connection/initDatabase.php');
+     require_once('connection/db_queries.php');
+     $db = new InitDatabase();  //create db and tables if not exists
+     $db->createDataBaseTables();
 
-        if(isset($_SESSION["shopping_cart"])){  
-            $item_array_id = array_column($_SESSION["shopping_cart"], "food_item_id"); 
+ if(isset($_POST["add_to_cart"]))  
+ { 
+      if(isset($_SESSION["shopping_cart"]))  
+      {  
+          
+           $item_array_id = array_column($_SESSION["shopping_cart"], "food_item_id");  
+           if(!in_array($_GET["id"], $item_array_id))  
+           {  
+                $count = count($_SESSION["shopping_cart"]);  
+                $item_array = array(  
+                     'food_item_id'               =>     $_GET["food_item_id"],  
+                     'food_item_name'               =>     $_POST["food_item"],  
+                     'price'          =>     $_POST["price"],  
+                     'type'          =>     $_POST["type"]  
+                );  
+                $_SESSION["shopping_cart"][$count] = $item_array;  
+           }  
+           else  
+           {  
+                echo '<script>alert("Item Already Added")</script>';  
+                echo '<script>window.location="index.php"</script>';  
+           }  
+      }  
+      else  
+      {  
+          echo "kkkkkkkkkkkkkkkkkkkkkk";
+           $item_array = array(  
+                'food_item_id'               =>     $_POST["food_item_id"],  
+                'food_item_name'               =>     $_POST["food_item"],  
+                'price'          =>     $_POST["price"],  
+                'type'          =>     $_POST["type"] 
+           );  
+           $_SESSION["shopping_cart"][0] = $item_array;  
+      }  
+ }  
+//  if(isset($_GET["action"]))  
+//  {  
+//       if($_GET["action"] == "delete")  
+//       {  
+//            foreach($_SESSION["shopping_cart"] as $keys => $values)  
+//            {  
+//                 if($values["item_id"] == $_GET["id"])  
+//                 {  
+//                      unset($_SESSION["shopping_cart"][$keys]);  
+//                      echo '<script>alert("Item Removed")</script>';  
+//                      echo '<script>window.location="index.php"</script>';  
+//                 }  
+//            }  
+//       }  
+//  }  
+ ?> 
 
-            if(!in_array($id, $item_array_id)){  
-                    $count = count($_SESSION["shopping_cart"]);   
-                    $_SESSION["shopping_cart"][$count] = $result1;  
-            }  
-            else  
-            {  
-                    echo '<script>alert("Item Already Added")</script>';  
-                    echo '<script>window.location="index.php"</script>';  
-            }  
-        }  
-        else  
-        {    
-            $_SESSION["shopping_cart"][0] = $result1;  
-        }  
-    }else{
-        echo "no action";
-    }
- ?>
- 
 <?php include('template-parts/admin-header.php'); ?>
  <div class="wrapper"> <!-- WRAPPER -->
     <?php include('template-parts/atule-customer-navbar.php'); ?>
@@ -45,6 +70,7 @@
                                     <h4 class="title">Your Orders</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
+                                <?php print_r($_SESSION);?>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -53,22 +79,6 @@
                                             <th>Price</th>
                                         </thead>
                                         <tbody>
-                                            <?php   
-                                                echo $_SESSION["shopping_cart"];
-                                                if(!empty($_SESSION["shopping_cart"])){  
-                                                    $total = 0;  
-                                                    foreach($_SESSION["shopping_cart"] as $keys => $values){  
-                                                ?>  
-                                                <tr>  
-                                                    <td><?php echo $values["food_item_id"]; ?></td>  
-                                                    <td><?php echo $values["food_item"]; ?></td>  
-                                                    <td><?php echo $values["type"]; ?></td> 
-                                                    <td><?php echo $values["price"]; ?></td>
-                                                </tr>  
-                                                <?php  
-                                                    } 
-                                                 }  
-                                                ?>  
                                             <tr>
                                                 <td>1</td>
                                                 <td>Akornor Jollof</td>
@@ -141,7 +151,7 @@
                                     <p class="category">Here is a subtitle for this table</p>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                    <form id="menu_form"></form>
+                                    <form id="menu_form" method="post" action="customer-food-menu.php"></form>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -154,13 +164,12 @@
                                               $result2 = $db->selectAllFromTable('akorno_food_menu');
                                               while ($row = $result2->fetch()){?>
                                                     <tr>
-                                                        <td><input type="text" form="menu_form" value="<?php echo $row['food_item_id']; ?>" disabled></td>
-                                                        <td><?php echo $row['food_item']; ?></td>
-                                                        <td><?php echo $row['type']; ?></td>
-                                                        <td><?php echo $row['price']; ?></td>
-                                                        <td>
-                                                            <a href="<?php echo "customer-food-menu.php?action=add&food_item_id=".$row['food_item_id'];?>" class="btn btn btn-success btn-fill pull-right">ADD</a>
-                                                        </td>
+                                                        <td><input type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" ></td>
+                                                        <td><input type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" ></td>
+                                                        <td><input type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" ></td>
+                                                        <td><input type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" ></td>
+                                                        <td><input type="submit" name="add_to_cart" form="menu_form" class="btn btn btn-success btn-fill pull-right" value="ADD"></td>
+                                                        
                                                     </tr>
                                              <?php }
 
