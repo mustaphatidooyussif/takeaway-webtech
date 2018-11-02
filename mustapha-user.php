@@ -49,7 +49,7 @@ $admin_table = "admins_table";
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>About Me</label>
-                                                <textarea id="aboutme"  class="form-control" placeholder="Description here"></textarea>
+                                                <textarea id="aboutme" rows="8"  class="form-control" placeholder="Description here"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@ $admin_table = "admins_table";
                                       </h4>
                                     </a>
                                 </div>
-                                <p class="description text-center"> You have an administrator<br>
+                                <p class="description text-center" id="display_aboutme"> You have an administrator<br>
                                                     Privilleges <br>
                                 </p>
                             </div>
