@@ -262,4 +262,3 @@ demo = {
 
 }
 
-export default Search;

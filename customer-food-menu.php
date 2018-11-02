@@ -35,21 +35,7 @@
 
       print_r($_SESSION["shopping_cart"]);
  }  
-//  if(isset($_GET["action"]))  
-//  {  
-//       if($_GET["action"] == "delete")  
-//       {  
-//            foreach($_SESSION["shopping_cart"] as $keys => $values)  
-//            {  
-//                 if($values["item_id"] == $_GET["id"])  
-//                 {  
-//                      unset($_SESSION["shopping_cart"][$keys]);  
-//                      echo '<script>alert("Item Removed")</script>';  
-//                      echo '<script>window.location="index.php"</script>';  
-//                 }  
-//            }  
-//       }  
-//  }  
+
  ?> 
 
 <?php include('template-parts/admin-header.php'); ?>
@@ -65,7 +51,7 @@
                                     <h4 class="title">Your Orders</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                <?php print_r($_SESSION);?>
+                                
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
