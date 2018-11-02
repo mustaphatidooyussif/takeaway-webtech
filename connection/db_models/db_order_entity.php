@@ -1,6 +1,6 @@
 <?php 
     // set path to look
-    set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
+    set_include_path('C:/xampp/htdocs/takeaway-webtech/connection/');
     // import file
     require_once get_include_path()."initDatabase.php";
     // instantiate obj
@@ -29,7 +29,7 @@
         public $matronEntity = null;    // this is a MatronEntity obj
         public $customerEntity = null;  // this is a CustomerEntity obj
 
-        function __construct($owner, $id, $foodMenuEntity, $customerEntity){
+        function __construct($owner, $id, $foodMenuEntity=null, $customerEntity=null){
             /**
              * constructor 
              */
@@ -154,6 +154,46 @@
             $insert_stmt->execute();
         }
 
+        public function insertWithID($cus_id){
+            /**
+             * inserts Obj credentials to database when invoked.
+             */
+
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+
+            $query = sprintf(
+                $stmt,
+                self::$db->db_name,
+                $this->owner,
+
+                self::$db->orders_id,
+                self::$db->served_field,
+                self::$db->food_item_id,
+                self::$db->matron_id,
+                self::$db->customer_id,
+
+                self::$db->orders_id,
+                self::$db->served_field,
+                self::$db->food_item_id,
+                self::$db->matron_id,
+                self::$db->customer_id
+            );
+
+            $insert_stmt = self::$db->db_conn->prepare($query);
+
+            $food_item_id = $this->foodMenuEntity->getID();
+            $matron_id = $this->matronEntity ? $this->matronEntity->getID() : "";
+            $customer_id = $this->customerEntity? $this->customerEntity->getID() : $cus_id;
+
+            $insert_stmt->bindparam(':'.self::$db->orders_id, $this->id);
+            $insert_stmt->bindparam(':'.self::$db->served_field, $this->served);
+            $insert_stmt->bindparam(':'.self::$db->food_item_id, $food_item_id);
+            $insert_stmt->bindparam(':'.self::$db->matron_id, $matron_id);
+            $insert_stmt->bindparam(':'.self::$db->customer_id, $customer_id);
+
+            $insert_stmt->execute();
+        }
+
         public function updateMatronColumn($mat_id=""){
             /**
              * updates the matron_id column when matron is known
@@ -220,6 +260,28 @@
             );
             $retrieve_stmt = self::$db->db_conn->prepare($query);
             $retrieve_stmt->bindparam(':'.self::$db->orders_id, $id);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+        public function retrieveByCustomerID($cus_id){
+            /**
+             * returns OrderEntity item with a particular id.
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                self::$db->db_name,
+                $this->owner,
+                self::$db->customer_id,
+                self::$db->customer_id
+            );
+            $retrieve_stmt = self::$db->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.self::$db->customer_id, $cus_id);
 
             $retrieve_stmt->execute();
 

@@ -138,13 +138,36 @@
             return $retrieve_stmt;
         }
 
+        public function retrieveByServedStatusAndID($owner, $cus_id){
+            /**
+             * returns OrderEntity item with a particular served status and customer id
+             * (0 = "not served && 1 = "served").
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $owner,
+                $this->customer_id,
+                $this->customer_id
+            );
+            $retrieve_stmt = $this->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.$this->customer_id, $cus_id);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
 
         public function selectItemById($table_name, $id_name, $id_val){
             /**
              * returns all foodMenuEntity items in the database table.
              */
 
-            $stmt = "SELECT * FROM %s.%s WHERE %s = %s";
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,

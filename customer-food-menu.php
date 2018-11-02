@@ -1,58 +1,40 @@
-<?php
- if(isset($_POST["add_to_cart"]))  
- { 
-      if(isset($_SESSION["shopping_cart"]))  
-      {  
-           $item_array_id = array_column($_SESSION["shopping_cart"], "food_item_id");  
-           if(!in_array($_GET["id"], $item_array_id))  
-           {  
-                $count = count($_SESSION["shopping_cart"]);  
-                $item_array = array(  
-                     'food_item_id'               =>     $_GET["food_item_id"],  
-                     'food_item_name'               =>     $_POST["food_item"],  
-                     'price'          =>     $_POST["price"],  
-                     'type'          =>     $_POST["type"]  
-                );  
-                $_SESSION["shopping_cart"][$count] = $item_array;  
-           }  
-           else  
-           {  
-                echo '<script>alert("Item Already Added")</script>';  
-                echo '<script>window.location="index.php"</script>';  
-           }  
-      }  
-      else  
-      {  
-          //echo "kkkkkkkkkkkkkkkkkkkkkk";
-           $item_array = array(  
-                'food_item_id'               =>     $_POST["food_item_id"],  
-                'food_item_name'               =>     $_POST["food_item"],  
-                'price'          =>     $_POST["price"],  
-                'type'          =>     $_POST["type"] 
-           );  
-           $_SESSION["shopping_cart"][0] = $item_array;  
-      }  
 
-      print_r($_SESSION["shopping_cart"]);
- }  
-//  if(isset($_GET["action"]))  
-//  {  
-//       if($_GET["action"] == "delete")  
-//       {  
-//            foreach($_SESSION["shopping_cart"] as $keys => $values)  
-//            {  
-//                 if($values["item_id"] == $_GET["id"])  
-//                 {  
-//                      unset($_SESSION["shopping_cart"][$keys]);  
-//                      echo '<script>alert("Item Removed")</script>';  
-//                      echo '<script>window.location="index.php"</script>';  
-//                 }  
-//            }  
-//       }  
-//  }  
- ?> 
+<?php 
+    // set path to look
+    // set_include_path('C:/xampp/htdocs/takeaway-webtech/connection/db_models/');
+    // import files from connection folder
+    // OrderEntity
+    require_once("connection/db_models/db_order_entity.php");
+    // FoodMenuEntity
+    require_once("connection/db_models/db_food_menu_entity.php");
+    // include files
+    include('template-parts/customer-header.php');
 
-<?php include('template-parts/admin-header.php'); ?>
+
+?>
+<!-- Processing form on submit -->
+<?php 
+    if(isset($_POST['submit'])){
+        echo "inserted";
+        // retrieve data from form
+        $food_item_id = $_POST['food_item_id'];
+        $food_item = $_POST['food_item'];
+        $type = $_POST['type'];
+        $price = $_POST['price'];
+        $category = $_POST['category'];
+
+        // instantiate FoodEntity
+        $ak_fmu = new FoodMenuEntity("akorno_food_menu", $food_item_id, $food_item, $price, $type, $category);
+        // instantiate OrderEntity
+        $ordEntity = new OrderEntity("akorno_orders", "akOrd2345", $foodMenuEntity = $ak_fmu);
+        // insert into orders table
+        $ordEntity->insertWithID("06002020");
+
+    }
+?>
+
+
+
  <div class="wrapper"> <!-- WRAPPER -->
     <?php include('template-parts/atule-customer-navbar.php'); ?>
         <div class="atule-content"><!-- CONTENT CONTAINER-->
@@ -65,7 +47,6 @@
                                     <h4 class="title">Your Orders</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                <?php print_r($_SESSION);?>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -74,21 +55,34 @@
                                             <th>Price</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Akornor Jollof</td>
-                                                <td>Full Portion</td>
-                                                <td>Ghc8.50</td>
-                                                
-                                                <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>
-                                            </tr>
-                                            <tr>
+                                            <!-- Populate orders page with ordered items -->
+                                            <?php 
+                                            
+                                                $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "06002020");
+                                                // retrieve orders items belonging to customer and not served
+
+                                                while ($row = $orders->fetch()){ 
+                                                    $food_item_id = $row['food_item_id'];
+                                                    $unserved_orders = $db->selectItemById($db->ak_food_menu_table, $db->food_item_id, $food_item_id);
+                                                    $unserved_row = $unserved_orders->fetch();  
+                                            ?>
+
+                                                    <tr>
+                                                        <td><?php $unserved_row['orders_id']; ?></td>
+                                                        <td><?php $unserved_row['food_item']; ?></td>
+                                                        <td><?php $unserved_row['type']; ?></td>
+                                                        <td><?php $unserved_row['price']; ?></td>
+                                                        
+                                                        <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <!-- <tr>
                                                 <td>2</td>
                                                 <td>Minerva Hooper</td>
                                                 <td>$23,789</td>
                                                 <td>Curaçao</td>
                                                 <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>                                                
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -146,25 +140,26 @@
                                     <p class="category">Here is a subtitle for this table</p>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                    <form id="menu_form" method="post" action="customer-food-menu.php"></form>
-                                    <table class="table table-hover table-striped">
+                                    <form id="menu_form" method="post" action=""></form>
+                                    <table class="table  table-striped">
                                         <thead>
                                             <th>ID</th>
                                             <th>Food Item</th>
                                             <th>Type</th>
                                             <th>Price</th>
+                                            <th>Category</th>
                                         </thead>
                                         <tbody>
                                         <?php 
                                               $result2 = $db->selectAllFromTable('akorno_food_menu');
                                               while ($row = $result2->fetch()){?>
                                                     <tr>
-                                                        <td><input type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
-                                                        <td><input type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
-                                                        <td><input type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
-                                                        <td><input type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
-                                                        <td><input type="submit" name="add_to_cart" form="menu_form" class="btn btn btn-success btn-fill pull-right" value="ADD"></td>
-                                                        
+                                                        <td><input class="atule-food-menu-item" type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" name="category" form="menu_form" value="<?php echo $row['category']; ?>" readonly="readonly"></td>
+                                                        <td><button type="submit" name="submit" form="menu_form" class="btn btn btn-success">ADD</button></td>                                                        
                                                     </tr>
                                              <?php }
 
@@ -179,6 +174,5 @@
         </div><!-- END CONTENT DIV -->
 
         </div><!-- END WRAPPER DIV -->
-
 
 <?php include('template-parts/atule-customer-footer.php'); ?>

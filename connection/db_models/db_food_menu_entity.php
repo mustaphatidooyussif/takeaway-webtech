@@ -1,7 +1,7 @@
 <?php 
 
     // set path to look
-    set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
+    set_include_path('C:/xampp/htdocs/takeaway-webtech/connection/');
     // import file
     require_once get_include_path()."initDatabase.php";
     // instantiate obj
