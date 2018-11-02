@@ -5,13 +5,11 @@
         // build customer history table query
         public function buildCustomerHistoryTableQuery($db_name, $table_name, $id_field, $c_id, $customer_id, $customer_table, $fk_cafeteria_id1, $fk_cafeteria_id2, $cafeteria_table1, $cafeteria_table2){
             $customerHistoryTabeQuery = "CREATE TABLE IF NOT EXISTS `%s`.`%s` (
-                `%s` VARCHAR(45) NOT NULL,
+                `%s` INT NOT NULL AUTO_INCREMENT,
                 `%s` VARCHAR(45) NOT NULL,
                 `%s` VARCHAR(45),
                 `%s` VARCHAR(45),
-                PRIMARY KEY (`%s`),
-                FOREIGN KEY (`%s`)
-                    REFERENCES `%s`.`%s` (`%s`)
+                PRIMARY KEY (`%s`)
             )";
 
             return sprintf(
@@ -23,12 +21,7 @@
                 $customer_id,
                 $fk_cafeteria_id1,
                 $fk_cafeteria_id2,
-                $id_field,
-
-                $customer_id,
-                $db_name, 
-                $customer_table,
-                $customer_id
+                $id_field
             );
         }
 
@@ -36,18 +29,16 @@
         public function buildCafeteriaHistoryTableQuery($db_name, $table_name, $id_field, $fk_cafeteria_id, $cafeteria_table){
             
             $cafeteriaHistoryTabeQuery = "CREATE TABLE IF NOT EXISTS `%s`.`%s` (
+                `%s` INT NOT NULL AUTO_INCREMENT,
                 `%s` VARCHAR(45) NOT NULL,
-                `%s` VARCHAR(45) NOT NULL,
-                PRIMARY KEY (`%s`),
-                FOREIGN KEY (`%s`)
-                    REFERENCES `%s`.`%s` (`%s`)
+                PRIMARY KEY (`%s`)
             )";
 
             return sprintf(
                 $cafeteriaHistoryTabeQuery,
                 $db_name,$table_name,
-                $id_field,$fk_cafeteria_id,$id_field,
-                $fk_cafeteria_id,$db_name,$cafeteria_table,$fk_cafeteria_id
+                $id_field,$fk_cafeteria_id,
+                $id_field
             );
         }
 
@@ -76,7 +67,7 @@
         public function buildFoodMenuTableQuery($db_name, $table_name, $id_field, $food_item_field, $price_field, $type_field, $category_field){  
 
             $foodMenuTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
-                %s VARCHAR(45) NOT NULL,
+                %s INT NOT NULL AUTO_INCREMENT,
                 %s VARCHAR(45) NOT NULL,
                 %s VARCHAR(45) NOT NULL,
                 %s VARCHAR(45) NOT NULL,
@@ -100,16 +91,12 @@
         // build orders table query
         public function buildOrdersTableQuery($db_name, $table_name, $id_field, $served_field, $food_menu_id, $matron_id, $customer_id, $matron_table, $customer_table, $food_menu_table){
             $ordersTableQuery = "CREATE TABLE IF NOT EXISTS `%s`.`%s` (
-                `%s` VARCHAR(45) NOT NULL,
+                `%s` INT NOT NULL AUTO_INCREMENT,
                 `%s` INT NULL DEFAULT 0,
-                `%s` VARCHAR(45) NOT NULL,
-                `%s` VARCHAR(45) NOT NULL,
-                `%s` VARCHAR(45) NOT NULL,
-                PRIMARY KEY (`%s`),
-                FOREIGN KEY (`%s`) 
-                    REFERENCES `%s`.`%s` (`%s`),
-                FOREIGN KEY (`%s`)
-                    REFERENCES `%s`.`%s` (`%s`)
+                `%s` VARCHAR(45),
+                `%s` VARCHAR(45),
+                `%s` VARCHAR(45),
+                PRIMARY KEY (`%s`)
             )";
             
             return sprintf(
@@ -126,19 +113,14 @@
                 $food_menu_id,
                 $db_name,
                 $food_menu_table,
-                $food_menu_id,
-                
-                $customer_id,
-                $db_name,
-                $customer_table,
-                $customer_id
+                $food_menu_id
             );
         }
 
         // build persons table query
         public function buildLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
-                    %s VARCHAR(45) NOT NULL ,
+                    %s INT NOT NULL AUTO_INCREMENT ,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     PRIMARY KEY (%s)
@@ -155,6 +137,27 @@
             );
         }
 
+        // build admin table query
+        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password){            
+            $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
+                    %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    PRIMARY KEY (%s)
+            )";
+
+            return sprintf(
+                $loginTableQuery,
+                $db_name,
+                $admin_table_name,
+                $id,
+                $admin_username,
+                $admin_email,
+                $admin_password,
+                $id
+            );
+        }
 
         // build persons table query
         public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email){            

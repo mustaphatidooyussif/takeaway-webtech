@@ -21,7 +21,7 @@
         public $cafeteria_email = "cafeteria_email";
 
         // matron table credentials
-        public $matron_table = "matron_login";
+        public $matron_table = "matron_details";
         public $matron_id = "matron_id";
         public $matron_username = "matron_username";
         public $matron_password = "matron_password";
@@ -37,12 +37,6 @@
         public $customer_id = "customer_id";
         public $customer_username = "customer_username";
         public $customer_password = "customer_password";
-
-        // admin credentials
-        public $admin_table = "admin_table";
-        public $admin_id = "admin_id";
-        public $admin_username = "admin_username";
-        public $admin_password = "admin_password";
 
         // food menu table credentials
         public $ak_food_menu_table = "akorno_food_menu";
@@ -65,6 +59,13 @@
         public $ak_history_table = "akorno_orders_history";
         public $bb_history_table = "bigben_orders_history";
 
+        //Admin details
+        public $admin_table_name = "admins_table";
+        public $admins_ids = "admins_ids";
+        public $admin_username = "admin_username";
+        public $admins_passwords = "admins_passwords";
+        public $admin_email = "admin_email";
+        public $admin_aboutme = 'aboutme';
 
         // constructor
         public function __construct(){
@@ -82,11 +83,13 @@
         
         // create tables
         public function createDataBaseTables(){
+            //admin table
+            $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme);
+            
             // login tables
             $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email);
             $customer_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->customer_table, $this->customer_id, $this->customer_username, $this->customer_password);
-            $admin_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->admin_table, $this->admin_id, $this->admin_username, $this->admin_password);
-            
+                        
             // food menu tables
             $akornor_food_menu_table_query = $this->queryObj->buildFoodMenuTableQuery($this->db_name, $this->ak_food_menu_table, $this->food_item_id, $this->food_item_field, $this->price_field, $this->type_field, $this->category_field);
             $bigben_food_menu_table_query = $this->queryObj->buildFoodMenuTableQuery($this->db_name, $this->bb_food_menu_table, $this->food_item_id, $this->food_item_field, $this->price_field, $this->type_field, $this->category_field);
@@ -107,7 +110,7 @@
                 $akornor_food_menu_table_query, $bigben_food_menu_table_query,
                 $akornor_orders_table_query, $bigben_orders_table_query,
                 $customer_history_table_query, $akornor_history_table_query, $bb_history_table_query,
-                $admin_login_table_query, $cafeteria_create_table_query
+                $cafeteria_create_table_query, $admin_details_table
             ];
 
             // loop and execute queries
@@ -162,22 +165,24 @@
         }
 
 
-        public function selectItemById($table_name, $id_name, $id_val){
+        public function selectItemByColumn($table_name, $col_name, $col_val){
             /**
              * returns all foodMenuEntity items in the database table.
              */
 
-            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s;";
 
             $query = sprintf(
                 $stmt,
                 $this->db_name,
                 $table_name,
-                $id_name,
-                $id_val
+                $col_name,
+                $col_name
             ); 
+            
             $retrieve_stmt = $this->db_conn->prepare($query);
-
+            $retrieve_stmt->bindparam(':'.$col_name, $col_val);
+            
             $retrieve_stmt->execute();
 
             return $retrieve_stmt;

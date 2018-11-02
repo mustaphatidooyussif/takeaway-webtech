@@ -15,20 +15,20 @@
 <!-- Processing form on submit -->
 <?php 
     if(isset($_POST['submit'])){
-        echo "inserted";
         // retrieve data from form
         $food_item_id = $_POST['food_item_id'];
+        echo $food_item_id;
         $food_item = $_POST['food_item'];
         $type = $_POST['type'];
         $price = $_POST['price'];
         $category = $_POST['category'];
 
         // instantiate FoodEntity
-        $ak_fmu = new FoodMenuEntity("akorno_food_menu", $food_item_id, $food_item, $price, $type, $category);
+        $ak_fmu = new FoodMenuEntity("akorno_food_menu", $food_item, $price, $type, $category);
         // instantiate OrderEntity
-        $ordEntity = new OrderEntity("akorno_orders", "akOrd2345", $foodMenuEntity = $ak_fmu);
+        $ordEntity = new OrderEntity("akorno_orders");
         // insert into orders table
-        $ordEntity->insertWithID("06002020");
+        $ordEntity->insertWithID($cus_id="1", $food_itm_id=$food_item_id);
 
     }
 ?>
@@ -57,32 +57,26 @@
                                         <tbody>
                                             <!-- Populate orders page with ordered items -->
                                             <?php 
-                                            
-                                                $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "06002020");
-                                                // retrieve orders items belonging to customer and not served
-
+                                                // retrieve orders items belonging to customer and not served from orders table
+                                                $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "1");
+                                                
                                                 while ($row = $orders->fetch()){ 
                                                     $food_item_id = $row['food_item_id'];
-                                                    $unserved_orders = $db->selectItemById($db->ak_food_menu_table, $db->food_item_id, $food_item_id);
+                                                    //  get undered food menu items from food menu table
+                                                    $unserved_orders = $db->selectItemByColumn($db->ak_food_menu_table, $db->food_item_id, $food_item_id);
                                                     $unserved_row = $unserved_orders->fetch();  
                                             ?>
 
                                                     <tr>
-                                                        <td><?php $unserved_row['orders_id']; ?></td>
-                                                        <td><?php $unserved_row['food_item']; ?></td>
-                                                        <td><?php $unserved_row['type']; ?></td>
-                                                        <td><?php $unserved_row['price']; ?></td>
+                                                        <td><?php echo $row['orders_id']; ?></td>
+                                                        <td><?php echo $unserved_row['food_item']; ?></td>
+                                                        <td><?php echo $unserved_row['type']; ?></td>
+                                                        <td><?php echo $unserved_row['price']; ?></td>
                                                         
                                                         <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>
                                                     </tr>
                                                 <?php } ?>
-                                            <!-- <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td><button type="button" class="btn btn-danger btn-fill pull-right">Remove order</button></td>                                                
-                                            </tr> -->
+                                                
                                         </tbody>
                                     </table>
                                 </div>

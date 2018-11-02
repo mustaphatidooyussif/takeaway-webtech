@@ -1,4 +1,9 @@
+<?php 
 
+//$admin_email = "mustapha@ashesi.edu.gh";
+
+//$_SESSION['admin_email'] = $admin_email;
+?>
 <?php include('template-parts/admin-header.php'); ?>
 
     <div class="wrapper">
@@ -59,21 +64,17 @@
                                                     <th>Email</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>User 1</td>
-                                                        <td>user1@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>User 2</td>
-                                                        <td>user2@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                            <td>User 3</td>
-                                                            <td>user3@ashesi.edu.gh</td>
-                                                        </tr>
+                                                    <?php
+                                                      $bigben_users = $db->selectAllFromTable('matron_details');
+                                                      while($user = $bigben_users->fetch()){?>
+                                                            <tr>
+                                                                <td><?php echo $user['matron_id']; ?></td>
+                                                                <td><?php echo $user['matron_username']; ?></td>
+                                                                <td><?php echo $user['matron_email']; ?></td>
+                                                            </tr>
+                                                    <?php }
+                                                     ?>
+                                                  
                                                 </tbody>
                                             </table>
 
@@ -93,16 +94,16 @@
                                                         <th>Email</th>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>user1</td>
-                                                            <td>user1@ashesi.edu.gh</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>User2</td>
-                                                            <td>user2@ashesi.edu.gh</td>
-                                                        </tr>
+                                                        <?php
+                                                        $bigben_users = $db->selectAllFromTable('matron_details');
+                                                        while($user = $bigben_users->fetch()){?>
+                                                                <tr>
+                                                                    <td><?php echo $user['matron_id']; ?></td>
+                                                                    <td><?php echo $user['matron_username']; ?></td>
+                                                                    <td><?php echo $user['matron_email']; ?></td>
+                                                                </tr>
+                                                        <?php }
+                                                        ?>
                                                     </tbody>
                                                 </table>
 
@@ -117,20 +118,20 @@
                                         <h4 class="title">Mesage Cafeteria</h4>
                                     </div>
                                     <div class="content">
-                                        <form>
+                                        <form action="mailers/mail-cafeteria.php" method="POST">
                                                 <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label>Email</label>
-                                                                <input type="text" class="form-control" placeholder="Email Address">
+                                                                <!-- <label>To</label> -->
+                                                                <input type="email" name= "email" class="form-control" placeholder="To">
                                                             </div>
                                                         </div>
                                                     </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Subject</label>
-                                                        <input type="text" class="form-control" placeholder="Subject">
+                                                        <!-- <label>Subject</label> -->
+                                                        <input type="text" name="subject" class="form-control" placeholder="Subject">
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,12 +140,12 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Message</label>
-                                                        <textarea rows="5" class="form-control" placeholder="Message body here"></textarea>
+                                                        <textarea  id="editor" name="message" class="form-control editor" placeholder="Message body here"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info btn-fill pull-right">Send</button>
+                                            <button type="submit" name="send_email" class="btn btn-info btn-fill pull-right">Send</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -164,18 +165,17 @@
                                                     <th class="pull-right">Delete?</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Admin1</td>
-                                                        <td>admin1@ashesi.edu.gh</td>
-                                                        <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Admin 2</td>
-                                                        <td>admin2@ashesi.edu.gh</td>
-                                                        <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                    </tr>
+                                                    <?php 
+                                                     $admins = $db->selectAllFromTable('admins_table');
+                                                     while ($row = $admins->fetch()){?>
+                                                        <tr>
+                                                            <td><?php echo $row['admins_ids'];?></td>
+                                                            <td><?php echo $row['admin_username'];?></td>
+                                                            <td><?php echo $row['admin_email'];?></td>
+                                                            <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                        </tr>
+                                                    <?php }
+                                                    ?>
                                                 </tbody>
                                             </table>
 

@@ -22,14 +22,13 @@
         // db resource
         static public $db;
 
-        public $owner;// use the table name where the obj belongs in the database 
-        public $id;
+        public $owner;// use the table name where the obj belongs in the database
         public $served = 0;
         public $foodMenuEntity = null; // this is a FoodMenuEntity obj
         public $matronEntity = null;    // this is a MatronEntity obj
         public $customerEntity = null;  // this is a CustomerEntity obj
 
-        function __construct($owner, $id, $foodMenuEntity=null, $customerEntity=null){
+        function __construct($owner, $foodMenuEntity=null, $customerEntity=null){
             /**
              * constructor 
              */
@@ -38,7 +37,6 @@
             self::$db = $db;
 
             $this->owner = $owner;
-            $this->id = $id;
             $this->foodMenuEntity = $foodMenuEntity;
             $this->customerEntity = $customerEntity;
         }
@@ -83,13 +81,6 @@
 
             return $this->owner;
         }
-        function getID(){
-            /**
-             * id getter
-             */
-
-            return $this->id;
-        }
         function getServedStatus(){
             /**
              * served status getter
@@ -119,20 +110,17 @@
              * inserts Obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 $this->owner,
-
-                self::$db->orders_id,
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
                 self::$db->customer_id,
 
-                self::$db->orders_id,
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
@@ -145,7 +133,6 @@
             $matron_id = $this->matronEntity ? $this->matronEntity->getID() : "";
             $customer_id = $this->customerEntity->getID();
 
-            $insert_stmt->bindparam(':'.self::$db->orders_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->served_field, $this->served);
             $insert_stmt->bindparam(':'.self::$db->food_item_id, $food_item_id);
             $insert_stmt->bindparam(':'.self::$db->matron_id, $matron_id);
@@ -154,25 +141,23 @@
             $insert_stmt->execute();
         }
 
-        public function insertWithID($cus_id){
+        public function insertWithID($cus_id="", $food_itm_id="", $mat_id=""){
             /**
              * inserts Obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 $this->owner,
 
-                self::$db->orders_id,
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
                 self::$db->customer_id,
 
-                self::$db->orders_id,
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
@@ -181,11 +166,10 @@
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $food_item_id = $this->foodMenuEntity->getID();
-            $matron_id = $this->matronEntity ? $this->matronEntity->getID() : "";
-            $customer_id = $this->customerEntity? $this->customerEntity->getID() : $cus_id;
+            $food_item_id = $food_itm_id;
+            $matron_id = $mat_id;
+            $customer_id = $cus_id;
 
-            $insert_stmt->bindparam(':'.self::$db->orders_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->served_field, $this->served);
             $insert_stmt->bindparam(':'.self::$db->food_item_id, $food_item_id);
             $insert_stmt->bindparam(':'.self::$db->matron_id, $matron_id);

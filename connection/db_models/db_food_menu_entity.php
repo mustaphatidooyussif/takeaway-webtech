@@ -18,14 +18,13 @@
 
         // credentials
         public $owner; // use the table name where the obj belongs in the database
-        public $id;
         public $item;
         public $price;
         public $type;
         public $category;
 
         // constructor
-        function __construct($owner, $id, $item, $price, $type, $category){
+        function __construct($owner, $item, $price, $type, $category){
             /**
              * constructor 
              */
@@ -34,7 +33,6 @@
             self::$db = $db;
 
             $this->owner = $owner;
-            $this->id = $id;
             $this->item = $item;
             $this->price = $price;
             $this->type = $type;
@@ -49,13 +47,6 @@
              */
 
             return $this->owner;
-        }
-        function getID(){
-            /**
-             * id getter
-             */
-
-            return $this->id;
         }
         function getItem(){
             /**
@@ -91,18 +82,18 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 $this->owner,
-                self::$db->food_item_id,
+
                 self::$db->food_item_field,
                 self::$db->price_field,
                 self::$db->type_field,
                 self::$db->category_field,
-                self::$db->food_item_id,
+                
                 self::$db->food_item_field,
                 self::$db->price_field,
                 self::$db->type_field,
@@ -111,7 +102,6 @@
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->food_item_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->food_item_field, $this->item);
             $insert_stmt->bindparam(':'.self::$db->price_field, $this->price);
             $insert_stmt->bindparam(':'.self::$db->type_field, $this->type);

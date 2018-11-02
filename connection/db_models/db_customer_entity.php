@@ -17,11 +17,10 @@
         static public $db;
 
         // credentials
-        public $id;
         public $username;
         public $password;
 
-        function __construct($id, $username, $password){
+        function __construct($username, $password){
             /**
              * constructor 
              */
@@ -29,16 +28,8 @@
             global $db;
             self::$db = $db;
 
-            $this->id = $id;
             $this->username = $username;
             $this->password = $password;
-        }
-
-        function getID(){
-            /**
-             * id getter.
-             */
-            return $this->id;
         }
         function getUsername(){
             /**
@@ -60,23 +51,22 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s) VALUES (:%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s) VALUES (:%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 self::$db->customer_table,
-                self::$db->customer_id,
+                
                 self::$db->customer_username,
                 self::$db->customer_password,
-                self::$db->customer_id,
+                
                 self::$db->customer_username,
                 self::$db->customer_password
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->customer_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->customer_username, $this->username);
             $insert_stmt->bindparam(':'.self::$db->customer_password, $this->password);
             $insert_stmt->execute();
