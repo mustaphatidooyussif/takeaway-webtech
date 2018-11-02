@@ -171,6 +171,27 @@
             );
         }
 
+        // build admin table query
+        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password){            
+            $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
+                    %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    %s VARCHAR(45) NOT NULL,
+                    PRIMARY KEY (%s)
+            )";
+
+            return sprintf(
+                $loginTableQuery,
+                $db_name,
+                $admin_table_name,
+                $id,
+                $admin_username,
+                $admin_email,
+                $admin_password,
+                $id
+            );
+        }
 
         // build persons table query
         public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email){            
