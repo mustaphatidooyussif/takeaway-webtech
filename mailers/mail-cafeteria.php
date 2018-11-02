@@ -8,15 +8,10 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 // // Retrieve the email template required
-// $message = file_get_contents('templates/order-email.html');
-// $username = 'Mustapha';
-// $food_item = 'Banku';
-// $item_price = '9.00';
-
-// Replace the % with the actual information
-// $message = str_replace('%username%', $username, $message);
-// $message = str_replace('%food_item%', $food_item, $message);  //TODO: Get food items from database.
-// $message = str_replace('%item_price%', $item_price, $message);  //TODO: Get item price from database.
+$user_email = $_POST['email'];
+$subject = $_POST['subject'];
+$message = $_POST['message'];
+$_SESSION['mail_sent'] = true;
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
@@ -30,12 +25,12 @@ try {
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
 
-    //Recipients
+    //Sender
     $mail->setFrom('takeawayproject112@gmail.com', 'Take Away Team');
 
-    //TODO: Get recipient email from the database
-    $mail->addAddress('takeawayproject112@gmail.com', $username);     // Add a
-    $mail->addAddress('mustapha.yussif@ashesi.edu.gh', $username);     // Add a  
+    //Recipients
+    $mail->addAddress($user_email);     // Add a
+    
 
     // //Attachments
     // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -44,13 +39,12 @@ try {
     
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'takeawaytam@takeaway.com';
+    $mail->Subject = $subject;
     $mail->Body    = $message;
     // $mail->AltBody = strip_tags($message);
 
-    $url = $_SERVER['DOCUMENT_ROOT'].'/takeaway-webtech/customer-dashboard.php'; 
     $mail->send();
-    header("Location:../mustapha-dashboard.php"); 
+    //header("Location:../mustapha-dashboard.php"); 
     
     echo 'Message has been sent ';
 } catch (Exception $e) {

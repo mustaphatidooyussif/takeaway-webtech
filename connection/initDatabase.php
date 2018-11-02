@@ -59,11 +59,13 @@
         public $ak_history_table = "akorno_orders_history";
         public $bb_history_table = "bigben_orders_history";
 
+        //Admin details
         public $admin_table_name = "admins_table";
         public $admins_ids = "admins_ids";
         public $admin_username = "admin_username";
         public $admins_passwords = "admins_passwords";
         public $admin_email = "admin_email";
+        public $admin_aboutme = 'aboutme';
 
         // constructor
         public function __construct(){
@@ -82,7 +84,7 @@
         // create tables
         public function createDataBaseTables(){
             //admin table
-            $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords);
+            $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme);
             
             // login tables
             $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email);
@@ -140,22 +142,24 @@
         }
 
 
-        public function selectItemById($table_name, $id_name, $id_val){
+        public function selectItemByColumn($table_name, $col_name, $col_val){
             /**
              * returns all foodMenuEntity items in the database table.
              */
 
-            $stmt = "SELECT * FROM %s.%s WHERE %s = %s";
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s;";
 
             $query = sprintf(
                 $stmt,
                 $this->db_name,
                 $table_name,
-                $id_name,
-                $id_val
+                $col_name,
+                $col_name
             ); 
+            
             $retrieve_stmt = $this->db_conn->prepare($query);
-
+            $retrieve_stmt->bindparam(':'.$col_name, $col_val);
+            
             $retrieve_stmt->execute();
 
             return $retrieve_stmt;
