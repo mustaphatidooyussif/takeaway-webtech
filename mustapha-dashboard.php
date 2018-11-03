@@ -1,11 +1,16 @@
-<?php 
 
-//$admin_email = "mustapha@ashesi.edu.gh";
-
-//$_SESSION['admin_email'] = $admin_email;
-?>
 <?php include('template-parts/admin-header.php'); ?>
+    <?php 
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            if(isset($_GET['action'])){
+                if ($_GET['action'] =='remove_admin'){
+                    //Delete an admin by the id
+                    $db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
+                }
+            }
+        }
 
+    ?>
     <div class="wrapper">
       <?php include('template-parts/admin-sidebar.php'); ?>
       
@@ -18,42 +23,6 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="card">
-
-                                    <!--Cafeterias Table-->
-                                    <div class="header">
-                                        <h4 class="title">All Cafeterias</h4>
-                                    </div>
-                                    <div class="content table-responsive table-full-width">
-                                        
-                                        <table class="table table-hover table-striped">
-                                            <thead>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th class="pull-right">Delete?</th>
-                                            </thead>
-                                            <tbody>
-                                                <?php 
-                                                
-                                                    $cafeterias = $db->selectAllFromTable('cafeterias');
-                                                    while($cafeteria = $cafeterias->fetch()){?>
-                                                        <tr>
-                                                            <form method="get" action="" id="<?php echo $cafeteria['cafeterias_ids'] ?>"></form>
-                                                            <td><?php echo $cafeteria['cafeterias_ids'] ?></td>
-                                                            <td><?php echo $cafeteria['cafeteria_uname'] ?></td>
-                                                            <td><?php echo $cafeteria['cafeteria_email'] ?></td>
-                                                            <input type="hidden" form="<?php echo $cafeteria['cafeterias_ids'] ?>" name="cafeteria_id" value="<?php echo $cafeteria['cafeterias_ids'] ?>">
-                                                            <td><button type="submit"  form="<?php echo $cafeteria['cafeterias_ids'] ?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                        </tr>                                                     
-                                                   <?php }
-                                                ?>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-
                                 <!--Big ben Users Table-->
                                 <div class="card">
                                         <div class="header">
@@ -121,7 +90,7 @@
                                         <h4 class="title">Mesage Cafeteria</h4>
                                     </div>
                                     <div class="content">
-                                        <form action="mailers/mail-cafeteria.php" method="POST">
+                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                                                 <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -172,12 +141,12 @@
                                                      $admins = $db->selectAllFromTable('admins_table');
                                                      while ($row = $admins->fetch()){?>
                                                         <tr>
-                                                            <form method="get" action="" id="<?php echo $row['admins_ids'] ?>"></form>
+                                                            <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>"></form>
                                                             <td><?php echo $row['admins_ids'];?></td>
                                                             <td><?php echo $row['admin_username'];?></td>
                                                             <td><?php echo $row['admin_email'];?></td>
-                                                            <input type="hidden" name="admin_id" value="<?php echo $row['admins_ids'] ?>">>
-                                                            <td><button type="button" form="<?php echo $row['admins_ids'] ?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                            <input type="hidden" form="<?php echo $row['admins_ids'] ?>" name="admin_id" value="<?php echo $row['admins_ids'] ?>">
+                                                            <td><button type="submit" name="action" value="remove_admin" form="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
                                                         </tr>
                                                     <?php }
                                                     ?>

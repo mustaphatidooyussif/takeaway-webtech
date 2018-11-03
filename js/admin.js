@@ -10,7 +10,6 @@ $("#aboutme").on("change keyup paste", function() {
     oldVal = currentVal;
     //action to be performed on textarea changed
     $('#display_aboutme').html(oldVal);
-
     
 });
 

@@ -32,7 +32,7 @@ $admin_table = "admins_table";
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value ="<?php echo $admin['admin_username']; ?>" readonly="readonly">
+                                                <input type="text" class="form-control" placeholder="Username" value ="<?php echo htmlspecialchars($admin['admin_username']); ?>" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@ $admin_table = "admins_table";
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email" value ="<?php echo $admin['admin_email']; ?>" readonly="readonly">
+                                                <input type="email" class="form-control" placeholder="Email" value ="<?php echo htmlspecialchars($admin['admin_email']); ?>" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>

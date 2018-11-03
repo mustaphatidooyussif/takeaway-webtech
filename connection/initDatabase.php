@@ -26,6 +26,7 @@
         public $matron_username = "matron_username";
         public $matron_password = "matron_password";
         public $matron_email = "matron_email";
+        public $belong_to_cafeteria = "belong_to_cafeteria";
 
         // special ids
         public $sak_orders_id = "ak_orders_id";
@@ -87,7 +88,7 @@
             $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme);
             
             // login tables
-            $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email);
+            $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email, $this->belong_to_cafeteria);
             $customer_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->customer_table, $this->customer_id, $this->customer_username, $this->customer_password);
                         
             // food menu tables
@@ -148,6 +149,52 @@
              */
 
             $stmt = "SELECT * FROM %s.%s WHERE %s=:%s;";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $col_name,
+                $col_name
+            ); 
+            
+            $retrieve_stmt = $this->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.$col_name, $col_val);
+            
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+        public function deleteItemById($table_name, $col_name, $col_val){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s;";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $col_name,
+                $col_name
+            ); 
+            
+            $retrieve_stmt = $this->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.$col_name, $col_val);
+            
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+        public function deleteItemColumn($table_name, $col_name, $col_val){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s;";
 
             $query = sprintf(
                 $stmt,
