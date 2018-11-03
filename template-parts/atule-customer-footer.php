@@ -29,12 +29,10 @@
 
     <!--  Notifications Plugin    -->
     <script src="js/bootstrap-notify.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script> 
 
-	<script type="text/javascript">
+	<script type="text/javascript" >
     	$(document).ready(function(){
-			var search = new Search();
-			// demo.initChartist();
-			demo.initSearch();
 
         	$.notify({
             	icon: 'pe-7s-gift',
@@ -46,6 +44,8 @@
             });
 
     	});
+
+
 	</script>
 </body>
 </html>

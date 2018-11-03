@@ -16,7 +16,6 @@
         static public $db;
 
         // credentials
-        public $id;
         public $username;
         public $admin_email;
         public $password;
@@ -159,7 +158,7 @@
              * deletes item with particular id.
              */
             
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
