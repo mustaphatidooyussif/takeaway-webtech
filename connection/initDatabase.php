@@ -68,6 +68,15 @@
         public $admin_email = "admin_email";
         public $admin_aboutme = 'aboutme';
 
+        ///Registration details
+        public $registration_table = "admins_table";
+        public $new_user_firstname = "firstname";
+        public $new_user_lastname = "lastname";
+        public $new_user_email = "email";
+        public $new_user_password = "password";
+        public $new_user_confirm_password = 'confirm_password';
+        public $new_user_username = 'username';
+
         // constructor
         public function __construct(){
             global $conn, $connectionCredential, $queries;
