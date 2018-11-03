@@ -40,7 +40,7 @@
                         <li class="atule-dropdown">
                             <a href="">
                                 <i class="fas fa-cart-plus" style="padding-bottom: 14px;"></i>
-                                <span class="badge">5</span>
+                                <span class="badge"><?php echo $number_of_orders ?></span>
                             </a>
                         </li>
                         <li class="dropdown atule-dropdown">
