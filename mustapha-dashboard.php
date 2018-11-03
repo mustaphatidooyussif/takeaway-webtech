@@ -1,11 +1,12 @@
 
 <?php require_once('template-parts/admin-header.php'); ?>
+
     <?php 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if(isset($_GET['action'])){
                 if ($_GET['action'] =='remove_admin'){
                     //Delete an admin by the id
-                    //$db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
+                    $db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
                 }
             }
         }
