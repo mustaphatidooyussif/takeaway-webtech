@@ -64,13 +64,14 @@ $admin_table = "admins_table";
                     <!--Profile Photo-->
                     <div class="col-md-4">
                         <div class="card card-user">
-                            <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                            <div class="image" >
+                                <img  src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
                             </div>
+                            <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
                             <div class="content">
                                 <div class="author">
                                      <a href="#">
-                                    <img class="avatar border-gray" src="images/faces/face-8.jpg" alt="..."/>
+                                    <img id="profileImage" class="avatar border-gray" src="images/faces/face-8.jpg" alt="..."/>
 
                                       <h4 class="title">mustapha<br />
                                          <small>mustapha.yussif@ashesi.edu.gh</small>

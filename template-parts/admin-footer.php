@@ -25,22 +25,11 @@
     //     .catch( error => {
     //         console.error( error );
     //     } );
-
-    var oldVal = "";
-    $("#aboutme").on("change keyup paste", function() {
-    var currentVal = $(this).val();
-    if(currentVal == oldVal) {
-        return; //check to prevent multiple simultaneous triggers
-    }
-    
-    oldVal = currentVal;
-    //action to be performed on textarea changed
-    $('#display_aboutme').html(oldVal);
-});
 </script>
 
 <!--  Charts Plugin -->
 <script src="js/chartist.min.js"></script>
+<script src="js/admin.js"></script>
 
 <!--  Notifications Plugin    -->
 <script src="js/bootstrap-notify.js"></script>

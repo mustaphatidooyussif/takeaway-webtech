@@ -25,6 +25,7 @@
                                         <h4 class="title">All Cafeterias</h4>
                                     </div>
                                     <div class="content table-responsive table-full-width">
+                                        
                                         <table class="table table-hover table-striped">
                                             <thead>
                                                 <th>ID</th>
@@ -38,10 +39,12 @@
                                                     $cafeterias = $db->selectAllFromTable('cafeterias');
                                                     while($cafeteria = $cafeterias->fetch()){?>
                                                         <tr>
+                                                            <form method="get" action="" id="<?php echo $cafeteria['cafeterias_ids'] ?>"></form>
                                                             <td><?php echo $cafeteria['cafeterias_ids'] ?></td>
                                                             <td><?php echo $cafeteria['cafeteria_uname'] ?></td>
                                                             <td><?php echo $cafeteria['cafeteria_email'] ?></td>
-                                                            <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                            <input type="hidden" form="<?php echo $cafeteria['cafeterias_ids'] ?>" name="cafeteria_id" value="<?php echo $cafeteria['cafeterias_ids'] ?>">
+                                                            <td><button type="submit"  form="<?php echo $cafeteria['cafeterias_ids'] ?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
                                                         </tr>                                                     
                                                    <?php }
                                                 ?>
@@ -169,10 +172,12 @@
                                                      $admins = $db->selectAllFromTable('admins_table');
                                                      while ($row = $admins->fetch()){?>
                                                         <tr>
+                                                            <form method="get" action="" id="<?php echo $row['admins_ids'] ?>"></form>
                                                             <td><?php echo $row['admins_ids'];?></td>
                                                             <td><?php echo $row['admin_username'];?></td>
                                                             <td><?php echo $row['admin_email'];?></td>
-                                                            <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                            <input type="hidden" name="admin_id" value="<?php echo $row['admins_ids'] ?>">>
+                                                            <td><button type="button" form="<?php echo $row['admins_ids'] ?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
                                                         </tr>
                                                     <?php }
                                                     ?>
