@@ -62,7 +62,7 @@
                 $id
             );
         }
-
+        
         // build food menu table query
         public function buildFoodMenuTableQuery($db_name, $table_name, $id_field, $food_item_field, $price_field, $type_field, $category_field){  
 
@@ -160,9 +160,10 @@
         }
 
         // build persons table query
-        public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email){            
+        public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email, $belong_to_cafeteria){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                     %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
@@ -177,6 +178,7 @@
                 $username_field_name,
                 $password_field_name,
                 $email,
+                $belong_to_cafeteria,
                 $id_field_name
 
             );

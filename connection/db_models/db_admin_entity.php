@@ -2,7 +2,7 @@
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
     // import file
-    require get_include_path()."initDatabase.php";
+    require_once get_include_path()."initDatabase.php";
     // instantiate obj
     $db = new InitDatabase();
 
