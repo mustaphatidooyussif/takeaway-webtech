@@ -2,7 +2,7 @@
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
     // import file
-    require get_include_path()."initDatabase.php";
+    require_once get_include_path()."initDatabase.php";
     // instantiate obj
     $db = new InitDatabase();
 
@@ -18,27 +18,23 @@
         public $id;
         public $username;
         public $password;
+        public $email;
+        public $cafeteria;
 
         // constructor
-        function __construct($id, $username, $password){
+        function __construct($username, $password, $email, $cafeteria){
             /**
              * constructor 
              */
 
             global $db;
             self::$db = $db;
-
-            $this->id = $id;
             $this->username = $username;
             $this->password = $password;
+            $this->email = $email;
+            $this->cafeteria = $cafeteria;
         }
 
-        function getID(){
-            /**
-             * id getter.
-             */
-            return $this->id;
-        }
         function getUsername(){
             /**
              * username getter
@@ -52,6 +48,20 @@
             return $this->password;
         }
 
+        function getCafeteria(){
+            /**
+             * password getter.
+             */
+            return $this->cafeteria;
+        }
+
+        function getEmail(){
+            /**
+             * password getter.
+             */
+            return $this->email;
+        }
+
         //=================MODEL FUNCTIONALITIES=========================//
 
         function insert(){
@@ -59,7 +69,7 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s) VALUES (:%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
@@ -68,9 +78,13 @@
                 self::$db->matron_id,
                 self::$db->matron_username,
                 self::$db->matron_password,
+                self::$db->matron_email,
+                self::$db->belong_to_cafeteria,
                 self::$db->matron_id,
                 self::$db->matron_username,
-                self::$db->matron_password
+                self::$db->matron_password,
+                self::$db->matron_email,
+                self::$db->belong_to_cafeteria
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
@@ -78,6 +92,8 @@
             $insert_stmt->bindparam(':'.self::$db->matron_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->matron_username, $this->username);
             $insert_stmt->bindparam(':'.self::$db->matron_password, $this->password);
+            $insert_stmt->bindparam(':'.self::$db->matron_email, $this->email);
+            $insert_stmt->bindparam(':'.self::$db->belong_to_cafeteria, $this->cafeteria);
             $insert_stmt->execute();
         }
 
@@ -185,20 +201,19 @@
 
     }
 
-    // test
-    $cus1 = new MatronEntity("06002021", "atule", "1234");
-    $cus2 = new MatronEntity("06002022", "atule1", "1234");
-    $cus3 = new MatronEntity("06002023", "atule2", "1234");
-    $cus2->insert();
-    $cus3->insert();
-    $retrieve_stmt = matronEntity::retrieveAll();
+    // // test
+    // $cus1 = new MatronEntity( "atule", "06002021","akorno@gmail.com", "akorno");
+    // $cus2 = new MatronEntity( "atule", "06002021","akorno@gmail.com", "akorno");
+    // $cus2->insert();
+    // $cus1->insert();
+    // $retrieve_stmt = matronEntity::retrieveAll();
 
-    while ($row = $retrieve_stmt->fetch()){ 
-            $id = $row['matron_id'];
-            $username = $row['matron_username'];
-            var_dump($id);
-            var_dump($username);
-        }
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $id = $row['matron_id'];
+    //         $username = $row['matron_username'];
+    //         var_dump($id);
+    //         var_dump($username);
+    //     }
 
 
 ?>

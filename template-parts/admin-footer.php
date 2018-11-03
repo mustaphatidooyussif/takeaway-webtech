@@ -20,15 +20,16 @@
         .catch( error => {
             console.error( error );
         } );
-    ClassicEditor
-        .create( document.querySelector( '#aboutme' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    // ClassicEditor
+    //     .create( document.querySelector( '#aboutme' ) )
+    //     .catch( error => {
+    //         console.error( error );
+    //     } );
 </script>
 
 <!--  Charts Plugin -->
 <script src="js/chartist.min.js"></script>
+<script src="js/admin.js"></script>
 
 <!--  Notifications Plugin    -->
 <script src="js/bootstrap-notify.js"></script>

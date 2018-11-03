@@ -2,13 +2,13 @@
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
     // import file
-    require get_include_path()."initDatabase.php";
+    require_once get_include_path()."initDatabase.php";
     // instantiate obj
     $db = new InitDatabase();
 
 class Cafeteria{
      // db resource
-     static public $db;
+    static public $db;
     public $username;
     public $email;
 
@@ -30,10 +30,11 @@ class Cafeteria{
             $stmt,
             self::$db->db_name,
             self::$db->cafeteria_table,
-            $this->username,
-            $this->email
+            self::$db->cafeteria_uname,
+            self::$db->cafeteria_email,
+            self::$db->cafeteria_uname,
+            self::$db->cafeteria_email
         );
-
         $insert_stmt = self::$db->db_conn->prepare($query);
 
         // $insert_stmt->bindparam(':'.self::$db->admin_id, $this->id);
@@ -56,7 +57,7 @@ class Cafeteria{
         );
 
         $retrieve_stmt = self::$db->db_conn->prepare($query);
-
+        
         $retrieve_stmt->execute();
 
         return $retrieve_stmt;
