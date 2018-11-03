@@ -49,8 +49,9 @@
 
                             <?php
                                 $orders_id = unserialize($_POST['orders_ids']);
+                                print_r($orders_id);
                                 // loop crreate tr for each order id
-                                while($orders_id as $id){ ?>
+                                foreach($orders_id as $id){ ?>
                                     <tr>
                                         <td><?php echo "%food_item%".$id; ?></td>
                                         <td><?php echo "%item_price%".$id; ?></td>

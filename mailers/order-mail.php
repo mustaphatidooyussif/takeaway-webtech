@@ -4,8 +4,13 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once('C:/xampp\htdocs/takeaway-webtech/template-parts/customer-header.php');
-
+// set path to look
+set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
+// import file
+require_once get_include_path()."initDatabase.php";
+$db = new InitDatabase();  //create db and tables if not exists
+$db->createDataBaseTables();
+print_r(unserialize($_POST['orders_ids']));
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
