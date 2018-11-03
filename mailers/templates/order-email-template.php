@@ -49,20 +49,43 @@
 
                             <?php
                                 $orders_id = unserialize($_POST['orders_ids']);
-                                print_r($orders_id);
+                                $fields_string="";
+                                $fields_string.=$_POST['total_price'];
                                 // loop crreate tr for each order id
                                 foreach($orders_id as $id){ ?>
                                     <tr>
-                                        <td><?php echo "%food_item%".$id; ?></td>
-                                        <td><?php echo "%item_price%".$id; ?></td>
+                                        <td><?php echo "%food_item".$id."%"; ?></td>
+                                        <td><?php echo "%item_price".$id."%"; ?></td>
                                     </tr>
-                                <?php  } ?>
+                                    <!-- append ids to string -->
+                                <?php  
+                                    $fields_string.='&'.$id;
+                                } ?>
                         </table>
                         <br>
                         <p>You will receive another email as soon as the order is served.</p>
                         <p> </p>
                         <p>Thank you regard</p> <br>
                                 <!-- /Callout Panel -->
+
+                        <?php
+                            //set POST variables
+                            $url = 'http://localhost/takeaway-webtech/mailers/test-curl.php';
+
+                            //open connection
+                            $ch = curl_init($url);
+
+                            //set the url, number of POST vars, POST data
+                            curl_setopt($ch,CURLOPT_POST, true);
+                            curl_setopt($ch,CURLOPT_POSTFIELDS, array("orders_data" => $fields_string));
+
+                            //execute post
+                            $result = curl_exec($ch);
+                            var_dump($result); // TODO: if true redirect to a page
+
+                            //close connection
+                            curl_close($ch);
+                        ?>
                     <!-- FOOTER -->
                     </td>
                 </tr>

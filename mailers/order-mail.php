@@ -10,7 +10,6 @@ set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
 require_once get_include_path()."initDatabase.php";
 $db = new InitDatabase();  //create db and tables if not exists
 $db->createDataBaseTables();
-print_r(unserialize($_POST['orders_ids']));
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
@@ -20,9 +19,13 @@ $username = 'Samuel Atule';
 
 // Replace the % with the actual information
 $message = str_replace('%username%', $username, $message);
-// get data from submitted form
-$total_price = $_POST['total_price'];
-$orders_id = unserialize($_POST['orders_ids']);
+// get data from submitted form through php curl
+$orders_data = explode('&', $_POST['orders_data']);
+
+$total_price = $orders_data[0];
+$orders_id = array_slice($orders_data, 1);
+print_r($total_price);
+print_r($orders_id);
 // Loop through and retrieve food items into food message
 foreach($orders_id as $id) {
     $orders = $db->selectItemByColumn($db->ak_orders_table, $db->orders_id, $id);
@@ -35,8 +38,8 @@ foreach($orders_id as $id) {
     // retrieve data
     $row = $unserved_food_item->fetch();
     // retrieve food items into food message
-    $message = str_replace('%food_item%'.$id, $row["food_item"], $message);  // Get food items from database
-    $message = str_replace('%item_price%'.$id, $row["price"], $message);  // Get item price from database
+    $message = str_replace('%food_item'.$id.'%', $row["food_item"], $message);  // Get food items from database
+    $message = str_replace('%item_price'.$id.'%', $row["price"], $message);  // Get item price from database
 }
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
@@ -70,7 +73,7 @@ try {
     // $mail->AltBody = strip_tags($message);
 
     $url = $_SERVER['DOCUMENT_ROOT'].'/takeaway-webtech/customer-dashboard.php'; 
-    $mail->send();
+    // $mail->send();
     header("Location:../customer-food-menu.php"); 
     
     echo 'Message has been sent ';
