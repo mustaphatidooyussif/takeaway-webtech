@@ -13,11 +13,11 @@
 
 ?>
 <!-- Processing form on submit -->
-<?php 
+<?php
+    print_r($_POST['food_item']);
     if(isset($_POST['submit'])){
         // retrieve data from form
         $food_item_id = $_POST['food_item_id'];
-        echo $food_item_id;
         $food_item = $_POST['food_item'];
         $type = $_POST['type'];
         $price = $_POST['price'];
@@ -134,7 +134,7 @@
                                     <p class="category">Here is a subtitle for this table</p>
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                    <form id="menu_form" method="post" action=""></form>
+                                    
                                     <table class="table  table-striped">
                                         <thead>
                                             <th>ID</th>
@@ -147,13 +147,14 @@
                                         <?php 
                                               $result2 = $db->selectAllFromTable('akorno_food_menu');
                                               while ($row = $result2->fetch()){?>
+                                                    <form id="<?php echo $row['food_item_id']; ?>" method="post" action="" class='add-order-form'></form>
                                                     <tr>
-                                                        <td><input class="atule-food-menu-item" type="text" name="food_item_id" form="menu_form" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" name="food_item" form="menu_form" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" name="type" form="menu_form" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" name="price" form="menu_form" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" name="category" form="menu_form" value="<?php echo $row['category']; ?>" readonly="readonly"></td>
-                                                        <td><button type="submit" name="submit" form="menu_form" class="btn btn btn-success">ADD</button></td>                                                        
+                                                        <td><input class="atule-food-menu-item" type="text" id= "food_item_id" name="food_item_id" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" id= "food_item" name="food_item" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" id= "type" name="type" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" id= "price" name="price" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
+                                                        <td><input class="atule-food-menu-item" type="text" id= "category" name="category" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['category']; ?>" readonly="readonly"></td>
+                                                        <td><button type="submit" name="submit" form="<?php echo $row['food_item_id']; ?>" class="btn btn btn-success">ADD</button></td>                                                        
                                                     </tr>
                                              <?php }
 
