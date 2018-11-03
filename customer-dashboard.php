@@ -1,8 +1,8 @@
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
 
     <div class="wrapper"> <!-- WRAPPER -->
 
-       <?php include('template-parts/atule-customer-navbar.php'); ?>
+       <?php require_once('template-parts/atule-customer-navbar.php'); ?>
         
         <div class="atule-content"><!-- CONTENT CONTAINER-->
 
@@ -12,4 +12,4 @@
 
     </div><!-- END WRAPPER DIV -->
 
-<?php include('template-parts/atule-customer-footer.php'); ?>
+<?php require_once('template-parts/atule-customer-footer.php'); ?>

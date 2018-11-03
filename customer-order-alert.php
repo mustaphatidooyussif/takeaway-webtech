@@ -1,10 +1,10 @@
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
 
     <div style="background-color:#eeeeee;"> <!-- WRAPPER -->
 
-       <?php include('template-parts/atule-customer-navbar.php'); ?>
+       <?php require_once('template-parts/atule-customer-navbar.php'); ?>
         
        
     <!-- </div>END WRAPPER DIV -->
 
-<?php include('template-parts/atule-customer-footer.php'); ?>
+<?php require_once('template-parts/atule-customer-footer.php'); ?>

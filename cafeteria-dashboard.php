@@ -1,10 +1,10 @@
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
 
     <div class="wrapper">
-      <?php include('template-parts/cafeteria-sidebar.php'); ?>
+      <?php require_once('template-parts/cafeteria-sidebar.php'); ?>
         <div class="main-panel">
           <!--navbar-->
-            <?php include('template-parts/cafeteria-navbar.php'); ?>
+            <?php require_once('template-parts/cafeteria-navbar.php'); ?>
 
             <!--Main content area-->
             <div class="content">
@@ -127,4 +127,4 @@
               </div>
             </div>
                      
-<?php include('template-parts/admin-footer.php'); ?>
+<?php require_once('template-parts/admin-footer.php'); ?>

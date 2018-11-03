@@ -1,16 +1,21 @@
 <?php
 $admin_email = "mustapha@ashesi.edu.gh";
 $admin_table = "admins_table";
+
+// selectItemByColumn
+//Get admin by id
+//$admin_table
+$admin = $db->selectItemByColumn($admin_table, "admin_email", $admin_email)->fetch();
 ?>
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
 
 <div class="wrapper">
 	<!--sidebar-->
-    <?php include('template-parts/admin-sidebar.php'); ?>
+    <?php require_once('template-parts/admin-sidebar.php'); ?>
 
     <div class="main-panel">
 			<!--navbar-->
-				<?php include('template-parts/admin-navbar.php'); ?>
+				<?php require_once('template-parts/admin-navbar.php'); ?>
 
 
         <div class="content">
@@ -22,11 +27,6 @@ $admin_table = "admins_table";
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <?php
-                                    //Get admin by id
-                                    //$admin_table
-                                    $admin = $db->selectItemByColumn($admin_table, "admin_email", $admin_email)->fetch();
-                                 ?>
                                 <form>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -78,8 +78,8 @@ $admin_table = "admins_table";
                                       </h4>
                                     </a>
                                 </div>
-                                <p class="description text-center" id="display_aboutme"> You have an administrator<br>
-                                                    Privilleges <br>
+                                <p class="description text-center" id="display_aboutme">
+                                <?php echo $admin['aboutme']; ?>
                                 </p>
                             </div>
                             <hr>
@@ -96,4 +96,4 @@ $admin_table = "admins_table";
             </div>
         </div>
 
-<?php include('template-parts/admin-footer.php'); ?>
+<?php require_once('template-parts/admin-footer.php'); ?>

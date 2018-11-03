@@ -18,10 +18,12 @@
         // credentials
         public $id;
         public $username;
+        public $admin_email;
         public $password;
+        public $aboutme;
 
         // constructor
-        function __construct($id, $username, $password){
+        function __construct($username, $admin_email,  $password, $aboutme){
             /**
              * constructor 
              */
@@ -29,9 +31,10 @@
             global $db;
             self::$db = $db;
 
-            $this->id = $id;
             $this->username = $username;
+            $this->admin_email = $admin_email;
             $this->password = $password;
+            $this->aboutme = $aboutme;
         }
 
 
@@ -42,25 +45,29 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s) VALUES (:%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s);";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->admin_table,
-                self::$db->admin_id,
+                self::$db->admin_table_name,
                 self::$db->admin_username,
-                self::$db->admin_password,
-                self::$db->admin_id,
+                self::$db->admin_email,
+                self::$db->admins_passwords,
+                self::$db->admin_aboutme,
+
                 self::$db->admin_username,
-                self::$db->admin_password
+                self::$db->admin_email,
+                self::$db->admins_passwords,
+                self::$db->admin_aboutme
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->admin_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->admin_username, $this->username);
-            $insert_stmt->bindparam(':'.self::$db->admin_password, $this->password);
+            $insert_stmt->bindparam(':'.self::$db->admin_email, $this->admin_email);
+            $insert_stmt->bindparam(':'.self::$db->admins_passwords, $this->password);
+            $insert_stmt->bindparam(':'.self::$db->admin_aboutme, $this->aboutme);
             $insert_stmt->execute();
         }
 
@@ -132,7 +139,7 @@
             /**
              * deletes item with a particular username
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
@@ -170,20 +177,18 @@
 
     }
 
-    // test
-    $cus1 = new AdminEntity("06002021", "atule", "1234");
-    $cus2 = new AdminEntity("06002022", "atule1", "1234");
-    $cus3 = new AdminEntity("06002023", "atule2", "1234");
-    // $cus2->insert();
-    // $cus3->insert();
-    $retrieve_stmt = AdminEntity::retrieveAll();
+    // // test
+    // $cus1 = new AdminEntity("atule","atule@example.com", "06002021","I am a student");
 
-    while ($row = $retrieve_stmt->fetch()){ 
-            $id = $row['admin_id'];
-            $username = $row['admin_username'];
-            var_dump($id);
-            var_dump($username);
-        }
+    // $cus1->insert();
+    // $retrieve_stmt = AdminEntity::retrieveAll();
+
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $id = $row['admin_id'];
+    //         $username = $row['admin_username'];
+    //         var_dump($id);
+    //         var_dump($username);
+    //     }
 
     
 ?>

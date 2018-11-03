@@ -1,13 +1,13 @@
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
 
 <div class="wrapper">
     
 	<!--sidebar-->
-    <?php include('template-parts/admin-sidebar.php'); ?>
+    <?php require_once('template-parts/admin-sidebar.php'); ?>
 
     <div class="main-panel">
 			<!--navbar-->
-				<?php include('template-parts/admin-navbar.php'); ?>
+				<?php require_once('template-parts/admin-navbar.php'); ?>
 
         <!--Main content area-->
         <div class="content">
@@ -17,4 +17,4 @@
             </div>
         </div><!--End of Main content area-->
 
-<?php include('template-parts/admin-footer.php'); ?>
+<?php require_once('template-parts/admin-footer.php'); ?>

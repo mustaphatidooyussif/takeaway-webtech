@@ -23,7 +23,7 @@
       }  
       else  
       {  
-          //echo "kkkkkkkkkkkkkkkkkkkkkk";
+          /
            $item_array = array(  
                 'food_item_id'               =>     $_POST["food_item_id"],  
                 'food_item_name'               =>     $_POST["food_item"],  
@@ -38,9 +38,9 @@
 
  ?> 
 
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
  <div class="wrapper"> <!-- WRAPPER -->
-    <?php include('template-parts/atule-customer-navbar.php'); ?>
+    <?php require_once('template-parts/atule-customer-navbar.php'); ?>
         <div class="atule-content"><!-- CONTENT CONTAINER-->
 
             <div class="container-fluid"> <!-- ORDER CONTAINER -->
@@ -167,4 +167,4 @@
         </div><!-- END WRAPPER DIV -->
 
 
-<?php include('template-parts/atule-customer-footer.php'); ?>
+<?php require_once('template-parts/atule-customer-footer.php'); ?>

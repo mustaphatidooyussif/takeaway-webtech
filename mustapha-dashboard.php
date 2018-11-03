@@ -1,22 +1,22 @@
 
-<?php include('template-parts/admin-header.php'); ?>
+<?php require_once('template-parts/admin-header.php'); ?>
     <?php 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if(isset($_GET['action'])){
                 if ($_GET['action'] =='remove_admin'){
                     //Delete an admin by the id
-                    $db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
+                    //$db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
                 }
             }
         }
 
     ?>
     <div class="wrapper">
-      <?php include('template-parts/admin-sidebar.php'); ?>
+      <?php require_once('template-parts/admin-sidebar.php'); ?>
       
         <div class="main-panel">
           <!--navbar-->
-            <?php include('template-parts/admin-navbar.php'); ?>
+            <?php require_once('template-parts/admin-navbar.php'); ?>
 
             <!--Main content area-->
             <div class="content">
@@ -156,4 +156,4 @@
                                         </div>
                             </div>
                             
-<?php include('template-parts/admin-footer.php'); ?>
+<?php require_once('template-parts/admin-footer.php'); ?>
