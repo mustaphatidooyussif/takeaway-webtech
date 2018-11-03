@@ -11,11 +11,10 @@
         $food_item_id = $order_item['food_item_id'];
         //  get undered food menu items from food menu table
         $unserved_food_item = $db->selectItemByColumn($db->ak_food_menu_table, $db->food_item_id, $food_item_id);
-
-        while($row = $unserved_food_item->fetch()){
-            print_r($row["food_item"]);
-            print_r($row["price"]);
-        }
+        // retrieve data
+        $row = $unserved_food_item->fetch();
+        print_r($row["food_item"]);
+        print_r($row["price"]);
 
     }
 

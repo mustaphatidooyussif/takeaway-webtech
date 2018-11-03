@@ -4,19 +4,35 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+require_once('C:/xampp\htdocs/takeaway-webtech/template-parts/customer-header.php');
+
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
 // Retrieve the email template required
-$message = file_get_contents('templates/order-email.html');
-$username = 'Mustapha';
-$food_item = 'Banku';
-$item_price = '9.00';
+$message = file_get_contents('templates/order-email-template.php');
+$username = 'Samuel Atule';
 
 // Replace the % with the actual information
 $message = str_replace('%username%', $username, $message);
-$message = str_replace('%food_item%', $food_item, $message);  //TODO: Get food items from database.
-$message = str_replace('%item_price%', $item_price, $message);  //TODO: Get item price from database.
+// get data from submitted form
+$total_price = $_POST['total_price'];
+$orders_id = unserialize($_POST['orders_ids']);
+// Loop through and retrieve food items into food message
+foreach($orders_id as $id) {
+    $orders = $db->selectItemByColumn($db->ak_orders_table, $db->orders_id, $id);
+    // retrieve order with this id
+    $order_item = $orders->fetch();
+    // retrieve the onl;y the id of the order
+    $food_item_id = $order_item['food_item_id'];
+    //  get unservered food menu items from food menu table
+    $unserved_food_item = $db->selectItemByColumn($db->ak_food_menu_table, $db->food_item_id, $food_item_id);
+    // retrieve data
+    $row = $unserved_food_item->fetch();
+    // retrieve food items into food message
+    $message = str_replace('%food_item%'.$id, $row["food_item"], $message);  // Get food items from database
+    $message = str_replace('%item_price%'.$id, $row["price"], $message);  // Get item price from database
+}
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {

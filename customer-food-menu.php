@@ -112,7 +112,7 @@
                                         </div>
                                         
                                         <div class="row atule-orders-table"><!-- orders submit button -->
-                                        <form method="post" action="customer-food-menu-test.php" id="submit_order_form"></form>
+                                        <form method="post" action="mailers/order-mail.php" id="submit_order_form"></form>
                                             <div class="col-md-3 atule-total-price">
                                                 <label>Total Price: </label>
                                                 <button type="button" value="<?php echo $total_price?>" class="btn btn-light disabled"><?php echo "Ghc".$total_price?></button>

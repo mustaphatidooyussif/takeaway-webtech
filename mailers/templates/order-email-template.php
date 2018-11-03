@@ -11,7 +11,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
 <body>
-        
+    
     <div style="font-family: Helvetica Neue, Helvetica, Helvetica, Arial, sans-serif; ">
         <table style="width: 100%;">
         <tr>
@@ -46,10 +46,16 @@
                                 <th>Item</th>
                                 <th>Price</th>
                             </tr>
-                            <tr>
-                                <td>%food_item%</td>
-                                <td>%item_price%</td>
-                            </tr>
+
+                            <?php
+                                $orders_id = unserialize($_POST['orders_ids']);
+                                // loop crreate tr for each order id
+                                while($orders_id as $id){ ?>
+                                    <tr>
+                                        <td><?php echo "%food_item%".$id; ?></td>
+                                        <td><?php echo "%item_price%".$id; ?></td>
+                                    </tr>
+                                <?php  } ?>
                         </table>
                         <br>
                         <p>You will receive another email as soon as the order is served.</p>
