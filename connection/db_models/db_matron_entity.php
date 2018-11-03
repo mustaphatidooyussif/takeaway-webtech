@@ -15,7 +15,6 @@
         static public $db;
 
         // credentials
-        public $id;
         public $username;
         public $password;
         public $email;
@@ -34,7 +33,6 @@
             $this->email = $email;
             $this->cafeteria = $cafeteria;
         }
-
         function getUsername(){
             /**
              * username getter
@@ -75,7 +73,6 @@
                 $stmt,
                 self::$db->db_name,
                 self::$db->matron_table,
-                self::$db->matron_id,
                 self::$db->matron_username,
                 self::$db->matron_password,
                 self::$db->matron_email,
@@ -89,7 +86,6 @@
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->matron_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->matron_username, $this->username);
             $insert_stmt->bindparam(':'.self::$db->matron_password, $this->password);
             $insert_stmt->bindparam(':'.self::$db->matron_email, $this->email);
@@ -165,7 +161,7 @@
             /**
              * deletes item with a particular username
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
@@ -184,7 +180,7 @@
             /**
              * deletes item with particular id.
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,

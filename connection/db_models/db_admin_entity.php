@@ -16,7 +16,6 @@
         static public $db;
 
         // credentials
-        public $id;
         public $username;
         public $password;
 
@@ -29,7 +28,6 @@
             global $db;
             self::$db = $db;
 
-            $this->id = $id;
             $this->username = $username;
             $this->password = $password;
         }
@@ -42,23 +40,20 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s) VALUES (:%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s) VALUES (:%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 self::$db->admin_table,
-                self::$db->admin_id,
                 self::$db->admin_username,
                 self::$db->admin_password,
-                self::$db->admin_id,
                 self::$db->admin_username,
                 self::$db->admin_password
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->admin_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->admin_username, $this->username);
             $insert_stmt->bindparam(':'.self::$db->admin_password, $this->password);
             $insert_stmt->execute();
@@ -132,7 +127,7 @@
             /**
              * deletes item with a particular username
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
@@ -152,7 +147,7 @@
              * deletes item with particular id.
              */
             
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
@@ -170,20 +165,20 @@
 
     }
 
-    // test
-    $cus1 = new AdminEntity("06002021", "atule", "1234");
-    $cus2 = new AdminEntity("06002022", "atule1", "1234");
-    $cus3 = new AdminEntity("06002023", "atule2", "1234");
-    // $cus2->insert();
-    // $cus3->insert();
-    $retrieve_stmt = AdminEntity::retrieveAll();
+    // // test
+    // $cus1 = new AdminEntity("06002021", "atule", "1234");
+    // $cus2 = new AdminEntity("06002022", "atule1", "1234");
+    // $cus3 = new AdminEntity("06002023", "atule2", "1234");
+    // // $cus2->insert();
+    // // $cus3->insert();
+    // $retrieve_stmt = AdminEntity::retrieveAll();
 
-    while ($row = $retrieve_stmt->fetch()){ 
-            $id = $row['admin_id'];
-            $username = $row['admin_username'];
-            var_dump($id);
-            var_dump($username);
-        }
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $id = $row['admin_id'];
+    //         $username = $row['admin_username'];
+    //         var_dump($id);
+    //         var_dump($username);
+    //     }
 
     
 ?>

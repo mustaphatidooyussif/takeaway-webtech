@@ -10,7 +10,7 @@
     // CustomerEntity
     require_once "db_customer_entity.php";
     // OrderEntity
-    require "db_order_entity.php";
+    require_once "db_order_entity.php";
 
 
     class CafeteriaOrdersHistoryEntity{
@@ -23,8 +23,8 @@
 
 
         // credentials
-        public $owner;
         public $id;
+        public $owner; // use the table name where the obj belongs in the database
         public $orderEntity = null; // OrderEntity Obj
 
         function __construct($owner, $id, $orderEntity){
@@ -77,7 +77,7 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->owner,
+                $this->owner,
                 self::$db->history_id,
                 self::$db->orders_id,
                 self::$db->history_id,
@@ -93,7 +93,7 @@
             $insert_stmt->execute();
         }
 
-        static function retrieveAll(){
+        public function retrieveAll(){
             /**
              * returns all history items in the database table.
              */
@@ -103,7 +103,7 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->owner
+                $this->owner
             );
 
             $retrieve_stmt = self::$db->db_conn->prepare($query);
@@ -114,7 +114,7 @@
         }
 
  
-        static function retrieveByID($id){
+        public function retrieveByID($id){
             /**
              * returns history item with a particular id.
              */
@@ -124,7 +124,7 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->owner,
+                $this->owner,
                 self::$db->history_id,
                 self::$db->history_id
             );
@@ -136,21 +136,22 @@
             return $retrieve_stmt;
         }
 
-        static function deleteByID($id){
+        public function deleteByID($id){
             /**
              * deletes history item with particular id.
              */
 
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->owner,
+                $this->owner,
                 self::$db->history_id,
                 self::$db->history_id
             );
             $delete_stmt = self::$db->db_conn->prepare($query);
+
             $delete_stmt->bindparam(':'.self::$db->history_id, $id);
 
             $delete_stmt->execute();
@@ -159,7 +160,18 @@
     }
     
     // test
-    // $coh = new CafeteriaOrdersHistoryEntity("Akornor", "1", $ord);
-    // var_dump($coh);
+    $coh = new CafeteriaOrdersHistoryEntity("akorno_orders_history", "123", $ord_ak);
+    // $coh->insert();
+    // $retrieve_stmt = $coh->retrieveAll();
+    // $retrieve_stmt = $coh->retrieveByID(123);
+    // $coh->deleteByID("123");
+
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $h_id = $row['history_id'];
+    //         $o_id = $row['orders_id'];
+    //         echo "<br>";
+    //         var_dump($h_id);
+    //         var_dump($o_id);
+    //     }
 
 ?>
