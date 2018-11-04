@@ -17,17 +17,15 @@
                         <i class="fa fa-tasks"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add Cafeteria</a></li>
-                        <li><a href="#">Remove Cafeteria</a></li>
-                        <li><a href="#">Add User</a></li>
-                        <li><a href="#">Remove User</a></li>
+                        <li><a href="mustapha-add-cafeteria.php">Add Cafeteria</a></li>
+                        <li><a href="admin-add-user.php">Add User</a></li>
+                        <li><a href="admin-remove-user.php">Remove User</a></li>
                         <li><a href="mustapha-admins.php">Add Admin</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="">
-                        <i class="fa fa-search"></i>
-                        <p class="hidden-lg hidden-md">Search</p>
+                        <span class="search-trigger js-search-trigger"><i class="fa fa-search" aria-hidden="true"></i></span>
                     </a>
                 </li>
                 <li>

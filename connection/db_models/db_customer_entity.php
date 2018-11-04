@@ -3,9 +3,10 @@
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
     // import file
-    require get_include_path()."initDatabase.php";
+    require_once get_include_path()."initDatabase.php";
     // instantiate obj
     $db = new InitDatabase();
+
 
     class CustomerEntity{
         /**
@@ -16,11 +17,10 @@
         static public $db;
 
         // credentials
-        public $id;
         public $username;
         public $password;
 
-        function __construct($id, $username, $password){
+        function __construct($username, $password){
             /**
              * constructor 
              */
@@ -28,16 +28,8 @@
             global $db;
             self::$db = $db;
 
-            $this->id = $id;
             $this->username = $username;
             $this->password = $password;
-        }
-
-        function getID(){
-            /**
-             * id getter.
-             */
-            return $this->id;
         }
         function getUsername(){
             /**
@@ -59,25 +51,24 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s) VALUES (:%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s) VALUES (:%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table,
-                self::$db->matron_id,
-                self::$db->matron_username,
-                self::$db->matron_password,
-                self::$db->matron_id,
-                self::$db->matron_username,
-                self::$db->matron_password
+                self::$db->customer_table,
+                
+                self::$db->customer_username,
+                self::$db->customer_password,
+                
+                self::$db->customer_username,
+                self::$db->customer_password
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
 
-            $insert_stmt->bindparam(':'.self::$db->matron_id, $this->id);
-            $insert_stmt->bindparam(':'.self::$db->matron_username, $this->username);
-            $insert_stmt->bindparam(':'.self::$db->matron_password, $this->password);
+            $insert_stmt->bindparam(':'.self::$db->customer_username, $this->username);
+            $insert_stmt->bindparam(':'.self::$db->customer_password, $this->password);
             $insert_stmt->execute();
         }
 
@@ -91,20 +82,14 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table
+                self::$db->customer_table
             );
 
             $retrieve_stmt = self::$db->db_conn->prepare($query);
 
             $retrieve_stmt->execute();
-            $row = $retrieve_stmt->fetch();
 
-            while ($row){ 
-                    $id = $row['matron_id'];
-                    $username = $row['matron_username'];
-                    var_dump($id);
-                    var_dump($username);
-                }
+            return $retrieve_stmt;
         }
 
  
@@ -118,14 +103,16 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table,
-                self::$db->matron_id,
-                self::$db->matron_id
+                self::$db->customer_table,
+                self::$db->customer_id,
+                self::$db->customer_id
             );
             $retrieve_stmt = self::$db->db_conn->prepare($query);
-            $retrieve_stmt->bindparam(':'.self::$db->matron_id, $id);
+            $retrieve_stmt->bindparam(':'.self::$db->customer_id, $id);
 
-            return $retrieve_stmt->execute();
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
         }
 
         static function retrieveByUsername($username){
@@ -137,31 +124,33 @@
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table,
-                self::$db->matron_username,
-                self::$db->matron_username
+                self::$db->customer_table,
+                self::$db->customer_username,
+                self::$db->customer_username
             );
             $retrieve_stmt = self::$db->db_conn->prepare($query);
-            $retrieve_stmt->bindparam(':'.self::$db->matron_username, $username);
+            $retrieve_stmt->bindparam(':'.self::$db->customer_username, $username);
             
-            return $retrieve_stmt->execute();
+            $retrieve_stmt->execute();
+            
+            return $retrieve_stmt;
         }
 
         static function deleteByUsername($username){
             /**
              * deletes item with a particular username
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table,
-                self::$db->matron_username,
-                self::$db->matron_username
+                self::$db->customer_table,
+                self::$db->customer_username,
+                self::$db->customer_username
             );
             $delete_stmt = self::$db->db_conn->prepare($query);
-            $delete_stmt->bindparam(':'.self::$db->matron_username, $username);
+            $delete_stmt->bindparam(':'.self::$db->customer_username, $username);
             
             $delete_stmt->execute();
         }
@@ -170,17 +159,17 @@
             /**
              * deletes item with particular id.
              */
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
-                self::$db->matron_table,
-                self::$db->matron_id,
-                self::$db->matron_id
+                self::$db->customer_table,
+                self::$db->customer_id,
+                self::$db->customer_id
             );
             $delete_stmt = self::$db->db_conn->prepare($query);
-            $delete_stmt->bindparam(':'.self::$db->matron_id, $id);
+            $delete_stmt->bindparam(':'.self::$db->customer_id, $id);
 
             $delete_stmt->execute();
         }
@@ -189,17 +178,19 @@
     }
 
     // test
-    $cus = new CustomerEntity("06002021", "atule", "1234");
-    // $cus->insert();
-    $cus->retrieveAll();
-    // while ($row = $data->fetch()){ 
-    //     $id = $cus['matron_id'];
-    //     $username = $cus['matron_username'];
-    //     var_dump($id);
-    //     var_dump($username);
-    // }
-    // var_dump($data);
+    // $cus1 = new CustomerEntity("06002021", "atule", "1234");
+    // $cus2 = new CustomerEntity("06002022", "atule1", "1234");
+    // $cus3 = new CustomerEntity("06002023", "atule2", "1234");
+    // $cus2->insert();
+    // $cus3->insert();
+    // $retrieve_stmt = CustomerEntity::retrieveAll();
 
-
+    // while ($row = $retrieve_stmt->fetch()){ 
+    //         $id = $row['customer_id'];
+    //         $username = $row['customer_username'];
+    //         var_dump($id);
+    //         var_dump($username);
+    //         echo "<br>";
+    //     }
 
 ?>

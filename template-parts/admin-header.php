@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    require_once('connection/initDatabase.php');
+    require_once('connection/db_queries.php');
+    $db = new InitDatabase();  //create db and tables if not exists
+    $db->createDataBaseTables();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -35,4 +42,4 @@
 
 </head>
 
-<body>
+<body >
