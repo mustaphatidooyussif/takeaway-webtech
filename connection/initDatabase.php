@@ -69,7 +69,8 @@
         public $admin_aboutme = 'aboutme';
 
         ///Registration details
-        public $registration_table = "admins_table";
+        public $registration_table = "customers";
+        public $new_user_id = "id";
         public $new_user_firstname = "firstname";
         public $new_user_lastname = "lastname";
         public $new_user_email = "email";
@@ -77,6 +78,7 @@
         public $new_user_confirm_password = 'confirm_password';
         public $new_user_username = 'username';
 
+        //
         // constructor
         public function __construct(){
             global $conn, $connectionCredential, $queries;
@@ -93,6 +95,10 @@
         
         // create tables
         public function createDataBaseTables(){
+
+            //registration table
+            $customer_registration_table =  $this->queryObj->buildCustomerRegistrationQuery($this->db_name, $this->registration_table, $this->new_user_id, $this->new_user_firstname, $this->new_user_lastname, $this->new_user_username, $this->new_user_email, $this->new_user_password, $this->new_user_confirm_password);
+
             //admin table
             $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme);
             
@@ -120,7 +126,7 @@
                 $akornor_food_menu_table_query, $bigben_food_menu_table_query,
                 $akornor_orders_table_query, $bigben_orders_table_query,
                 $customer_history_table_query, $akornor_history_table_query, $bb_history_table_query,
-                $cafeteria_create_table_query, $admin_details_table
+                $cafeteria_create_table_query, $admin_details_table,$customer_registration_table
             ];
 
             // loop and execute queries
@@ -136,7 +142,7 @@
              * returns all foodMenuEntity items in the database table.
              */
 
-            $stmt = "SELECT * FROM %s.%s;";
+            $stmt = "SELECT * FROM %s.%s";
 
             $query = sprintf(
                 $stmt,
@@ -145,7 +151,7 @@
             );
 
             $retrieve_stmt = $this->db_conn->prepare($query);
-
+            
             $retrieve_stmt->execute();
 
             return $retrieve_stmt;
@@ -247,8 +253,8 @@
     
 
     
-    $db = new InitDatabase();
-    $db->createDataBaseTables();
+    // $db = new InitDatabase();
+    // $db->createDataBaseTables();
 
 
 

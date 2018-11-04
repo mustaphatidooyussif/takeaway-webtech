@@ -5,7 +5,7 @@
                 'host' => 'localhost',
                 'db_username' => 'root',
                 'db_password' => '',
-                'dbname' => 'take_db',
+                'dbname' => 'takeaway_db',
                 'opt' => [
                     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

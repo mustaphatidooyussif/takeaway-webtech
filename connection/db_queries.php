@@ -159,6 +159,34 @@
             );
         }
 
+        public function buildCustomerRegistrationQuery($db_name, $table_name, $id, $firstname, $lastname, $username, $email, $password, $c_password){
+            $tableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
+                %s INT NOT NULL AUTO_INCREMENT,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                %s VARCHAR(45) NOT NULL,
+                PRIMARY KEY (%s)
+            )";
+
+            return sprintf(
+                $tableQuery,
+                $db_name,
+                $table_name,
+                $id,
+                $firstname,
+                $lastname,
+                $username,
+                $email,
+                $password,
+                $c_password,
+                $id
+
+            );
+        }
+
         // build persons table query
         public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email, $belong_to_cafeteria){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (

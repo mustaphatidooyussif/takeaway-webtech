@@ -1,3 +1,26 @@
+<?php
+    session_start();
+    require_once('connection/initDatabase.php');
+    require_once('connection/db_queries.php');
+    require_once('connection/db_models/db_register_customer_entity.php');
+    $db = new InitDatabase();  //create db and tables if not exists
+    $db->createDataBaseTables();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST['register'])){
+            if(!empty($_POST['reg_email']) & !empty($_POST['fname']) &!empty($_POST['lname']) & !empty($_POST['uname']) & !empty($_POST['psw']) & !empty($_POST['c_psw'])){
+                $username = $_POST['uname'];
+                $firstname = $_POST['fname'];
+                $lastname = $_POST['lname'];
+                $email = $_POST['reg_email'];
+                $password = $_POST['psw'];
+                $c_password = $_POST['c_psw'];
+                $new_customer  = new RegisterCustomer($firstname,$lastname,$username,$email,$password,$c_password);
+                $new_customer.insert(); 
+            }
+        }
+    }
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +78,7 @@
                 <h4><i class="fas fa-user-plus"></i> Sign Up</h4>
                 </div>
                 <div class="modal-body" style="padding:40px 50px;">
-                <form role="form">
+                <form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                     <div class="form-group">
                         <label for="fname"> First name</label>
                         <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter first name">
@@ -70,7 +93,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email"> Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                        <input type="email" class="form-control" id="email" name="reg_email" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="psw"> Password</label>
@@ -80,7 +103,7 @@
                         <label for="c_psw"> Confirm Password</label>
                         <input type="password" class="form-control" id="c_psw" name="c_psw" placeholder="Confirm your password">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block"></span> Register </button>
+                    <button type="submit" name="register" class="btn btn-primary btn-block"></span> Register </button>
                 </form>
                 </div>
                 <div class="modal-footer">
