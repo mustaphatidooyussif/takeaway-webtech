@@ -25,7 +25,6 @@
         $ordEntity = new OrderEntity("akorno_orders");
         // insert into orders table
         $ordEntity->insertWithID($cus_id="1", $food_itm_id=$food_item_id);
-
     }
 
     // process when remove is clicked

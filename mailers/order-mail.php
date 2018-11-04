@@ -1,4 +1,6 @@
 <?php
+// start session
+session_start();
 // set path to look
 set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
 // import file
@@ -41,7 +43,7 @@ $username = 'Samuel Atule';
 // Replace the % with the actual information
 $message = str_replace('%username%', $username, $message);
 $message = str_replace('%table%', $table, $message);
-$message = str_replace('%total_price%', $total_price, $message);
+$message = str_replace('%total_price%', "Ghc".$total_price, $message);
 
 // Loop through and retrieve food items into food message
 foreach($orders_id as $id) {
@@ -56,18 +58,18 @@ foreach($orders_id as $id) {
     $row = $unserved_food_item->fetch();
     // retrieve food items into food message
     $message = str_replace('%food_item'.$id.'%', $row["food_item"], $message);  // Get food items from database
-    $message = str_replace('%item_price'.$id.'%', $row["price"], $message);  // Get item price from database  
+    $message = str_replace('%item_price'.$id.'%', "Ghc".$row["price"], $message);  // Get item price from database  
 
 }
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
     //Server settings
-    $mail->SMTPDebug = 1;                                 // Enable verbose debug output
+    // $mail->SMTPDebug = 1;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.sendgrid.net';  //Sendgrid:smtp.sendgrid.net// smtp.gmail.com Specify main and backup SMTP servers
+    $mail->Host = 'smtp.gmail.com';  //Sendgrid:smtp.sendgrid.net// smtp.gmail.com Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'takeawayproject112';                //Google: takeawayproject112@gmail.com  // SMTP username
+    $mail->Username = 'takeawayproject112@gmail.com';                //Google: takeawayproject112@gmail.com  // SMTP username
     $mail->Password = 'takeawayproject';                           // SMTP password
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
@@ -91,10 +93,16 @@ try {
     // $mail->AltBody = strip_tags($message);
 
     $url = $_SERVER['DOCUMENT_ROOT'].'/takeaway-webtech/customer-dashboard.php'; 
-    // $mail->send();
-    // header("Location:../customer-food-menu.php"); 
-    
-    echo 'Message has been sent ';
+    $mail->send();
+
+    // set success session
+    $_SESSION['status'] = 'success';
+
+    header("Location:../customer-food-menu.php"); 
 } catch (Exception $e) {
-    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+    // echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+    // set success session
+    $_SESSION['status'] = 'error';
+
+    header("Location:../customer-food-menu.php"); 
 }

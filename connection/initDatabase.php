@@ -238,8 +238,8 @@
     
 
     
-    // $db = new InitDatabase();
-    // $db->createDataBaseTables();
+    $db = new InitDatabase();
+    $db->createDataBaseTables();
 
 
 

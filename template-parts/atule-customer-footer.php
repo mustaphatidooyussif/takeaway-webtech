@@ -31,21 +31,40 @@
     <script src="js/bootstrap-notify.js"></script>
 	<script src="http://malsup.github.com/jquery.form.js"></script> 
 
-	<script type="text/javascript" >
-    	$(document).ready(function(){
+	<?php
+		if(isset($_SESSION['status'])){
+			if($_SESSION['status'] == 'success'){ ?>
+				
+				<script>
+					
+					$.notify({
+						icon: 'pe-7s-gift',
+						message: "<b>Email Sent!</b> - your order has been sent to your email."
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Food Menu</b> - select food to order."
+					},{
+						type: 'info',
+						timer: 4000
+					});
+				</script>
+	<?php 
+			// unset session
+			unset($_SESSION['status']);
+		}
+		else{?>
+			<script type="text/javascript" >
+					$.notify({
+						icon: 'pe-7s-gift',
+						message: "Welcome to <b>Food Menu</b> - select food to order."
 
-            },{
-                type: 'info',
-                timer: 4000
-            });
-
-    	});
-
-
-	</script>
+					},{
+						type: 'info',
+						timer: 4000
+					});
+			</script>
+		<?php }
+			
+		}
+		?>
+			
 </body>
 </html>
