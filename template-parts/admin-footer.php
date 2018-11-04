@@ -1,4 +1,8 @@
-
+<!DOCTYPE html>
+<html>
+<body>
+	<div>
+		<div>
             <footer class="footer">
                 <div class="container-fluid">
                    <!--Footer code will go here-->

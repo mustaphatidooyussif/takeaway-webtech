@@ -1,5 +1,5 @@
 <?php
-    // import file
+    //import file
     require_once "connection.php";
     require_once "db_queries.php";
 
@@ -71,6 +71,58 @@
             // use created database
             $this->db_conn->exec($this->queryObj->buildUseDbQuery($this->db_name));
         }
+
+
+        // delete menu item
+        public function deleteByItem($item, $table_name){
+            /**
+             * returns foodMenuEntity item with a particular item name.
+             */
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $this->food_item_field,
+                $this->food_item_field   
+            );
+            $delete_stmt = $this->db_conn->prepare($query);
+
+            $delete_stmt->bindparam(':'.$this->food_item_field, $item);
+            
+            $delete_stmt->execute();
+            return $delete_stmt;
+        }
+
+        
+        public function retrieveByCategory($category,$table_name){
+            /**
+             * returns foodMenuEntity items in a particular category.
+             */
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $this->category_field,
+                $this->category_field
+            );
+            $retrieve_stmt = $this->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.$this->category_field, $category);
+            
+            $retrieve_stmt->execute();
+            
+            return $retrieve_stmt;
+        }
+
+
+
+
+
+
+
 
 
         // create tables
