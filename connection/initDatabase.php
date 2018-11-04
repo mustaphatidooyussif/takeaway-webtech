@@ -22,11 +22,11 @@
 
         // matron table credentials
         public $matron_table = "matron_details";
-        public $matron_id = "matron_id";
-        public $matron_username = "matron_username";
-        public $matron_password = "matron_password";
-        public $matron_email = "matron_email";
-        public $belong_to_cafeteria = "belong_to_cafeteria";
+        public $matron_id = "id";
+        public $matron_username = "username";
+        public $matron_password = "password";
+        public $matron_email = "email";
+        public $belong_to_cafeteria = "cafeteria";
 
         // special ids
         public $sak_orders_id = "ak_orders_id";
@@ -156,7 +156,10 @@
 
             return $retrieve_stmt;
         }
-
+        
+        public function authenticateUser($email, $password){
+            
+        }
         public function retrieveByServedStatusAndID($owner, $cus_id){
             /**
              * returns OrderEntity item with a particular served status and customer id

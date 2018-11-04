@@ -14,7 +14,6 @@
 ?>
 <!-- Processing form on submit -->
 <?php
-    print_r($_POST['food_item']);
     if(isset($_POST['submit'])){
         // retrieve data from form
         $food_item_id = $_POST['food_item_id'];

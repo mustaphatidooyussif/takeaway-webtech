@@ -37,18 +37,20 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s, :%s);";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 self::$db->registration_table,
+                
                 self::$db->new_user_firstname,
                 self::$db->new_user_lastname,
                 self::$db->new_user_username,
                 self::$db->new_user_email,
                 self::$db->new_user_password,
                 self::$db->new_user_confirm_password,
+
                 self::$db->new_user_firstname,
                 self::$db->new_user_lastname,
                 self::$db->new_user_username,
@@ -59,14 +61,14 @@
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
-
+            
             $insert_stmt->bindparam(':'.self::$db->new_user_firstname, $this->firstname);
             $insert_stmt->bindparam(':'.self::$db->new_user_lastname, $this->lastname);
             $insert_stmt->bindparam(':'.self::$db->new_user_email, $this->username);
             $insert_stmt->bindparam(':'.self::$db->new_user_password, $this->email);
             $insert_stmt->bindparam(':'.self::$db->new_user_confirm_password, $this->password);
             $insert_stmt->bindparam(':'.self::$db->new_user_confirm_password, $this->confirm_pass);
-
+            // var_dump($insert_stmt);
             $insert_stmt->execute();
         }
 

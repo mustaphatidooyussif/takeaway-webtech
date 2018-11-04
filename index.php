@@ -6,17 +6,91 @@
     $db = new InitDatabase();  //create db and tables if not exists
     $db->createDataBaseTables();
 
+    $errors = array(); //form errors array
+
+    //funtion to remove special charchers from input
+    function trim_characters($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST['register'])){
             if(!empty($_POST['reg_email']) & !empty($_POST['fname']) &!empty($_POST['lname']) & !empty($_POST['uname']) & !empty($_POST['psw']) & !empty($_POST['c_psw'])){
-                $username = $_POST['uname'];
-                $firstname = $_POST['fname'];
-                $lastname = $_POST['lname'];
-                $email = $_POST['reg_email'];
-                $password = $_POST['psw'];
-                $c_password = $_POST['c_psw'];
-                $new_customer  = new RegisterCustomer($firstname,$lastname,$username,$email,$password,$c_password);
-                $new_customer.insert(); 
+                $username = trim_characters($_POST['uname']);
+                $firstname = trim_characters($_POST['fname']);
+                $lastname = trim_characters($_POST['lname']);
+                $email = trim_characters($_POST['reg_email']);
+                $password = trim_characters($_POST['psw']);
+                $c_password = trim_characters($_POST['c_psw']);
+                
+                //reports error if empty fills
+                if (empty($username)) { array_push($errors, "Username is required"); }
+                if (empty($email)) { array_push($errors, "Email is required"); }
+                if (empty($password)) { array_push($errors, "Password is required"); }
+                if ($password != $c_password) {
+                  array_push($errors, "The two passwords do not match");
+                }
+                
+                $result_by_email = $db->selectItemByColumn($db->registration_table, $db->new_user_email, $email)->fetch();
+                $result_by_username = $db->selectItemByColumn($registration_table, $db->new_user_username, $username)->fetch();
+
+                if($result_by_email){
+                    if($result_by_email['email']==$email){
+                        array_push($errors, "Email already exist");
+                    }
+                }
+
+                if($result_by_username){
+                    if($result_by_username['username']==$username){
+                        array_push($errors, "Username already exist");
+                    }
+                }
+                if(count($errors)== 0){
+                    $password = md5($password);
+                    $new_customer  = new RegisterCustomer($firstname,$lastname,$username,$email,$password,$c_password);
+                    $new_customer->insert(); 
+                    $_SESSION['username'] = $username;
+                    $_SESSION['email'] = $email;
+                    header('location: customer-dashboard.php');
+                }
+
+            }
+        }
+        else if(isset($_POST['login'])){
+            if(!empty($_POST['inputEmail']) & !empty($_POST['inputPassword'])){
+                $email = $_POST['inputEmail'];
+                $password = $_POST['inputPassword'];
+
+                if (empty($email)) {
+                    array_push($errors, "Email is required");
+                }
+                if (empty($password)) {
+                    array_push($errors, "Password is required");
+                }
+
+                if (count($errors) == 0) {
+                    $password = md5($password);
+
+                    //TODO: Authenticate the user and check if true
+                    $result = false;
+                    if ($result) {
+                      $_SESSION['password'] = $password;
+                      $_SESSION['email'] = $email;
+
+                      //TODO1: if customer
+                      header('location: customer-dashboard.php');
+
+                      //TODO: If cafeteria eg Akorno or Bigben
+                      header('location: cafeteria-dashboard.php');
+
+                    }else {
+                        array_push($errors, "Wrong username/password combination");
+                    }
+                }
+
             }
         }
     }
@@ -53,14 +127,14 @@
             <p id="profile-name" class="profile-name-card">takeAway</p>
             <form class="form-signin">
                 <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
                 <div id="remember" class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"><span class="glyphicon glyphicon-off"></span> Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" name="login" type="submit"><span class="glyphicon glyphicon-off"></span> Sign in</button>
             </form><!-- /form -->
             <p>Don't have an account? <a href="#" class="forgot-password" id="myBtn">
                 create an account

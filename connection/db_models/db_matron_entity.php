@@ -67,17 +67,18 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 self::$db->matron_table,
+
                 self::$db->matron_username,
                 self::$db->matron_password,
                 self::$db->matron_email,
                 self::$db->belong_to_cafeteria,
-                self::$db->matron_id,
+
                 self::$db->matron_username,
                 self::$db->matron_password,
                 self::$db->matron_email,
@@ -85,11 +86,12 @@
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
-
+            
             $insert_stmt->bindparam(':'.self::$db->matron_username, $this->username);
             $insert_stmt->bindparam(':'.self::$db->matron_password, $this->password);
             $insert_stmt->bindparam(':'.self::$db->matron_email, $this->email);
             $insert_stmt->bindparam(':'.self::$db->belong_to_cafeteria, $this->cafeteria);
+            //var_dump($insert_stmt);
             $insert_stmt->execute();
         }
 

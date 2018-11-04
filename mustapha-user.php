@@ -1,11 +1,7 @@
 <?php
-$admin_email = "mustapha@ashesi.edu.gh";
-$admin_table = "admins_table";
+$admin_email = "mustapha@ashesi.edu.gh"; //TODO: Get admin email from session.
 
-// selectItemByColumn
-//Get admin by id
-//$admin_table
-$admin = $db->selectItemByColumn($admin_table, "admin_email", $admin_email)->fetch();
+$admin = $db->selectItemByColumn($db->admin_table_name, $db->admin_email, $admin_email)->fetch();
 ?>
 <?php require_once('template-parts/admin-header.php'); ?>
 
@@ -49,7 +45,7 @@ $admin = $db->selectItemByColumn($admin_table, "admin_email", $admin_email)->fet
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>About Me</label>
-                                                <textarea id="aboutme" rows="8"  class="form-control" placeholder="Description here"></textarea>
+                                                <textarea id="aboutme" name="aboutme" rows="8"  class="form-control" placeholder="Description here"></textarea>
                                             </div>
                                         </div>
                                     </div>

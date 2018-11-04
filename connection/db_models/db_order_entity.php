@@ -315,42 +315,4 @@
             $delete_stmt->execute();
         }
     }
-
-    // test
-
-    $bb_fmu = new FoodMenuEntity("bigben_food_menu", "455", "Rice", "0", "half Portion", "Breakfast");
-    // // $bb_fmu->insert();
-    $ak_fmu = new FoodMenuEntity("akorno_food_menu", "4565", "Waakye", "0", "half Portion", "Breakfast");
-    // // $ak_fmu->insert();
-    $cus = new CustomerEntity(6002022, "atule", 1234);
-    // // $cus->insert();
-    $ord_ak = new OrderEntity("akorno_orders", "32", $ak_fmu, $cus);
-    $ord_bb = new OrderEntity("bigben_orders", "45", $bb_fmu, $cus);
-    // // insert data to database
-    // // $ord_ak->insert();
-    // // instantiate and get matron id
-    $mat = new MatronEntity("2323232323", "Tidoo Mustapha", 1234);
-    // $mat_id = $mat->getID();
-    // // update matron table
-    // $ord_ak->updateMatronColumn($mat_id);
-
-    // $ord_bb->insert();
-    // $ord_bb->updateMatronColumn($mat_id);
-    // // retrieve all data 
-    // $retrieve_stmt = $ord_ak->retrieveAll();
-
-    // while ($row = $retrieve_stmt->fetch()){ 
-    //         $id = $row['orders_id'];
-    //         $served = $row['served'];
-    //         $food_item_id = $row['food_item_id'];
-    //         $matron_id = $row['matron_id'];
-    //         $customer_id = $row['customer_id'];
-    //         echo "<br>";
-    //         var_dump($id);
-    //         var_dump($served);
-    //         var_dump($food_item_id);
-    //         var_dump($matron_id);
-    //         var_dump($customer_id);
-    //     }
-
 ?>

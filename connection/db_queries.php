@@ -138,9 +138,10 @@
         }
 
         // build admin table query
-        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password){            
+        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password, $admin_aboutme){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                     %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
@@ -151,10 +152,12 @@
                 $loginTableQuery,
                 $db_name,
                 $admin_table_name,
+                $admin_aboutme,
                 $id,
                 $admin_username,
                 $admin_email,
                 $admin_password,
+                $admin_aboutme,
                 $id
             );
         }
