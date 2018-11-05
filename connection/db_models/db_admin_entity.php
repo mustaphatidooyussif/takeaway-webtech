@@ -20,9 +20,10 @@
         public $admin_email;
         public $password;
         public $aboutme;
+        public $prev;
 
         // constructor
-        function __construct($username, $admin_email,  $password, $aboutme){
+        function __construct($username, $admin_email,  $password, $aboutme, $prev){
             /**
              * constructor 
              */
@@ -34,6 +35,7 @@
             $this->admin_email = $admin_email;
             $this->password = $password;
             $this->aboutme = $aboutme;
+            $this->prev = $prev;
         }
 
 
@@ -44,7 +46,7 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s);";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s);";
 
             $query = sprintf(
                 $stmt,
@@ -55,11 +57,13 @@
                 self::$db->admin_email,
                 self::$db->admins_passwords,
                 self::$db->admin_aboutme,
+                self::$db->admin_privillege,
 
                 self::$db->admin_username,
                 self::$db->admin_email,
                 self::$db->admins_passwords,
-                self::$db->admin_aboutme
+                self::$db->admin_aboutme,
+                self::$db->admin_privillege
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
@@ -68,6 +72,7 @@
             $insert_stmt->bindparam(':'.self::$db->admin_email, $this->admin_email);
             $insert_stmt->bindparam(':'.self::$db->admins_passwords, $this->password);
             $insert_stmt->bindparam(':'.self::$db->admin_aboutme, $this->aboutme);
+            $insert_stmt->bindparam(':'.self::$db->admin_privillege, $this->prev);
             $insert_stmt->execute();
         }
 

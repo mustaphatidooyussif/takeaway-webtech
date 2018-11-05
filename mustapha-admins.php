@@ -5,7 +5,7 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if(isset($_POST['add_admin'])){
               if(!empty($_POST["admin_username"]) & !empty($_POST["admin_email"])){
-                $admin =  new AdminEntity($_POST["admin_username"],$_POST["admin_email"],$_POST["default_password"],$_POST["about_admin"]); 
+                $admin =  new AdminEntity($_POST["admin_username"],$_POST["admin_email"],md5($_POST["default_password"]),$_POST["about_admin"], $_POST["prev"]); 
                 $admin->insert();
               }
 
@@ -49,6 +49,7 @@
                                             </div>
                                             <input type="hidden" name="default_password" value="takeaway">
                                             <input type="hidden" name="about_admin" value="I am an admin.">
+                                            <input type="hidden" name="prev" value="admin">
 
                                             <button type="submit" name="add_admin" class="btn btn-info btn-fill pull-right">Add</button>
                                             <div class="clearfix"></div>

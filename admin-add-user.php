@@ -4,8 +4,8 @@
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if(isset($_POST['add_user'])){
-              if(!empty($_POST["user_name"]) & !empty($_POST["user_email"]) & !empty($_POST["user_cafeteria"])){
-                $matron = new MatronEntity($_POST["user_name"], $_POST["default_password"], $_POST["user_email"], $_POST["user_cafeteria"]);
+              if(!empty($_POST["user_name"]) & !empty($_POST["user_email"]) & $_POST["user_cafeteria"] !="Select Cafeteria"){
+                $matron = new MatronEntity(strtolower($_POST["user_name"]), md5(strtolower($_POST["default_password"])), strtolower($_POST["user_email"]), strtolower($_POST["user_cafeteria"]), strtolower($_POST["user_cafeteria"]));
                 $matron->insert();
               }
 
@@ -24,7 +24,7 @@
                 <div class="card center-element">
                   <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                       <fieldset>
-                        <legend>Add User</legend>
+                        <legend>Add Matron</legend>
                           <div  class="form-group">
                             <label for="user_name">Name</label>
                             <input type="text" name="user_name" class="form-control" id="user_name" required>
@@ -38,7 +38,12 @@
                           </div>
                           <div  class="form-group">
                             <label for="user_cafeteria">Cafeteria</label>
-                            <input type="text" name="user_cafeteria" class="form-control" id="user_cafeteria" required>
+                            <!-- <input type="text" name="user_cafeteria" class="form-control" id="user_cafeteria" required> -->
+                            <select name="user_cafeteria" class="form-control" id="user_cafeteria" required>
+                              <option>Select Cafeteria</option>
+                              <option>Akorno</option>
+                              <option>Bigben</option>
+                            </select>
                           </div>
                           <br>
                           <br>

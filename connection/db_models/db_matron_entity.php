@@ -19,9 +19,10 @@
         public $password;
         public $email;
         public $cafeteria;
+        public $prev;
 
         // constructor
-        function __construct($username, $password, $email, $cafeteria){
+        function __construct($username, $password, $email, $cafeteria, $prev){
             /**
              * constructor 
              */
@@ -32,6 +33,7 @@
             $this->password = $password;
             $this->email = $email;
             $this->cafeteria = $cafeteria;
+            $this->prev = $prev;
         }
         function getUsername(){
             /**
@@ -67,7 +69,7 @@
              * inserts obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
@@ -78,11 +80,13 @@
                 self::$db->matron_password,
                 self::$db->matron_email,
                 self::$db->belong_to_cafeteria,
+                self::$db->matron_previlege,
 
                 self::$db->matron_username,
                 self::$db->matron_password,
                 self::$db->matron_email,
-                self::$db->belong_to_cafeteria
+                self::$db->belong_to_cafeteria,
+                self::$db->matron_previlege
             );
 
             $insert_stmt = self::$db->db_conn->prepare($query);
@@ -91,7 +95,8 @@
             $insert_stmt->bindparam(':'.self::$db->matron_password, $this->password);
             $insert_stmt->bindparam(':'.self::$db->matron_email, $this->email);
             $insert_stmt->bindparam(':'.self::$db->belong_to_cafeteria, $this->cafeteria);
-            //var_dump($insert_stmt);
+            $insert_stmt->bindparam(':'.self::$db->matron_previlege, $this->prev);
+
             $insert_stmt->execute();
         }
 

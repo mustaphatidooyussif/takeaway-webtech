@@ -27,13 +27,14 @@
         public $matron_password = "password";
         public $matron_email = "email";
         public $belong_to_cafeteria = "cafeteria";
+        public $matron_previlege = "previlege";
 
         // special ids
         public $sak_orders_id = "ak_orders_id";
         public $sbb_orders_id = "bb_orders_id";
 
 
-        // matron table credentials
+        // table credentials
         public $customer_table = "customer_login";
         public $customer_id = "customer_id";
         public $customer_username = "customer_username";
@@ -62,11 +63,12 @@
 
         //Admin details
         public $admin_table_name = "admins_table";
-        public $admins_ids = "admins_ids";
-        public $admin_username = "admin_username";
-        public $admins_passwords = "admins_passwords";
-        public $admin_email = "admin_email";
+        public $admins_ids = "id";
+        public $admin_username = "username";
+        public $admins_passwords = "password";
+        public $admin_email = "email";
         public $admin_aboutme = 'aboutme';
+        public $admin_privillege = "previlege";
 
         ///Registration details
         public $registration_table = "customers";
@@ -77,6 +79,7 @@
         public $new_user_password = "password";
         public $new_user_confirm_password = 'confirm_password';
         public $new_user_username = 'username';
+        public $customer_previlege = 'previlege';
 
         //
         // constructor
@@ -92,18 +95,43 @@
             $this->db_conn->exec($this->queryObj->buildUseDbQuery($this->db_name));
         }
 
+        function register($firstname,$lastname,$username,$email,$password,$c_password, $prev){
+            /**
+             * inserts obj credentials to database when invoked.
+             */
+
+            $stmt = "INSERT INTO $this->db_name.$this->registration_table ($this->new_user_firstname, $this->new_user_lastname, $this->new_user_username, $this->new_user_email, $this->new_user_password, $this->new_user_confirm_password, $this->customer_previlege) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $this->registration_table,
+                
+                $this->new_user_firstname,
+                $this->new_user_lastname,
+                $this->new_user_username,
+                $this->new_user_email,
+                $this->new_user_password,
+                $this->new_user_confirm_password
+            );
+
+            $insert_stmt = $this->db_conn->prepare($query);
+            $insert_stmt->execute([$firstname,$lastname,$username,$email,$password,$c_password, $prev]);
+
+            return$insert_stmt;
+        }
         
         // create tables
         public function createDataBaseTables(){
 
             //registration table
-            $customer_registration_table =  $this->queryObj->buildCustomerRegistrationQuery($this->db_name, $this->registration_table, $this->new_user_id, $this->new_user_firstname, $this->new_user_lastname, $this->new_user_username, $this->new_user_email, $this->new_user_password, $this->new_user_confirm_password);
+            $customer_registration_table =  $this->queryObj->buildCustomerRegistrationQuery($this->db_name, $this->registration_table, $this->new_user_id, $this->new_user_firstname, $this->new_user_lastname, $this->new_user_username, $this->new_user_email, $this->new_user_password, $this->new_user_confirm_password, $this->customer_previlege);
 
             //admin table
-            $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme);
+            $admin_details_table = $this->queryObj->buildAdminTableQuery($this->db_name, $this->admin_table_name, $this->admins_ids, $this->admin_username, $this->admin_email, $this->admins_passwords, $this->admin_aboutme, $this->admin_privillege);
             
             // login tables
-            $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email, $this->belong_to_cafeteria);
+            $matron_login_table_query = $this->queryObj->buildMatronLoginTableQuery($this->db_name, $this->matron_table, $this->matron_id, $this->matron_username, $this->matron_password, $this->matron_email, $this->belong_to_cafeteria, $this->matron_previlege);
             $customer_login_table_query = $this->queryObj->buildLoginTableQuery($this->db_name, $this->customer_table, $this->customer_id, $this->customer_username, $this->customer_password);
                         
             // food menu tables
@@ -157,8 +185,30 @@
             return $retrieve_stmt;
         }
         
-        public function authenticateUser($email, $password){
+        public function authenticateUser($table_name,$email, $password){
+                 /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s AND %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $table_name,
+                $this->new_user_email,
+                $this->new_user_email,
+                $this->new_user_password,
+                $this->new_user_password
+            ); 
             
+            $retrieve_stmt = $this->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.$this->new_user_email, $email);
+            $retrieve_stmt->bindparam(':'.$this->new_user_password, $password);
+            
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
         }
         public function retrieveByServedStatusAndID($owner, $cus_id){
             /**

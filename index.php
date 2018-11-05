@@ -25,6 +25,7 @@
                 $email = trim_characters($_POST['reg_email']);
                 $password = trim_characters($_POST['psw']);
                 $c_password = trim_characters($_POST['c_psw']);
+                $prev = trim_characters($_POST['prev']);
                 
                 //reports error if empty fills
                 if (empty($username)) { array_push($errors, "Username is required"); }
@@ -35,7 +36,7 @@
                 }
                 
                 $result_by_email = $db->selectItemByColumn($db->registration_table, $db->new_user_email, $email)->fetch();
-                $result_by_username = $db->selectItemByColumn($registration_table, $db->new_user_username, $username)->fetch();
+                $result_by_username = $db->selectItemByColumn($db->registration_table, $db->new_user_username, $username)->fetch();
 
                 if($result_by_email){
                     if($result_by_email['email']==$email){
@@ -50,8 +51,8 @@
                 }
                 if(count($errors)== 0){
                     $password = md5($password);
-                    $new_customer  = new RegisterCustomer($firstname,$lastname,$username,$email,$password,$c_password);
-                    $new_customer->insert(); 
+                    $c_password = md5($c_password);
+                    $new_customer  = $db->register($firstname,$lastname,$username,$email,$password,$c_password, $prev);
                     $_SESSION['username'] = $username;
                     $_SESSION['email'] = $email;
                     header('location: customer-dashboard.php');
@@ -63,7 +64,7 @@
             if(!empty($_POST['inputEmail']) & !empty($_POST['inputPassword'])){
                 $email = $_POST['inputEmail'];
                 $password = $_POST['inputPassword'];
-
+                
                 if (empty($email)) {
                     array_push($errors, "Email is required");
                 }
@@ -73,19 +74,31 @@
 
                 if (count($errors) == 0) {
                     $password = md5($password);
-
                     //TODO: Authenticate the user and check if true
-                    $result = false;
-                    if ($result) {
-                      $_SESSION['password'] = $password;
-                      $_SESSION['email'] = $email;
 
-                      //TODO1: if customer
-                      header('location: customer-dashboard.php');
+                    //Authenticate user as a customer or an admin or a matron. 
+                    $customer = $db->authenticateUser($db->registration_table, $email, $password);
+                    $matron = $db->authenticateUser($db->matron_table, $email, $password);
+                    $admin = $db->authenticateUser($db->admin_table_name, $email, $password);
 
-                      //TODO: If cafeteria eg Akorno or Bigben
-                      header('location: cafeteria-dashboard.php');
-
+                    if ($customer->rowCount() || $matron->rowCount() || $admin->rowCount()) {
+                        $_SESSION['password'] = $password;
+                        $_SESSION['email'] = $email;
+                        
+                        if($customer->rowCount()){
+                            header('location: customer-dashboard.php');
+                        }
+                        else if($matron->rowCount()){
+                            $_SESSION['cafeteria'] = $matron->fetch()['previlege'];
+                            header('location: cafeteria-dashboard.php');   
+                        }
+                        else if($admin->rowCount()){
+                            echo "admin";
+                            header('location: mustapha-dashboard.php'); 
+                        }
+                        else{
+                            array_push($errors, "Wrong username/password combination");
+                        }
                     }else {
                         array_push($errors, "Wrong username/password combination");
                     }
@@ -125,7 +138,7 @@
     <div class="container">
         <div class="card card-container">
             <p id="profile-name" class="profile-name-card">takeAway</p>
-            <form class="form-signin">
+            <form class="form-signin" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
@@ -177,6 +190,7 @@
                         <label for="c_psw"> Confirm Password</label>
                         <input type="password" class="form-control" id="c_psw" name="c_psw" placeholder="Confirm your password">
                     </div>
+                    <input type="hidden" class="form-control" name="prev" value="customer">
                     <button type="submit" name="register" class="btn btn-primary btn-block"></span> Register </button>
                 </form>
                 </div>

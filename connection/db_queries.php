@@ -138,9 +138,10 @@
         }
 
         // build admin table query
-        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password, $admin_aboutme){            
+        public function buildAdminTableQuery($db_name, $admin_table_name, $id, $admin_username, $admin_email, $admin_password, $admin_aboutme, $prev){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                     %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
@@ -152,19 +153,20 @@
                 $loginTableQuery,
                 $db_name,
                 $admin_table_name,
-                $admin_aboutme,
                 $id,
                 $admin_username,
                 $admin_email,
                 $admin_password,
                 $admin_aboutme,
+                $prev,
                 $id
             );
         }
 
-        public function buildCustomerRegistrationQuery($db_name, $table_name, $id, $firstname, $lastname, $username, $email, $password, $c_password){
+        public function buildCustomerRegistrationQuery($db_name, $table_name, $id, $firstname, $lastname, $username, $email, $password, $c_password, $prev){
             $tableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                 %s INT NOT NULL AUTO_INCREMENT,
+                %s VARCHAR(45) NOT NULL,
                 %s VARCHAR(45) NOT NULL,
                 %s VARCHAR(45) NOT NULL,
                 %s VARCHAR(45) NOT NULL,
@@ -185,15 +187,17 @@
                 $email,
                 $password,
                 $c_password,
+                $prev,
                 $id
 
             );
         }
 
         // build persons table query
-        public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email, $belong_to_cafeteria){            
+        public function buildMatronLoginTableQuery($db_name, $table_name, $id_field_name, $username_field_name, $password_field_name, $email, $belong_to_cafeteria, $prev){            
             $loginTableQuery = "CREATE TABLE IF NOT EXISTS %s.%s (
                     %s INT NOT NULL AUTO_INCREMENT,
+                    %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
                     %s VARCHAR(45) NOT NULL,
@@ -210,6 +214,7 @@
                 $password_field_name,
                 $email,
                 $belong_to_cafeteria,
+                $prev,
                 $id_field_name
 
             );

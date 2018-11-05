@@ -21,7 +21,7 @@
               <div class="container-fluid">
                  <div class="card center-element">
                     <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                          <h4>Enter the email of user to Delete</h4>
+                          <h4>Enter the email of matron to Delete</h4>
                           <div class="form-group">
                             <input type="text" name="remove_email" class="form-control" id="remove_email" required>
                           <div>

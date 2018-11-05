@@ -38,12 +38,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                      $bigben_users = $db->selectAllFromTable('matron_details');
+                                                      $bigben_users = $db->selectItemByColumn($db->matron_table, $db->belong_to_cafeteria, strtolower("bigben"));
                                                       while($user = $bigben_users->fetch()){?>
                                                             <tr>
-                                                                <td><?php echo $user['matron_id']; ?></td>
-                                                                <td><?php echo $user['matron_username']; ?></td>
-                                                                <td><?php echo $user['matron_email']; ?></td>
+                                                                <td><?php echo $user['id']; ?></td>
+                                                                <td><?php echo $user['username']; ?></td>
+                                                                <td><?php echo $user['email']; ?></td>
                                                             </tr>
                                                     <?php }
                                                      ?>
@@ -68,12 +68,13 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $bigben_users = $db->selectAllFromTable('matron_details');
-                                                        while($user = $bigben_users->fetch()){?>
+                                                        $akorno_users = $db->selectItemByColumn($db->matron_table, $db->belong_to_cafeteria, strtolower("akorno"));
+                                                        // $akorno_users = $db->selectAllFromTable('matron_details');
+                                                        while($user = $akorno_users->fetch()){?>
                                                                 <tr>
-                                                                    <td><?php echo $user['matron_id']; ?></td>
-                                                                    <td><?php echo $user['matron_username']; ?></td>
-                                                                    <td><?php echo $user['matron_email']; ?></td>
+                                                                    <td><?php echo $user['id']; ?></td>
+                                                                    <td><?php echo $user['username']; ?></td>
+                                                                    <td><?php echo $user['email']; ?></td>
                                                                 </tr>
                                                         <?php }
                                                         ?>
@@ -143,11 +144,11 @@
                                                      while ($row = $admins->fetch()){?>
                                                         <tr>
                                                             <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>"></form>
-                                                            <td><?php echo $row['admins_ids'];?></td>
-                                                            <td><?php echo $row['admin_username'];?></td>
-                                                            <td><?php echo $row['admin_email'];?></td>
-                                                            <input type="hidden" form="<?php echo $row['admins_ids'] ?>" name="admin_id" value="<?php echo $row['admins_ids'] ?>">
-                                                            <td><button type="submit" name="action" value="remove_admin" form="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                            <td><?php echo $row['id'];?></td>
+                                                            <td><?php echo $row['username'];?></td>
+                                                            <td><?php echo $row['email'];?></td>
+                                                            <input type="hidden" form="<?php echo $row['id'] ?>" name="admin_id" value="<?php echo $row['id'] ?>">
+                                                            <td><button type="submit" name="action" value="remove_admin" form="<?php $admin_form_id = $row['id']; echo $admin_form_id;?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
                                                         </tr>
                                                     <?php }
                                                     ?>

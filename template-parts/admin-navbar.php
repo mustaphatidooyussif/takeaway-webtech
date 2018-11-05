@@ -18,8 +18,8 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="mustapha-add-cafeteria.php">Add Cafeteria</a></li>
-                        <li><a href="admin-add-user.php">Add User</a></li>
-                        <li><a href="admin-remove-user.php">Remove User</a></li>
+                        <li><a href="admin-add-user.php">Add Matron</a></li>
+                        <li><a href="admin-remove-user.php">Remove Matron</a></li>
                         <li><a href="mustapha-admins.php">Add Admin</a></li>
                     </ul>
                 </li>
