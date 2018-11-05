@@ -2,12 +2,12 @@
 <?php
 
 // OrderEntity
-    require_once("connection/db_models/db_order_entity.php");
+    // require_once("connection/db_models/db_order_entity.php");
     // FoodMenuEntity
-    require_once("connection/db_models/db_food_menu_entity.php");
+    // require_once("connection/db_models/db_food_menu_entity.php");
     // include files
     require_once('template-parts/customer-header.php');
-    
+
                                     $output = '';
                                     if(isset($_POST['query'])){
                                         
@@ -58,8 +58,7 @@
 
                                                 echo $output;
                                                                 
-                                    } 
-                                    // else {
-
-                                    // }
+                                    } else {
+                                        echo "<p align='center'><b>Food item not found.</b></p>";
+                                    }
                                 ?>

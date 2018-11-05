@@ -191,8 +191,6 @@
                                 <!-- orders table -->
                                 <div id="result"></div>
 
-                                
-                                
                             </div>
                         </div>
                     </div>
