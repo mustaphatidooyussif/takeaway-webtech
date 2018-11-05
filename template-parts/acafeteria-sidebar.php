@@ -19,35 +19,31 @@ Tip 2: you can also add an image using data-image tag
 
         <ul class="nav">
             <li class="active">
-                <a href="cafeteria-dashboard.php">
+                <a href="acafeteria-dashboard.php">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
             <li>
-                <a href="cafeteria-add-menu.php">
+                <a href="acafeteria-add-menu.php">
                     <i class="pe-7s-user"></i>
                     <p>Add Menu</p>
                 </a>
             </li>
             <li>
-                <a href="cafeteria-delete-menu.php">
+                <a href="acafeteria-delete-menu.php">
                     <i class="pe-7s-note2"></i>
                     <p>Delete Menu</p>
                 </a>
             </li>
             <li>
-                <a href="cafeteria-menu.php">
+                <a href="acafeteria-menu.php">
                     <i class="pe-7s-note2"></i>
                     <p>Display Available Menu</p>
                 </a>
             </li>
 
-            <li>
-                <a href="cafeteria-settings.php">
-                    <i class="pe-7s-note2"></i>
-                    <p>Settings</p>
-                </a>
+            
             </li>
         </ul>
     </div>

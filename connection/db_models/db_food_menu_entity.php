@@ -24,7 +24,9 @@
         public $category;
 
         // constructor
-        function __construct($owner, $item, $price, $type, $category){
+
+        function __construct($owner, $id, $item, $price, $type, $category){
+
             /**
              * constructor 
              */
@@ -201,19 +203,21 @@
              * deletes foodMenuEntity with a particular item name
              */
 
-            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s= :%s";
+
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 $this->owner,
                 self::$db->food_item_field,
-                self::$db->food_item_field
+                $item
             );
             $delete_stmt = self::$db->db_conn->prepare($query);
-            $delete_stmt->bindparam(':'.self::$db->food_item_field, $item);
-            
+            $delete_stmt->bindparam(':'.self::$db->food_item_field, $this->$item);
+            //echo $query;
             $delete_stmt->execute();
+            return $delete_stmt;
         }
 
         public function deleteByID($id){
@@ -232,8 +236,8 @@
             );
             $delete_stmt = self::$db->db_conn->prepare($query);
             $delete_stmt->bindparam(':'.self::$db->food_item_id, $id);
-
             $delete_stmt->execute();
+
         }
 
     }

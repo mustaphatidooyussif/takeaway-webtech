@@ -5,6 +5,7 @@
     $db = new InitDatabase();  //create db and tables if not exists
     $db->createDataBaseTables();
 ?>
+
 <!doctype html>
 <html lang="en">
 

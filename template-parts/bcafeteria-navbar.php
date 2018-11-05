@@ -12,18 +12,7 @@
         <div class="collapse navbar-collapse">
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-tasks"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Add Cafeteria</a></li>
-                        <li><a href="#">Remove Cafeteria</a></li>
-                        <li><a href="#">Add User</a></li>
-                        <li><a href="#">Remove User</a></li>
-                        <li><a href="mustapha-admins.php">Add Admin</a></li>
-                    </ul>
-                </li>
+                
                 <li>
                     <a href="">
                         <i class="fa fa-search"></i>
