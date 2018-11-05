@@ -329,7 +329,7 @@
     // // insert data to database
     // // $ord_ak->insert();
     // // instantiate and get matron id
-    $mat = new MatronEntity("2323232323", "Tidoo Mustapha", 1234);
+    $mat = new MatronEntity("tidoo", "2323232323", "user@example.com","akorno");
     // $mat_id = $mat->getID();
     // // update matron table
     // $ord_ak->updateMatronColumn($mat_id);

@@ -32,15 +32,15 @@
                         </li>
 
                         <li class="atule-dropdown">
-                            <a href="">
+                            <a href="http://192.168.20.21/mpconsole/">
                                 <p>History</p>
                             </a>
                         </li>
 
                         <li class="atule-dropdown">
-                            <a href="">
+                            <a href="#">
                                 <i class="fas fa-cart-plus" style="padding-bottom: 14px;"></i>
-                                <span class="badge">5</span>
+                                <span class="badge"><?php echo $number_of_orders ?></span>
                             </a>
                         </li>
                         <li class="dropdown atule-dropdown">
@@ -48,8 +48,8 @@
                                 <i class="far fa-user" style="padding-bottom: 14px;"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
-                                <li class="divider"></li>
+                                <!-- <li><a href="#">Profile</a></li>
+                                <li class="divider"></li> -->
                                 <li><a href="#">Logout</a></li>
                             </ul>
                         </li>
