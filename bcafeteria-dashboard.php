@@ -4,7 +4,7 @@
       <?php include('template-parts/bcafeteria-sidebar.php'); ?>
         <div class="main-panel">
           <!--navbar-->
-            <?php include('template-parts/cafeteria-navbar.php'); ?>
+            <?php include('template-parts/bcafeteria-navbar.php'); ?>
 
             <!--Main content area-->
             <div class="content">

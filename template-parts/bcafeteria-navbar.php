@@ -7,12 +7,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="#"><strong>Akornor-</strong>Dashboard</a>
+        <a class="navbar-brand" href="#"><strong>Big Ben-</strong>Dashboard</a>
         </div>
         <div class="collapse navbar-collapse">
 
             <ul class="nav navbar-nav navbar-right">
-        
+                
                 <li>
                     <a href="">
                         <i class="fa fa-search"></i>

@@ -1,4 +1,4 @@
-q<?php 
+<?php 
 
     // set path to look
     set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
