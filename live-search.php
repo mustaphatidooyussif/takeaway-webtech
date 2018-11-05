@@ -7,18 +7,55 @@
     // require_once("connection/db_models/db_food_menu_entity.php");
     // include files
     require_once('template-parts/customer-header.php');
-
                                     $output = '';
-                                    if(isset($_POST['query'])){
+                                    if(isset($_POST['value']) && isset($_POST['query'])){
                                         
-                                        if(!empty($_POST['query'])){
+                                        if(!empty($_POST['value']) && !empty($_POST['query'])){
+                                            // get food menu items with category value and search query
+                                            // $all_order_query = $db->retriveWildCardResults($db->ak_food_menu_table, $_POST['query']);
+                                            
+                                            echo $all_order_query;
+                                        }else if (!empty($_POST['value'])){
+                                            // get food menu items with category value
+                                            $all_order_query = "SELECT * FROM take_db.akorno_food_menu WHERE category=".$_POST['value'];
+
+                                        }else if (!empty($_POST['query'])){
+                                            // get food menu items with search query
                                             $all_order_query = $db->retriveWildCardResults($db->ak_food_menu_table, $_POST['query']);
+
                                         }else{
+                                            // get all food menu items
                                             $all_order_query = "SELECT * FROM take_db.akorno_food_menu";
                                         };
-                                    }else{
+
+                                    }else if(isset($_POST['query'])){
+
+                                        if(!empty($_POST['query'])){
+                                            // get food menu items with search query
+                                            $all_order_query = $db->retriveWildCardResults($db->ak_food_menu_table, $_POST['query']);
+                                        }else{
+                                            // get all food menu items
+                                            $all_order_query = "SELECT * FROM take_db.akorno_food_menu";
+                                        };
+
+                                    }else if(isset($_POST['value'])){
+                                        
+                                        if(!empty($_POST['value'])){
+                                            // get food menu items with category value
+                                            $all_order_query = "SELECT * FROM take_db.akorno_food_menu WHERE category=".$_POST['value'];
+
+                                            echo $all_order_query;
+                                        }else{
+                                            // get all food menu items
+                                            $all_order_query = "SELECT * FROM take_db.akorno_food_menu";
+                                        };
+
+                                    }else {
+                                        // get all food menu items
                                         $all_order_query = "SELECT * FROM take_db.akorno_food_menu";
                                     };
+
+                                    
                                     
                                     // query database and retrieve all orders
                                     $allOrders = $db->selectAllFromTable_Ord($all_order_query);

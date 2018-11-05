@@ -42,6 +42,7 @@
 
  <div class="wrapper"> <!-- WRAPPER -->
     <?php 
+        
         // retrieve orders items belonging to customer and not served from orders table
         $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "1", "0");
         $number_of_orders = $orders->rowCount();
@@ -86,7 +87,6 @@
                                                             // get orders id
                                                             $orders_id = $row['orders_id'];
                                                             array_push($orders_id_array, $orders_id);
-                                                            
                                                     ?>
                                                             <tr>
                                                                 <!-- form declaration -->
@@ -167,13 +167,14 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Breakfast</a></li>
-                                <li><a href="#">Lunch</a></li>
-                                <li><a href="#">Supper</a></li>
-                                <li><a href="#">Drinks & Snacks</a></li>
+                                <li><a href="customer-food-menu.php?value=all">All</a></li>
+                                <li><a href="customer-food-menu.php?value=breakfast">Breakfast</a></li>
+                                <li><a href="customer-food-menu.php?value=lunch">Lunch</a></li>
+                                <li><a href="customer-food-menu.php?value=supper">Supper</a></li>
+                                <li><a href="customer-food-menu.php?value=drinks.snacks">Drinks & Snacks</a></li>
                             </ul>
                         </div>
-                        <input type="text" class="form-control" aria-label="..." value="Filter By">
+                        <input type="text" class="form-control" aria-label="..." value="Filter By" readonly="readonly">
                     </div>
                 </div>
             </div><!-- END SEARCH AND FILTER BOXES -->
