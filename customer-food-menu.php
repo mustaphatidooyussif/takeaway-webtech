@@ -158,25 +158,6 @@
                         <input type="text" class="form-control" name="search_text" id="search_text" placeholder="search food menu " aria-describedby="sizing-addon1">
                     </div>
                 </div>
-
-                <div class="col-md-2 atule-filter">
-                    <div class="input-group input-group-lg">
-                        <div class="input-group-btn">
-                            <!-- Button and dropdown menu -->
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="customer-food-menu.php?value=all">All</a></li>
-                                <li><a href="customer-food-menu.php?value=breakfast">Breakfast</a></li>
-                                <li><a href="customer-food-menu.php?value=lunch">Lunch</a></li>
-                                <li><a href="customer-food-menu.php?value=supper">Supper</a></li>
-                                <li><a href="customer-food-menu.php?value=drinks.snacks">Drinks & Snacks</a></li>
-                            </ul>
-                        </div>
-                        <input type="text" class="form-control" aria-label="..." value="Filter By" readonly="readonly">
-                    </div>
-                </div>
             </div><!-- END SEARCH AND FILTER BOXES -->
 
 

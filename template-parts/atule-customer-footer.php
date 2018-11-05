@@ -1,24 +1,9 @@
 
-	<footer >
-		<div class="container-fluid">
-			<!--Footer code will go here-->
-			<div class="pull-right">
-				<ul class="nav-list">
-					<li><a href="#">BACK TO TOP</a></li>
-					<li><a href="#">HELP</a></li>
-				</ul>
-			</div>
-
-			<a href="#"><i class="fab fa-facebook-f fa-3x"></i></a>
-			<a href="#"><i class="fab fa-instagram fa-3x"></i></a>
-			<a href="#"><i class="fab fa-linkedin fa-3x"></i></a>
-
-			<p class="h6">
-				Take Away Online ordering system
-				<a href="#" target="_blank"></a>
-			</p>
-		</div>
-	</footer>
+	<div class="footer">
+				<p>
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/mustaphatidooyussif/takeaway-webtech" style="color: blue;">The takeAway Team</a> made with love for WebTech 
+                </p>
+	</div>
 
     <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
