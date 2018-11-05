@@ -5,7 +5,6 @@
     $db = new InitDatabase();  //create db and tables if not exists
     $db->createDataBaseTables();
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -27,13 +26,8 @@
     <link href="css/animate.min.css" rel="stylesheet" />
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet" />
-    <link rel="stylesheet" href="css/atule-customer-food-menu.css" />
-
-
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="css/demo.css" rel="stylesheet" />
-    <link href="css/admin.css" rel="stylesheet"/>
+    <link href="css/atule-customer-food-menu.css" rel="stylesheet"/>
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">

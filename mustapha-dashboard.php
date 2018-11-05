@@ -1,5 +1,16 @@
-<?php include('template-parts/admin-header.php'); ?>
 
+<?php include('template-parts/admin-header.php'); ?>
+    <?php 
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            if(isset($_GET['action'])){
+                if ($_GET['action'] =='remove_admin'){
+                    //Delete an admin by the id
+                    $db->deleteItemById($db->admin_table_name, $db->admins_ids, intval($_GET['admin_id']));
+                }
+            }
+        }
+
+    ?>
     <div class="wrapper">
       <?php include('template-parts/admin-sidebar.php'); ?>
       
@@ -12,39 +23,6 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="card">
-
-                                    <!--Cafeterias Table-->
-                                    <div class="header">
-                                        <h4 class="title">All Cafeterias</h4>
-                                    </div>
-                                    <div class="content table-responsive table-full-width">
-                                        <table class="table table-hover table-striped">
-                                            <thead>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th class="pull-right">Delete?</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Big Ben</td>
-                                                    <td>bigben@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Akornor</td>
-                                                    <td>akornor@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-
                                 <!--Big ben Users Table-->
                                 <div class="card">
                                         <div class="header">
@@ -58,21 +36,17 @@
                                                     <th>Email</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>User 1</td>
-                                                        <td>user1@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>User 2</td>
-                                                        <td>user2@ashesi.edu.gh</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                            <td>User 3</td>
-                                                            <td>user3@ashesi.edu.gh</td>
-                                                        </tr>
+                                                    <?php
+                                                      $bigben_users = $db->selectAllFromTable('matron_details');
+                                                      while($user = $bigben_users->fetch()){?>
+                                                            <tr>
+                                                                <td><?php echo $user['matron_id']; ?></td>
+                                                                <td><?php echo $user['matron_username']; ?></td>
+                                                                <td><?php echo $user['matron_email']; ?></td>
+                                                            </tr>
+                                                    <?php }
+                                                     ?>
+                                                  
                                                 </tbody>
                                             </table>
 
@@ -92,16 +66,16 @@
                                                         <th>Email</th>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>user1</td>
-                                                            <td>user1@ashesi.edu.gh</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>User2</td>
-                                                            <td>user2@ashesi.edu.gh</td>
-                                                        </tr>
+                                                        <?php
+                                                        $bigben_users = $db->selectAllFromTable('matron_details');
+                                                        while($user = $bigben_users->fetch()){?>
+                                                                <tr>
+                                                                    <td><?php echo $user['matron_id']; ?></td>
+                                                                    <td><?php echo $user['matron_username']; ?></td>
+                                                                    <td><?php echo $user['matron_email']; ?></td>
+                                                                </tr>
+                                                        <?php }
+                                                        ?>
                                                     </tbody>
                                                 </table>
 
@@ -116,20 +90,20 @@
                                         <h4 class="title">Mesage Cafeteria</h4>
                                     </div>
                                     <div class="content">
-                                        <form>
+                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                                                 <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label>Email</label>
-                                                                <input type="text" class="form-control" placeholder="Email Address">
+                                                                <!-- <label>To</label> -->
+                                                                <input type="email" name= "email" class="form-control" placeholder="To">
                                                             </div>
                                                         </div>
                                                     </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Subject</label>
-                                                        <input type="text" class="form-control" placeholder="Subject">
+                                                        <!-- <label>Subject</label> -->
+                                                        <input type="text" name="subject" class="form-control" placeholder="Subject">
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,12 +112,12 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Message</label>
-                                                        <textarea rows="5" class="form-control" placeholder="Message body here"></textarea>
+                                                        <textarea  id="editor" name="message" class="form-control editor" placeholder="Message body here"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info btn-fill pull-right">Send</button>
+                                            <button type="submit" name="send_email" class="btn btn-info btn-fill pull-right">Send</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -163,18 +137,19 @@
                                                     <th class="pull-right">Delete?</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Admin1</td>
-                                                        <td>admin1@ashesi.edu.gh</td>
-                                                        <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Admin 2</td>
-                                                        <td>admin2@ashesi.edu.gh</td>
-                                                        <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                    </tr>
+                                                    <?php 
+                                                     $admins = $db->selectAllFromTable('admins_table');
+                                                     while ($row = $admins->fetch()){?>
+                                                        <tr>
+                                                            <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>"></form>
+                                                            <td><?php echo $row['admins_ids'];?></td>
+                                                            <td><?php echo $row['admin_username'];?></td>
+                                                            <td><?php echo $row['admin_email'];?></td>
+                                                            <input type="hidden" form="<?php echo $row['admins_ids'] ?>" name="admin_id" value="<?php echo $row['admins_ids'] ?>">
+                                                            <td><button type="submit" name="action" value="remove_admin" form="<?php $admin_form_id = $row['admins_ids']; echo $admin_form_id;?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                                        </tr>
+                                                    <?php }
+                                                    ?>
                                                 </tbody>
                                             </table>
 

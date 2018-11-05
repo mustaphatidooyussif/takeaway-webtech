@@ -1,5 +1,15 @@
-<?php include('template-parts/admin-header.php'); ?>
 
+<?php include('template-parts/admin-header.php'); ?>
+<?php 
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if(isset($_GET['action'])){
+            if ($_GET['action'] =='remove_cafeteria'){
+                $db->deleteItemById($db->cafeteria_table, $db->cafeterias_ids, intval($_GET['cafeteria_id']));
+            }
+        }
+    }
+
+?>
 <div class="wrapper">
 	<!--sidebar-->
     <?php include('template-parts/admin-sidebar.php'); ?>
@@ -15,36 +25,43 @@
                 <!--Display all Cafeterias-->
                 <div class="row">
                     <div class="col-md-12">
-                            <div class="card">
-                                    <div class="header">
-                                        <h4 class="title">All Cafeterias</h4>
-                                    </div>
-                                    <div class="content table-responsive table-full-width">
-                                        <table class="table table-hover table-striped">
-                                            <thead>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th class="pull-right">Delete?</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Big Ben</td>
-                                                    <td>bigben@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Akornor</td>
-                                                    <td>akornor@ashesi.edu.gh</td>
-                                                    <td><button type="button" class="btn btn-danger btn-fill pull-right">remove</button></td>
-                                                </tr>
+                    <div class="card">
+
+                        <!--Cafeterias Table-->
+                        <div class="header">
+                            <h4 class="title">All Cafeterias</h4>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th class="pull-right">Delete?</th>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    
+                                        $cafeterias = $db->selectAllFromTable('cafeterias');
+                                        while($cafeteria = $cafeterias->fetch()){?>
+                                            <tr>
+                                                <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" id="<?php $caferia_form_id = $cafeteria['cafeterias_ids']; echo $caferia_form_id;?>"></form>
+                                                <td><?php echo $cafeteria['cafeterias_ids'] ?></td>
+                                                <td><?php echo $cafeteria['cafeteria_uname'] ?></td>
+                                                <td><?php echo $cafeteria['cafeteria_email'] ?></td>
+                                                <input type="hidden" form="<?php echo $cafeteria['cafeterias_ids'] ?>" name="cafeteria_id" value="<?php echo htmlspecialchars($cafeteria['cafeterias_ids']); ?>">
+                                                <td><button type="submit" name="action" value="remove_cafeteria" form="<?php $caferia_form_id = $cafeteria['cafeterias_ids']; echo $caferia_form_id;?>" class="btn btn-danger btn-fill pull-right">remove</button></td>
+                                            </tr>                                                     
+                                                <?php }
+                                                ?>
                                             </tbody>
                                         </table>
 
+                                        </div>
                                     </div>
-                                </div>
+                                    </div>
+                                    </div>
 
 
                                     <div class="card">

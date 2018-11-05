@@ -1,6 +1,6 @@
 <?php 
     // set path to look
-    set_include_path('C:/xampp/htdocs"/takeaway-webtech/connection/');
+    set_include_path('C:/xampp/htdocs/takeaway-webtech/connection/');
     // import file
     require_once get_include_path()."initDatabase.php";
     // instantiate obj
@@ -9,6 +9,8 @@
     require_once "db_food_menu_entity.php";
     // CustomerEntity
     require_once "db_customer_entity.php";
+    // MatronEntity
+    require_once "db_matron_entity.php";
 
 
 
@@ -20,14 +22,13 @@
         // db resource
         static public $db;
 
-        public $owner; // use the table name where the obj belongs in the database
-        public $id;
+        public $owner;// use the table name where the obj belongs in the database
         public $served = 0;
         public $foodMenuEntity = null; // this is a FoodMenuEntity obj
         public $matronEntity = null;    // this is a MatronEntity obj
         public $customerEntity = null;  // this is a CustomerEntity obj
 
-        function __construct($owner, $id, $foodMenuEntity, $customerEntity){
+        function __construct($owner, $foodMenuEntity=null, $customerEntity=null){
             /**
              * constructor 
              */
@@ -36,7 +37,6 @@
             self::$db = $db;
 
             $this->owner = $owner;
-            $this->id = $id;
             $this->foodMenuEntity = $foodMenuEntity;
             $this->customerEntity = $customerEntity;
         }
@@ -81,13 +81,6 @@
 
             return $this->owner;
         }
-        function getID(){
-            /**
-             * id getter
-             */
-
-            return $this->id;
-        }
         function getServedStatus(){
             /**
              * served status getter
@@ -117,18 +110,17 @@
              * inserts Obj credentials to database when invoked.
              */
 
-            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s, :%s)";
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
 
             $query = sprintf(
                 $stmt,
                 self::$db->db_name,
                 $this->owner,
-                self::$db->orders_id,
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
                 self::$db->customer_id,
-                self::$db->orders_id,
+
                 self::$db->served_field,
                 self::$db->food_item_id,
                 self::$db->matron_id,
@@ -138,15 +130,81 @@
             $insert_stmt = self::$db->db_conn->prepare($query);
 
             $food_item_id = $this->foodMenuEntity->getID();
-            $matron_id = $this->matronEntity ? $this->matronEntity->getID() : null;
+            $matron_id = $this->matronEntity ? $this->matronEntity->getID() : "";
+            $customer_id = $this->customerEntity->getID();
 
-            $insert_stmt->bindparam(':'.self::$db->orders_id, $this->id);
             $insert_stmt->bindparam(':'.self::$db->served_field, $this->served);
             $insert_stmt->bindparam(':'.self::$db->food_item_id, $food_item_id);
             $insert_stmt->bindparam(':'.self::$db->matron_id, $matron_id);
-            $insert_stmt->bindparam(':'.self::$db->customer_id, $this->customerEntity->getID());
+            $insert_stmt->bindparam(':'.self::$db->customer_id, $customer_id);
 
             $insert_stmt->execute();
+        }
+
+        public function insertWithID($cus_id="", $food_itm_id="", $mat_id=""){
+            /**
+             * inserts Obj credentials to database when invoked.
+             */
+
+            $stmt = "INSERT INTO %s.%s (%s, %s, %s, %s) VALUES (:%s, :%s, :%s, :%s)";
+
+            $query = sprintf(
+                $stmt,
+                self::$db->db_name,
+                $this->owner,
+
+                self::$db->served_field,
+                self::$db->food_item_id,
+                self::$db->matron_id,
+                self::$db->customer_id,
+
+                self::$db->served_field,
+                self::$db->food_item_id,
+                self::$db->matron_id,
+                self::$db->customer_id
+            );
+
+            $insert_stmt = self::$db->db_conn->prepare($query);
+
+            $food_item_id = $food_itm_id;
+            $matron_id = $mat_id;
+            $customer_id = $cus_id;
+
+            $insert_stmt->bindparam(':'.self::$db->served_field, $this->served);
+            $insert_stmt->bindparam(':'.self::$db->food_item_id, $food_item_id);
+            $insert_stmt->bindparam(':'.self::$db->matron_id, $matron_id);
+            $insert_stmt->bindparam(':'.self::$db->customer_id, $customer_id);
+
+            $insert_stmt->execute();
+        }
+
+        public function updateMatronColumn($mat_id=""){
+            /**
+             * updates the matron_id column when matron is known
+             */
+
+            $stmt = "UPDATE %s.%s SET %s=:%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                self::$db->db_name,
+                $this->owner,
+
+                self::$db->matron_id,
+                self::$db->matron_id,
+                self::$db->customer_id,
+                self::$db->customer_id
+
+            );
+            $update_stmt = self::$db->db_conn->prepare($query);
+
+            $matron_id = $this->matronEntity ? $this->matronEntity->getID() : $mat_id;
+            $customer_id = $this->customerEntity->getID();
+
+            $update_stmt->bindparam(':'.self::$db->matron_id, $matron_id);
+            $update_stmt->bindparam(':'.self::$db->customer_id, $customer_id);
+
+            $update_stmt->execute();
         }
 
         public function retrieveAll(){
@@ -192,6 +250,28 @@
             return $retrieve_stmt;
         }
 
+        public function retrieveByCustomerID($cus_id){
+            /**
+             * returns OrderEntity item with a particular id.
+             */
+
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                self::$db->db_name,
+                $this->owner,
+                self::$db->customer_id,
+                self::$db->customer_id
+            );
+            $retrieve_stmt = self::$db->db_conn->prepare($query);
+            $retrieve_stmt->bindparam(':'.self::$db->customer_id, $cus_id);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
         public function retrieveByServedStatus($status){
             /**
              * returns OrderEntity item with a particular served status
@@ -220,7 +300,7 @@
              * deletes OrderEntity item with a particular id.
              */
 
-            $stmt = "DELETE * FROM %s.%s WHERE %s=:%s";
+            $stmt = "DELETE FROM %s.%s WHERE %s=:%s";
 
             $query = sprintf(
                 $stmt,
@@ -238,14 +318,24 @@
 
     // test
 
-    // $bb_fmu = new FoodMenuEntity("bigben_food_menu", "455", "Rice", "0", "half Portion", "Breakfast");
-    // $ak_fmu = new FoodMenuEntity("akorno_food_menu", "4565", "Waakye", "0", "half Portion", "Breakfast");
-    // $cus = new CustomerEntity("06002022", "atule", "1234");
-    // $ord_ak = new OrderEntity("akorno_orders", "32", $ak_fmu, $cus);
-    // $ord_bb = new OrderEntity("bigben_orders", "45", $bb_fmu, $cus);
+    $bb_fmu = new FoodMenuEntity("bigben_food_menu", "455", "Rice", "0", "half Portion", "Breakfast");
+    // // $bb_fmu->insert();
+    $ak_fmu = new FoodMenuEntity("akorno_food_menu", "4565", "Waakye", "0", "half Portion", "Breakfast");
+    // // $ak_fmu->insert();
+    $cus = new CustomerEntity(6002022, "atule", 1234);
+    // // $cus->insert();
+    $ord_ak = new OrderEntity("akorno_orders", "32", $ak_fmu, $cus);
+    $ord_bb = new OrderEntity("bigben_orders", "45", $bb_fmu, $cus);
     // // insert data to database
-    // $ord_ak->insert();
+    // // $ord_ak->insert();
+    // // instantiate and get matron id
+    $mat = new MatronEntity("tidoo", "2323232323", "user@example.com","akorno");
+    // $mat_id = $mat->getID();
+    // // update matron table
+    // $ord_ak->updateMatronColumn($mat_id);
+
     // $ord_bb->insert();
+    // $ord_bb->updateMatronColumn($mat_id);
     // // retrieve all data 
     // $retrieve_stmt = $ord_ak->retrieveAll();
 
