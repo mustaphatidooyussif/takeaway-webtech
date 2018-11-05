@@ -60,6 +60,8 @@ foreach($orders_id as $id) {
     $message = str_replace('%food_item'.$id.'%', $row["food_item"], $message);  // Get food items from database
     $message = str_replace('%item_price'.$id.'%', "Ghc".$row["price"], $message);  // Get item price from database  
 
+    // update sent orders in the database to have "served" status of 1
+    $db->updateByServedStatusAndID($db->ak_orders_table, "1",  $order_item['orders_id'], "1");
 }
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions

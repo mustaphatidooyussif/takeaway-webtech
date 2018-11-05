@@ -43,7 +43,7 @@
  <div class="wrapper"> <!-- WRAPPER -->
     <?php 
         // retrieve orders items belonging to customer and not served from orders table
-        $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "1");
+        $orders = $db->retrieveByServedStatusAndID($db->ak_orders_table, "1", "0");
         $number_of_orders = $orders->rowCount();
         require_once('template-parts/atule-customer-navbar.php'); 
         ?>
@@ -110,16 +110,19 @@
                                             </table>
                                         </div>
                                         
-                                        <div class="row atule-orders-table"><!-- orders submit button -->
-                                        <form method="post" action="mailers/order-mail.php" id="submit_order_form"></form>
+                                        <div class="row atule-orders-table">
+                                        <!-- orders form -->
+                                        <form method="post" action="mailers/order-mail.php" id="submit_order_form" role="form"></form>
                                             <div class="col-md-3 atule-total-price">
                                                 <label>Total Price: </label>
                                                 <button type="button" value="<?php echo $total_price?>" class="btn btn-light disabled"><?php echo "Ghc".$total_price?></button>
                                                 <input type="hidden" form="submit_order_form" name="total_price" value="<?php echo $total_price?>">                                                
                                             </div>
                                             <div class="col-md-3 atule-submit-orders">
-                                            <button type="submit" name="submit_order" value="submit_order" form="submit_order_form" class="btn btn btn-success">Submit order</button>
-                                                
+                                            <!-- modal caller -->
+                                             <a href="#modal-dialog" class="modal-toggle" form="submit_order_form" data-toggle="modal" data-href="mailers/order-mail.php" data-modal-type="confirm" data-modal-title="Delete Property" data-modal-text="Are you sure you want to delete {$property.address_string}?" data-modal-confirm-url="{$base_url}residential-lettings/properties/do-delete/property/{$property.id}"><i class="icon-trash"></i> 
+                                                <button type="submit" name="submit_order" value="submit_order" form="submit_order_form" class="btn btn btn-success">Submit order</button>
+                                             </a>
                                             </div>
                                         </div><!-- end orders submit button -->
                                     </div> 
@@ -128,13 +131,31 @@
                     </div><!-- END ORDERS CONTAINER -->
             <?php } ?>
 
-
+            <!-- modal confirm box -->
+            <div id="modal-dialog" class="modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+                        <h3>Are you sure?</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to place order?</p>
+                    </div>
+                    <div class="modal-footer">
+                    <a href="#" id="btnYes" class="btn confirm">Yes</a>
+                    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn secondary">No</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- end modal confirm box -->
 
             <div class="row atule-searchbox"><!-- SEARCH AND FILTER BOXES -->
                 <div class="col-md-4" >
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                        <input type="text" class="form-control" placeholder="search food menu " aria-describedby="sizing-addon1">
+                        <input type="text" class="form-control" name="search_text" id="search_text" placeholder="search food menu " aria-describedby="sizing-addon1">
                     </div>
                 </div>
 
@@ -166,34 +187,12 @@
                                     <h4 class="title">Akornor Food Menu</h4>
                                     <p class="category">Here is a subtitle for this table</p>
                                 </div>
-                                <div class="content table-responsive table-full-width">
-                                    
-                                    <table class="table  table-striped">
-                                        <thead>
-                                            <th>ID</th>
-                                            <th>Food Item</th>
-                                            <th>Type</th>
-                                            <th>Price (Ghc)</th>
-                                            <th>Category</th>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                              $result2 = $db->selectAllFromTable('akorno_food_menu');
-                                              while ($row = $result2->fetch()){?>
-                                                    <form id="<?php echo $row['food_item_id']; ?>" method="post" action="" class='add-order-form'></form>
-                                                    <tr>
-                                                        <td><input class="atule-food-menu-item" type="text" id= "food_item_id" name="food_item_id" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['food_item_id']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" id= "food_item" name="food_item" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['food_item']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" id= "type" name="type" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['type']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" id= "price" name="price" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['price']; ?>" readonly="readonly"></td>
-                                                        <td><input class="atule-food-menu-item" type="text" id= "category" name="category" form="<?php echo $row['food_item_id']; ?>" value="<?php echo $row['category']; ?>" readonly="readonly"></td>
-                                                        <td><button type="submit" name="submit" form="<?php echo $row['food_item_id']; ?>" class="btn btn btn-success">ADD</button></td>                                                        
-                                                    </tr>
-                                             <?php }
 
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                <!-- orders table -->
+                                <div id="result"></div>
+
+                                
+                                
                             </div>
                         </div>
                     </div>

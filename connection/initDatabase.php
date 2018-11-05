@@ -122,7 +122,27 @@
             
         }
 
-        public function selectAllFromTable($table_name){
+        public function selectAllFromTable_Ord($query){
+            /**
+             * returns all foodMenuEntity items in the database table.
+             */
+
+            // $stmt = "SELECT * FROM %s.%s;";
+
+            // $query = sprintf(
+            //     $stmt,
+            //     $this->db_name,
+            //     $table_name
+            // );
+
+            $retrieve_stmt = $this->db_conn->prepare($query);
+
+            $retrieve_stmt->execute();
+
+            return $retrieve_stmt;
+        }
+
+        public function selectAllFromTable($table_name, $query){
             /**
              * returns all foodMenuEntity items in the database table.
              */
@@ -142,27 +162,59 @@
             return $retrieve_stmt;
         }
 
-        public function retrieveByServedStatusAndID($owner, $cus_id){
+        public function retrieveByServedStatusAndID($owner, $cus_id, $status){
             /**
              * returns OrderEntity item with a particular served status and customer id
              * (0 = "not served && 1 = "served").
              */
 
-            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s";
+            $stmt = "SELECT * FROM %s.%s WHERE %s=:%s AND %s=:%s";
 
             $query = sprintf(
                 $stmt,
                 $this->db_name,
                 $owner,
                 $this->customer_id,
-                $this->customer_id
+                $this->customer_id,
+                $this->served_field,
+                $this->served_field
             );
             $retrieve_stmt = $this->db_conn->prepare($query);
             $retrieve_stmt->bindparam(':'.$this->customer_id, $cus_id);
+            $retrieve_stmt->bindparam(':'.$this->served_field, $status);
 
             $retrieve_stmt->execute();
 
             return $retrieve_stmt;
+        }
+
+        public function updateByServedStatusAndID($owner, $cus_id, $order_id, $status){
+            /**
+             * updates  order with a particular order id and customer id
+             * (0 = "not served && 1 = "served").
+             */
+
+            $stmt = "UPDATE %s.%s SET %s=:%s WHERE %s=:%s AND %s=:%s";
+
+            $query = sprintf(
+                $stmt,
+                $this->db_name,
+                $owner,
+                $this->served_field,
+                $this->served_field,
+                $this->customer_id,
+                $this->customer_id,
+                $this->orders_id,
+                $this->orders_id
+            );
+            $update_stmt = $this->db_conn->prepare($query);
+            $update_stmt->bindparam(':'.$this->served_field, $status);
+            $update_stmt->bindparam(':'.$this->customer_id, $cus_id);
+            $update_stmt->bindparam(':'.$this->orders_id, $order_id);
+
+            $update_stmt->execute();
+
+            // return $retrieve_stmt;
         }
 
 
@@ -189,6 +241,53 @@
             return $retrieve_stmt;
         }
 
+        // return wild card results
+        // wild card query for live search
+        public function retriveWildCardResults($table_name, $search_data){
+            $stmt = "SELECT * FROM take_db.akorno_food_menu 
+                     WHERE food_item_id LIKE '%".$search_data."%'
+                     OR food_item LIKE '%".$search_data."%'
+                     OR price LIKE '%".$search_data."%'
+                     OR type LIKE '%".$search_data."%'
+                     OR category LIKE '%".$search_data."%'";
+
+
+            // $query = sprintf(
+            //     $stmt,
+            //     $this->db_name,
+            //     $table_name,
+
+            //     $this->food_item_id,
+            //     $this->food_item_id,
+
+            //     $this->food_item_field,
+            //     $this->food_item_field,
+
+            //     $this->price_field,
+            //     $this->price_field,
+
+            //     $this->type_field,
+            //     $this->type_field,
+
+            //     $this->category_field,
+            //     $this->category_field
+
+            // );
+            // $card = "%$search_data%";
+            // $retrieve_stmt = $this->db_conn->prepare($stmt);
+            // $retrieve_stmt->bindparam(':'.$this->food_item_id, $w);
+            // $retrieve_stmt->bindValue(':'.$this->food_item_field, $card);
+            // $retrieve_stmt->bindValue(':'.$this->price_field, $card);
+            // $retrieve_stmt->bindValue(':'.$this->type_field, $card);
+            // $retrieve_stmt->bindValue(':'.$this->category_field, $card);
+            
+
+            // $retrieve_stmt->execute();
+
+            return $stmt;
+            // var_dump($stmt);
+        }
+        
         public function deleteItemById($table_name, $col_name, $col_val){
             /**
              * returns all foodMenuEntity items in the database table.
