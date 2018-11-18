@@ -1,16 +1,16 @@
-
 /** typography **/
+
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color:#0088cc;
+    background-color: #0088cc;
     color: white;
     text-align: center;
     padding: 20px;
- }
- 
+}
+
 .atule-food-menu-item {
     border: 0;
     background: #f9f9f9;
